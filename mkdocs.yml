@@ -1,0 +1,51 @@
+site_name: AI on OpenShift
+site_url: https://ai-on-openshift.io/
+repo_url: https://github.com/opendatahub-io-contrib/ai-on-openshift
+edit_uri: https://github.com/opendatahub-io-contrib/ai-on-openshift/tree/main/docs
+theme:
+    favicon: img/favicon.png
+    name: material
+    palette:
+      - scheme: default
+        toggle:
+          icon: material/weather-night
+          name: Switch to dark mode
+        primary: blue
+        accent: light blue
+      - scheme: slate
+        toggle:      
+          icon: material/weather-sunny
+          name: Switch to light mode
+        primary: blue
+        accent: light blue
+    features:
+        - navigation.instant
+        - navigation.tracking
+        - navigation.sections
+        - navigation.indexes
+        - navigation.top
+        - navigation.tabs
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+nav:
+  - Home: index.md
+  - Getting Started:
+    - OpenShift: getting-started/openshift.md
+    - Open Data Hub: getting-started/opendatahub.md
+    - OpenShift Data Science: getting-started/openshift-data-science.md
+  - Tools and Applications:
+    - Apache Spark: tools-and-applications/apache-spark.md
+    - Apache NiFi: tools-and-applications/apache-nifi.md
+    - MLflow: tools-and-applications/mflow.md
+  - Patterns:
+    - Bucket notifications: patterns/bucket-notifications.md
+    - Kafka to object storage: patterns/kafka-to-object-storage.md
+  - Demos:
+    - XRay Pipeline: demos/xray-pipeline.md
+    - Smart City: demos/smart-city.md
