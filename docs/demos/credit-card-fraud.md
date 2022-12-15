@@ -6,11 +6,11 @@
 - Have [MLFlow](/tools_and_applications_mlflow) running in a cluster
 
 ## Demo Description & Architecture
-The goal of this demo is to demonstrate how RHODS and MLFlow can be used together to build and end-to-end MLOps platform where we can: 
+The goal of this demo is to demonstrate how RHODS and MLFlow can be used together to build an end-to-end MLOps platform where we can: 
 
 - Build and train models in RHODS
 - Track and store those models with MLFlow
-- Deploy a model application in OpenShift that predicts with a sepcific model from MLFlow
+- Deploy a model application in OpenShift that predicts with a specific model from MLFlow
 - Observe how the model performs in production
 
 The architecture looks like this:
@@ -19,12 +19,12 @@ The architecture looks like this:
 For S3 we use ODF (OpenShift Data Foundation) according to the [MLFlow guide](/tools_and_applications_mlflow), but it can be replaced with another storage.  
 The monitoring component uses Prometheus and Grafana.
 
-The model we will build is a Credit Card Fraud Detection model, which predicts if a credit card usage is fraudulent or not depending on a few paramemters such as: distance from home and last transaction, purchase price compared to median, if it's from a retailer that already has been purchased from before, if the PIN number is used and if it's an online order or not.
+The model we will build is a Credit Card Fraud Detection model, which predicts if a credit card usage is fraudulent or not depending on a few parameters such as: distance from home and last transaction, purchase price compared to median, if it's from a retailer that already has been purchased from before, if the PIN number is used and if it's an online order or not.
 
 
 ## Demo
 
-### 1.1: MLFlow Route through visual interface
+### 1.1: MLFlow Route through the visual interface
 Start by finding your route to MLFlow. You will need it to send any data to MLFlow.
 
 - Go to the OpenShift Console as a Developer
@@ -35,9 +35,9 @@ Start by finding your route to MLFlow. You will need it to send any data to MLFl
 - Go to the Resources tab 
 - Press mlflow-server under Services 
 - Look at the Hostname and mlflow-server Port.  
-NOTE: This route and port only works internally in the cluster.
+NOTE: This route and port only work internally in the cluster.
 ![Find mlflow-server-service](img/mlflow-server-service.png)
-![Find hostname and port](img/hostname-and-port.png)
+![Find the hostname and port](img/hostname-and-port.png)
 
 ### 1.2: MLFlow Route through oc
 Alternatively, you can use the OC command to get the route through: `oc get route mlflow | grep mlflow`
@@ -55,13 +55,13 @@ There are a few important settings here that we need to set:
 - **Deployment Size:** Small
 - **Environment Variable:** Add a new one that's a Config Map -> Key/value and enter `MLFLOW_ROUTE` as the key and `http://<route-to-mlflow>:<port>` as the value.  
 This is the same route and port that we found in [step one](#11-mlflow-route-through-visual-interface), in my case it is `http://mlflow-server.mlflow.svc.cluster.local:8080`.
-- **Cluster Storage:** Create new persistent storage - I call it "Credit Fraud Storage" and set size to 20GB.
+- **Cluster Storage:** Create new persistent storage - I call it "Credit Fraud Storage" and set the size to 20GB.
 
-Press Create Workbench and wait for it to start (Status should say "Running" and you should be able to press the Open link).
+Press Create Workbench and wait for it to start - status should say "Running" and you should be able to press the Open link
 ![Workbench Settings](img/Workbench_Settings.png)
 ![Workbench](img/Workbench.png)
 
-Open the workbench and log in if needed.
+Open the workbench and login if needed.
 
 ### 3: Train the model
 When inside the workbench (Jupyter), pull down this repo from GitHub: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo).   
@@ -69,15 +69,15 @@ It contains:
 
 - A notebook (model.ipynb) inside the `model` folder with a Deep Neural Network model we will train.
 - Data for that model.
-- An application (model_application.py) inside the `application` folder which will fetch the trained model from MLFlow and run a prediction on it whenever it gets any user input.
+- An application (model_application.py) inside the `application` folder that will fetch the trained model from MLFlow and run a prediction on it whenever it gets any user input.
 ![Jupyter](img/Jupyter.png)
 
 Take a look inside the folders and scripts if you are interested.  
 Some things to note is how we set up tracking and logging with MLFlow in `model.ipynb` to make sure that the experiment and the model is captured. You can also read about that in the [MLFlow guide](/tools_and_applications_mlflow#adding-mlflow-to-training-code).
 
-When you are done, open up the `model.ipynb` notebook and run all the cells. If the everything is set up correctly it will train the model and push both the experiment and the model to MLFlow.  
+When you are done, open up the `model.ipynb` notebook and run all the cells. If everything is set up correctly it will train the model and push both the experiment and the model to MLFlow.  
 The experiment is a record with metrics of how the run went, while the model is the actual tensorflow model which we later will use for inference.  
-You may see some warnings in the last cell related to MLFlow, as long as you see a final progressbar which pushes the model to MLFlow you are fine:
+You may see some warnings in the last cell related to MLFlow, as long as you see a final progressbar for the model being pushed to MLFlow you are fine:
 ![Trained model](img/Trained_model.png)
 
 ### 4: View the model in MLFlow
@@ -112,7 +112,7 @@ When the application has been deployed you can press the "Open URL" button to op
 ![Application deployed](img/Application_deployed.png)
 Congratulations, you now have an application running your AI model!  
 If you looked inside the application code earlier, you also know that we specifically pull version 1 of the model called "DNN Fraud Detection" from MLFlow. This makes sense since we only ran the model once, but is easy to change if any other version or model should go into production.  
-We are also utilizing a program called "Gradio" to create the interface, it's a super lightweight way to get a nice looking interface running.
+We are also utilizing a program called "Gradio" to create the interface, it's a super lightweight way to get a nice-looking interface running.
 
 Try entering a few values and see if it predicts it as a credit fraud or not. You can select one of the examples at the bottom of the application page.
 ![Gradio](img/Gradio.PNG)
@@ -126,7 +126,7 @@ To set up Prometheus, start by going to the OpenShift Console as an Administrato
 Find the Prometheus Operator and make sure to install it in the credit-fraud namespace - this is so we have everything application related in the same namespace.
 ![Prometheus Operator](img/Prometheus_Operator.png)
 
-The deployed model was already built to send data to Prometheus so no changes needed there.  
+The deployed model was already built to send data to Prometheus so no changes are needed there.  
 Simply go to the model and run some data through it to see what happens in Prometheus.
 
 
