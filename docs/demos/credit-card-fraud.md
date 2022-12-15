@@ -11,7 +11,6 @@ The goal of this demo is to demonstrate how RHODS and MLFlow can be used togethe
 - Build and train models in RHODS
 - Track and store those models with MLFlow
 - Deploy a model application in OpenShift that predicts with a specific model from MLFlow
-- Observe how the model performs in production
 
 The architecture looks like this:
 ![Diagram](img/Diagram.PNG)
@@ -43,7 +42,7 @@ NOTE: This route and port only work internally in the cluster.
 Alternatively, you can use the OC command to get the route through: `oc get route mlflow | grep mlflow`
 
 ### 2: Create a RHODS workbench
-Open up RHODS and create a new Data Science project (see image), this is where we will build and train our model. This will also create a namespace in OpenShift which is where we will be running our appliaction after the model is done.  
+Open up RHODS and create a new Data Science project (see image), this is where we will build and train our model. This will also create a namespace in OpenShift which is where we will be running our application after the model is done.  
 I'm calling my project 'Credit Fraud', feel free to call yours something different but be aware that some things further down in the demo may change.
 ![Create Data Science Project](img/Create_data_science_project.png)
 
@@ -116,18 +115,3 @@ We are also utilizing a program called "Gradio" to create the interface, it's a 
 
 Try entering a few values and see if it predicts it as a credit fraud or not. You can select one of the examples at the bottom of the application page.
 ![Gradio](img/Gradio.PNG)
-
-
-### 6: Set up monitoring with Prometheus
-Now that we have an application and model running, we want to monitor what data goes through the model so we can alert on any detected frauds and see if the model starts drifting (the average inputs change) over time.  
-We will use Prometheus for gathering the data.
-
-To set up Prometheus, start by going to the OpenShift Console as an Administrator and go to OperatorHub.
-Find the Prometheus Operator and make sure to install it in the credit-fraud namespace - this is so we have everything application related in the same namespace.
-![Prometheus Operator](img/Prometheus_Operator.png)
-
-The deployed model was already built to send data to Prometheus so no changes are needed there.  
-Simply go to the model and run some data through it to see what happens in Prometheus.
-
-
-### 7: Set up alerting with Graphana
