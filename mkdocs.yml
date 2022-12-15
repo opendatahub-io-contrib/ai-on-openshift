@@ -42,10 +42,11 @@ nav:
   - Tools and Applications:
     - Apache Spark: tools-and-applications/apache-spark.md
     - Apache NiFi: tools-and-applications/apache-nifi.md
-    - MLflow: tools-and-applications/mflow.md
+    - MLflow: tools-and-applications/mlflow.md
   - Patterns:
     - Bucket notifications: patterns/bucket-notifications.md
     - Kafka to object storage: patterns/kafka-to-object-storage.md
   - Demos:
     - XRay Pipeline: demos/xray-pipeline.md
     - Smart City: demos/smart-city.md
+    - Credit Card Fraud: demos/credit-card-fraud.md
