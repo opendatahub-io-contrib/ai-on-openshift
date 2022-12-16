@@ -191,9 +191,17 @@ Then press "+Add" in the left menu and select Import from Git.
 
 In the "Git Repo URL" enter: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo) (this is the same repository we pulled into RHODS earlier).  
 Then press "Show advanced Git options" and set "Context dir" to "/application".  
-Press Create to start deploying the application.
+Finally, at the very bottom, click the blue "Deployment" link:
+
+![Deployment Options](img/Deployment_Options.png)
+
+And add `MLFLOW_ROUTE` as Name and your route from [step one](#11-mlflow-route-through-the-visual-interface) as Value (`http://mlflow-server.mlflow.svc.cluster.local:8080` for example).
+
+Your full settings page should look like this:
 
 ![Import from Git Settings](img/Import_from_Git_settings.png)
+
+Press Create to start deploying the application.
 
 You should now see two objects in your topology map, one for the Workbench we created earlier and one for the application we just added.  
 When the circle of your deployment turns dark blue it means that it has finished deploying.  
