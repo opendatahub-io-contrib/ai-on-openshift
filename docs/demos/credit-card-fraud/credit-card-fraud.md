@@ -3,7 +3,7 @@
 
 ## Pre-requisites:
 - Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster
-    - Note: You use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but this demo and all the screenshots are from RHODS
+    - Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
 - Have [MLFlow](/tools-and-applications/mlflow/mlflow/) running in a cluster
 
 ## Demo Description & Architecture
@@ -197,7 +197,7 @@ Finally, at the very bottom, click the blue "Deployment" link:
 
 And add `MLFLOW_ROUTE` as Name and your route from [step one](#11-mlflow-route-through-the-visual-interface) as Value (`http://mlflow-server.mlflow.svc.cluster.local:8080` for example).
 
-Your full settings page should look like this:
+Your full settings page should look something like this:
 
 ![Import from Git Settings](img/Import_from_Git_settings.png)
 
