@@ -98,7 +98,7 @@ mlflow.set_experiment("DNN-credit-card-fraud")
 mlflow.tensorflow.autolog(registered_model_name="DNN-credit-card-fraud")
 ```
 `mlflow.set_tracking_uri(MLFLOW_ROUTE)` just points to where we should send our MLFlow data.  
-`mlflow.set_experiment("DNN-credit-card-fraud")` tells MLFlow that we want to create an experiment, and what we are going to call it. In this case I call it "DNN-credit-fraud" as we are building a Deep Neural Network.  
+`mlflow.set_experiment("DNN-credit-card-fraud")` tells MLFlow that we want to create an experiment, and what we are going to call it. In this case I call it "DNN-credit-card-fraud" as we are building a Deep Neural Network.  
 `mlflow.tensorflow.autolog(registered_model_name="DNN-credit-card-fraud")` enables autologging of a bunch of variables (such as accuracy, loss, etc) so we don't manually have to track them. It also automatically uploads the model to MLFlow after the training completes. Here we name the model the same as the experiment.
 
 Then in the last cell we have our training code:
@@ -160,8 +160,32 @@ You can find the model application code in the "application" folder in the GitHu
 
 ![Model Application Folder](img/Model_Application_Folder.PNG)
 
-We are going to deploy the application with OpenShift by pointing it to the GitHub repository.  
-It will pull down the folder, automatically build a container image based on the Dockerfile (instructions for ), and publish it.
+If you look inside `model_application.py` you are going to see a few particularly important lines of code:
+```
+# Get a few environment variables. These are so we can:
+# - get data from MLFlow
+# - Set server name and port for Gradio
+MLFLOW_ROUTE = os.getenv("MLFLOW_ROUTE")
+...
+
+# Connect to MLFlow using the route.
+mlflow.set_tracking_uri(MLFLOW_ROUTE)
+
+# Specify what model and version we want to load, and then load it.
+model_name = "DNN-credit-card-fraud"
+model_version = 1
+model = mlflow.pyfunc.load_model(
+    model_uri=f"models:/{model_name}/{model_version}"
+)
+```
+Here is where we set up everything needed for loading the model from MLFlow. The environment variable MLFLOW_ROUTE is set in the Dockerfile to `http://mlflow-server.mlflow.svc.cluster.local:8080`.  
+You can also see that we specifically load version 1 of the model called "DNN-credit-card-fraud" from MLFlow. This makes sense since we only ran the model once, but is easy to change if any other version or model should go into production
+
+>**NOTE:** If the MLFlow route you found in [step 1](#11-mlflow-route-through-the-visual-interface) differs from `http://mlflow-server.mlflow.svc.cluster.local:8080`, then you will need to change the MLFLOW_ROUTE variable in the Dockerfile.  
+
+
+We are going to deploy the application with OpenShift by pointing to the GitHub repository.  
+It will pull down the folder, automatically build a container image based on the Dockerfile, and publish it.
 
 To do this, go to the OpenShift Console and make sure you are in **Developer** view and have selected the **credit-card-fraud** project.  
 Then press "+Add" in the left menu and select Import from Git.  
@@ -182,8 +206,6 @@ When the application has been deployed you can press the "Open URL" button to op
 ![Application deployed](img/Application_deployed.png)
 
 Congratulations, you now have an application running your AI model!  
-If you looked inside the application code earlier, you also know that we specifically pull version 1 of the model called "DNN Fraud Detection" from MLFlow. This makes sense since we only ran the model once, but is easy to change if any other version or model should go into production.  
-We are also utilizing a program called "Gradio" to create the interface, it's a super lightweight way to get a nice-looking interface running.
 
 Try entering a few values and see if it predicts it as a credit fraud or not. You can select one of the examples at the bottom of the application page.
 

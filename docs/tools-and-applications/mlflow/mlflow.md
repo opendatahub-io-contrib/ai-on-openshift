@@ -25,7 +25,7 @@ helm install mlflow-server strangiato/mlflow-server
 - Go to the Topology view and make sure that you are on the MLFlow project.  
 - Check that the MLFlow circle is dark blue (this means it has finished deploying).  
 - Press the "External URL" link in the top right corner of the MLFlow circle to open up the MLFlow UI.  
-- Run `helm test mlflow-server` to test MLFlow, if successfull you should see a new experiment called "helm-test" show up in the MLFlow UI with 3 experiments inside it.
+- Run `helm test mlflow-server` in your command prompt to test MLFlow. If successful, you should see a new experiment called "helm-test" show up in the MLFlow UI with 3 experiments inside it.
 
 ## Adding MLFlow to Training Code
 ```
