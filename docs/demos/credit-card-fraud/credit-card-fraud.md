@@ -1,13 +1,16 @@
 # Credit Card Fraud Detection Demo using MLFlow and Red Hat OpenShift Data Science
+
 [GitHub Source](https://github.com/red-hat-data-services/credit-fraud-detection-demo)
 
-## Pre-requisites:
+## Pre-requisites
+
 - Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster
-    - Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
+  - Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
 - Have [MLFlow](/tools-and-applications/mlflow/mlflow/) running in a cluster
 
 ## Demo Description & Architecture
-The goal of this demo is to demonstrate how RHODS and MLFlow can be used together to build an end-to-end MLOps platform where we can: 
+
+The goal of this demo is to demonstrate how RHODS and MLFlow can be used together to build an end-to-end MLOps platform where we can:
 
 - Build and train models in RHODS
 - Track and store those models with MLFlow
@@ -22,44 +25,46 @@ Description of each component:
 - **RHODS Notebook:** We will build and train the model using a Jupyter Notebook running in RHODS.
 - **MLFlow Experiment tracking:** We use MLFlow to track the parameters and metrics (such as accuracy, loss, etc) of a model training run. These runs can be grouped under different "experiments", making it easy to keep track of the runs.
 - **MLFlow Model registry:** As we track the experiment we also store the trained model through MLFlow so we can easily version it and assign a stage to it (for example Staging, Production, Archive).
-- **S3 (ODF):** This is where the models are physically stored and what the MLFlow model registry interfaces with. We use ODF (OpenShift Data Foundation) according to the [MLFlow guide](/tools-and-applications/mlflow/mlflow/), but it can be replaced with another storage.  
+- **S3 (ODF):** This is where the models are physically stored and what the MLFlow model registry interfaces with. We use ODF (OpenShift Data Foundation) according to the [MLFlow guide](/tools-and-applications/mlflow/mlflow/), but it can be replaced with another storage.
 - **Application interface:** This is the interface used to run predictions with the model. In our case, we will build a visual interface (interactive app) using Gradio and let it load the model from the MLFlow model registry.
 
 The model we will build is a Credit Card Fraud Detection model, which predicts if a credit card usage is fraudulent or not depending on a few parameters such as: distance from home and last transaction, purchase price compared to median, if it's from a retailer that already has been purchased from before, if the PIN number is used and if it's an online order or not.
 
-
 ## Deploying the demo
 
 ### 1.1: MLFlow Route through the visual interface
+
 Start by finding your route to MLFlow. You will need it to send any data to MLFlow.
 
 - Go to the OpenShift Console as a Developer
-- Select your mlflow project 
-- Press Topology 
-- Press the mlflow-server circle 
-    - While you are at it, you can also press the little "Open URL" button in the top right corner of the circle to open up the MLFlow UI in a new tab - we will need it later.
-- Go to the Resources tab 
-- Press mlflow-server under Services 
-- Look at the Hostname and mlflow-server Port.  
+- Select your mlflow project
+- Press Topology
+- Press the mlflow-server circle
+  - While you are at it, you can also press the little "Open URL" button in the top right corner of the circle to open up the MLFlow UI in a new tab - we will need it later.
+- Go to the Resources tab
+- Press mlflow-server under Services
+- Look at the Hostname and mlflow-server Port.
 NOTE: This route and port only work internally in the cluster.
 
 ![Find mlflow-server-service](img/mlflow-server-service.png)
 ![Find the hostname and port](img/hostname-and-port.png)
 
 ### 1.2: Get the MLFlow Route using command-line
+
 Alternatively, you can use the OC command to get the route through: `oc get route mlflow -n mlflow | grep mlflow`
 
 ### 2: Create a RHODS workbench
+
 Start by opening up RHODS by clicking on the 9 square symbol in the top menu and choosing "Red Hat OpenShift Data Science".
 
 ![Open RHODS](img/Open_RHODS.png)
 
-Then create a new Data Science project (see image), this is where we will build and train our model. This will also create a namespace in OpenShift which is where we will be running our application after the model is done.  
+Then create a new Data Science project (see image), this is where we will build and train our model. This will also create a namespace in OpenShift which is where we will be running our application after the model is done.
 I'm calling my project 'Credit Card Fraud', feel free to call yours something different but be aware that some things further down in the demo may change.
 
 ![Create Data Science Project](img/Create_data_science_project.png)
 
-After the project has been created, create a workbench where we can run Jupyter.  
+After the project has been created, create a workbench where we can run Jupyter.
 There are a few important settings here that we need to set:
 
 - **Name:** I simply call it "Credit Fraud Model", but feel free to call it something else.
@@ -77,39 +82,43 @@ Press Create Workbench and wait for it to start - status should say "Running" an
 Open the workbench and login if needed.
 
 ### 3: Train the model
-When inside the workbench (Jupyter), we are going to clone a GitHub repository which contains everything we need to train our model.  
-You can clone the GitHub repository by pressing the GitHub button in the left side menu (see image), then select "Clone a Repository" and enter this GitHub URL: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo) 
+
+When inside the workbench (Jupyter), we are going to clone a GitHub repository which contains everything we need to train our model.
+You can clone the GitHub repository by pressing the GitHub button in the left side menu (see image), then select "Clone a Repository" and enter this GitHub URL: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo)
 
 ![Jupyter](img/Jupyter.png)
 
-Open up the folder that was added (credit-fraud-detection-demo).  
+Open up the folder that was added (credit-fraud-detection-demo).
 It contains:
 
 - Data for training and evaluating the model.
 - A notebook (model.ipynb) inside the `model` folder with a Deep Neural Network model we will train.
 - An application (model_application.py) inside the `application` folder that will fetch the trained model from MLFlow and run a prediction on it whenever it gets any user input.
 
-The `model.ipynb` is what we are going to use for building and training the model, so open that up and take a look inside, there is documentation outlining what each cell does. What is particularly interesting for this demo are the last two cells.  
+The `model.ipynb` is what we are going to use for building and training the model, so open that up and take a look inside, there is documentation outlining what each cell does. What is particularly interesting for this demo are the last two cells.
 
 The second to last cell contains the code for setting up MLFlow tracking:
-```
+
+```python
 mlflow.set_tracking_uri(MLFLOW_ROUTE)
 mlflow.set_experiment("DNN-credit-card-fraud")
 mlflow.tensorflow.autolog(registered_model_name="DNN-credit-card-fraud")
 ```
-`mlflow.set_tracking_uri(MLFLOW_ROUTE)` just points to where we should send our MLFlow data.  
-`mlflow.set_experiment("DNN-credit-card-fraud")` tells MLFlow that we want to create an experiment, and what we are going to call it. In this case I call it "DNN-credit-card-fraud" as we are building a Deep Neural Network.  
+
+`mlflow.set_tracking_uri(MLFLOW_ROUTE)` just points to where we should send our MLFlow data.
+`mlflow.set_experiment("DNN-credit-card-fraud")` tells MLFlow that we want to create an experiment, and what we are going to call it. In this case I call it "DNN-credit-card-fraud" as we are building a Deep Neural Network.
 `mlflow.tensorflow.autolog(registered_model_name="DNN-credit-card-fraud")` enables autologging of a bunch of variables (such as accuracy, loss, etc) so we don't manually have to track them. It also automatically uploads the model to MLFlow after the training completes. Here we name the model the same as the experiment.
 
 Then in the last cell we have our training code:
-```
+
+```python
 with mlflow.start_run():
     epochs = 2
     history = model.fit(X_train, y_train, epochs=epochs, \
                         validation_data=(scaler.transform(X_val),y_val), \
                         verbose = True, class_weight = class_weights)
 
-    y_pred_temp = model.predict(scaler.transform(X_test)) 
+    y_pred_temp = model.predict(scaler.transform(X_test))
 
     threshold = 0.995
 
@@ -127,17 +136,19 @@ with mlflow.start_run():
     mlflow.log_metric("fn", f_n)
     mlflow.log_metric("tp", t_p)
 ```
-`with mlflow.start_run():` is used to tell MLFlow that we are starting a run, and we wrap our training code with it to define exactly what code belongs to the "run".  
+
+`with mlflow.start_run():` is used to tell MLFlow that we are starting a run, and we wrap our training code with it to define exactly what code belongs to the "run".
 Most of the rest of the code in this cell is normal model training and evaluation code, but at the very bottom we can see how we send some custom metrics to MLFlow through `mlflow.log_metric`. We do this as custom metrics are not tracked by the autolog we enabled in the previous cell.
 
-Now run all the cells in the notebook from top to bottom, either by clicking Shift-Enter on every cell, or by going to Run->Run All Cells in the very top menu.  
-If everything is set up correctly it will train the model and push both the run and the model to MLFlow.  
-The run is a record with metrics of how the run went, while the model is the actual tensorflow model which we later will use for inference.  
+Now run all the cells in the notebook from top to bottom, either by clicking Shift-Enter on every cell, or by going to Run->Run All Cells in the very top menu.
+If everything is set up correctly it will train the model and push both the run and the model to MLFlow.
+The run is a record with metrics of how the run went, while the model is the actual tensorflow model which we later will use for inference.
 You may see some warnings in the last cell related to MLFlow, as long as you see a final progressbar for the model being pushed to MLFlow you are fine:
 ![Trained model](img/Trained_model.png)
 
 ### 4: View the model in MLFlow
-Let's take a look at how it looks inside MLFlow now that we have trained the model.  
+
+Let's take a look at how it looks inside MLFlow now that we have trained the model.
 If you opened the MLFlow UI in a new tab in step 1.1, then just swap over to that tab, otherwise follow these steps:
 
 - Go to the OpenShift Console
@@ -148,20 +159,22 @@ If you opened the MLFlow UI in a new tab in step 1.1, then just swap over to tha
 
 ![Open MLFlow UI](img/Open_MLFlow_UI.png)
 
-When inside the MLFlow interface you should see your new experiment in the left menu. Click on it to see all the runs under that experiment name, there should only be a single run from the model we just trained.  
+When inside the MLFlow interface you should see your new experiment in the left menu. Click on it to see all the runs under that experiment name, there should only be a single run from the model we just trained.
 You can now click on the row in the Created column to get more information about the run and how to use the model from MLFlow.
 
 ![MLFlow view](img/MLFlow_view.png)
 
 ### 5: Deploy the model application
-The model application is a visual interface for interacting with the model. You can use it to send data to the model and get a prediction of whether a transaction is fraudulent or not.  
-It works by loading a specific model and model version from MLFlow, and running any data that comes in through the model.  
+
+The model application is a visual interface for interacting with the model. You can use it to send data to the model and get a prediction of whether a transaction is fraudulent or not.
+It works by loading a specific model and model version from MLFlow, and running any data that comes in through the model.
 You can find the model application code in the "application" folder in the GitHub repository you cloned in [step 3](#3-train-the-model).
 
 ![Model Application Folder](img/Model_Application_Folder.PNG)
 
 If you look inside `model_application.py` you are going to see a few particularly important lines of code:
-```
+
+```python
 # Get a few environment variables. These are so we can:
 # - get data from MLFlow
 # - Set server name and port for Gradio
@@ -178,19 +191,20 @@ model = mlflow.pyfunc.load_model(
     model_uri=f"models:/{model_name}/{model_version}"
 )
 ```
-Here is where we set up everything that's needed for loading the model from MLFlow. The environment variable MLFLOW_ROUTE is set in the Dockerfile.  
+
+Here is where we set up everything that's needed for loading the model from MLFlow. The environment variable MLFLOW_ROUTE is set in the Dockerfile.
 You can also see that we specifically load version 1 of the model called "DNN-credit-card-fraud" from MLFlow. This makes sense since we only ran the model once, but is easy to change if any other version or model should go into production
 
-We are going to deploy the application with OpenShift by pointing to the GitHub repository.  
+We are going to deploy the application with OpenShift by pointing to the GitHub repository.
 It will pull down the folder, automatically build a container image based on the Dockerfile, and publish it.
 
-To do this, go to the OpenShift Console and make sure you are in **Developer** view and have selected the **credit-card-fraud** project.  
-Then press "+Add" in the left menu and select Import from Git.  
+To do this, go to the OpenShift Console and make sure you are in **Developer** view and have selected the **credit-card-fraud** project.
+Then press "+Add" in the left menu and select Import from Git.
 
 ![Import from Git](img/Import_from_Git.png)
 
-In the "Git Repo URL" enter: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo) (this is the same repository we pulled into RHODS earlier).  
-Then press "Show advanced Git options" and set "Context dir" to "/application".  
+In the "Git Repo URL" enter: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo) (this is the same repository we pulled into RHODS earlier).
+Then press "Show advanced Git options" and set "Context dir" to "/application".
 Finally, at the very bottom, click the blue "Deployment" link:
 
 ![Deployment Options](img/Deployment_Options.png)
@@ -203,14 +217,14 @@ Your full settings page should look something like this:
 
 Press Create to start deploying the application.
 
-You should now see two objects in your topology map, one for the Workbench we created earlier and one for the application we just added.  
-When the circle of your deployment turns dark blue it means that it has finished deploying.  
-If you want more details on how the deployment is going, you can press the circle and look at Resources in the right menu that opens up. There you can see how the build is going and what's happening to the pod. The application will be ready when the build is complete and the pod is "Running".  
-When the application has been deployed you can press the "Open URL" button to open up the interface in a new tab. 
+You should now see two objects in your topology map, one for the Workbench we created earlier and one for the application we just added.
+When the circle of your deployment turns dark blue it means that it has finished deploying.
+If you want more details on how the deployment is going, you can press the circle and look at Resources in the right menu that opens up. There you can see how the build is going and what's happening to the pod. The application will be ready when the build is complete and the pod is "Running".
+When the application has been deployed you can press the "Open URL" button to open up the interface in a new tab.
 
 ![Application deployed](img/Application_deployed.png)
 
-Congratulations, you now have an application running your AI model!  
+Congratulations, you now have an application running your AI model!
 
 Try entering a few values and see if it predicts it as a credit fraud or not. You can select one of the examples at the bottom of the application page.
 
