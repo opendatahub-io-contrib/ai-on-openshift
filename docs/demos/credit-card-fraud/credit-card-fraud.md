@@ -1,13 +1,16 @@
 # Credit Card Fraud Detection Demo using MLFlow and Red Hat OpenShift Data Science
+
 [GitHub Source](https://github.com/red-hat-data-services/credit-fraud-detection-demo)
 
-## Pre-requisites:
+## Pre-requisites
+
 - Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster
-    - Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
+  - Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
 - Have [MLFlow](/tools-and-applications/mlflow/mlflow/) running in a cluster
 
 ## Demo Description & Architecture
-The goal of this demo is to demonstrate how RHODS and MLFlow can be used together to build an end-to-end MLOps platform where we can: 
+
+The goal of this demo is to demonstrate how RHODS and MLFlow can be used together to build an end-to-end MLOps platform where we can:
 
 - Build and train models in RHODS
 - Track and store those models with MLFlow
@@ -29,20 +32,20 @@ Description of each component:
 
 The model we will build is a Credit Card Fraud Detection model, which predicts if a credit card usage is fraudulent or not depending on a few parameters such as: distance from home and last transaction, purchase price compared to median, if it's from a retailer that already has been purchased from before, if the PIN number is used and if it's an online order or not.
 
-
 ## Deploying the demo
 
 ### 1.1: MLFlow Route through the visual interface
+
 Start by finding your route to MLFlow. You will need it to send any data to MLFlow.
 
 - Go to the OpenShift Console as a Developer
-- Select your mlflow project 
-- Press Topology 
-- Press the mlflow-server circle 
-    - While you are at it, you can also press the little "Open URL" button in the top right corner of the circle to open up the MLFlow UI in a new tab - we will need it later.
-- Go to the Resources tab 
-- Press mlflow-server under Services 
-- Look at the Hostname and mlflow-server Port.  
+- Select your mlflow project
+- Press Topology
+- Press the mlflow-server circle
+  - While you are at it, you can also press the little "Open URL" button in the top right corner of the circle to open up the MLFlow UI in a new tab - we will need it later.
+- Go to the Resources tab
+- Press mlflow-server under Services
+- Look at the Hostname and mlflow-server Port.
 NOTE: This route and port only work internally in the cluster.
 
 ![Find mlflow-server-service](img/mlflow-server-service.png)
@@ -56,16 +59,17 @@ The port you will find with: `oc get svc mlflow-server -n mlflow -o yaml`
 ![OC Get Port](img/OC_Get_Port.png)
 
 ### 2: Create a RHODS workbench
+
 Start by opening up RHODS by clicking on the 9 square symbol in the top menu and choosing "Red Hat OpenShift Data Science".
 
 ![Open RHODS](img/Open_RHODS.png)
 
-Then create a new Data Science project (see image), this is where we will build and train our model. This will also create a namespace in OpenShift which is where we will be running our application after the model is done.  
+Then create a new Data Science project (see image), this is where we will build and train our model. This will also create a namespace in OpenShift which is where we will be running our application after the model is done.
 I'm calling my project 'Credit Card Fraud', feel free to call yours something different but be aware that some things further down in the demo may change.
 
 ![Create Data Science Project](img/Create_data_science_project.png)
 
-After the project has been created, create a workbench where we can run Jupyter.  
+After the project has been created, create a workbench where we can run Jupyter.
 There are a few important settings here that we need to set:
 
 - **Name:** Credit Fraud Model
@@ -90,34 +94,37 @@ You can clone the GitHub repository by pressing the GitHub button in the left si
 
 ![Jupyter](img/Jupyter.png)
 
-Open up the folder that was added (credit-fraud-detection-demo).  
+Open up the folder that was added (credit-fraud-detection-demo).
 It contains:
 
 - Data for training and evaluating the model.
 - A notebook (model.ipynb) inside the `model` folder with a Deep Neural Network model we will train.
 - An application (model_application.py) inside the `application` folder that will fetch the trained model from MLFlow and run a prediction on it whenever it gets any user input.
 
-The `model.ipynb` is what we are going to use for building and training the model, so open that up and take a look inside, there is documentation outlining what each cell does. What is particularly interesting for this demo are the last two cells.  
+The `model.ipynb` is what we are going to use for building and training the model, so open that up and take a look inside, there is documentation outlining what each cell does. What is particularly interesting for this demo are the last two cells.
 
 The second to last cell contains the code for setting up MLFlow tracking:
-```
+
+```python
 mlflow.set_tracking_uri(MLFLOW_ROUTE)
 mlflow.set_experiment("DNN-credit-card-fraud")
 mlflow.tensorflow.autolog(registered_model_name="DNN-credit-card-fraud")
 ```
-`mlflow.set_tracking_uri(MLFLOW_ROUTE)` just points to where we should send our MLFlow data.  
-`mlflow.set_experiment("DNN-credit-card-fraud")` tells MLFlow that we want to create an experiment, and what we are going to call it. In this case I call it "DNN-credit-card-fraud" as we are building a Deep Neural Network.  
+
+`mlflow.set_tracking_uri(MLFLOW_ROUTE)` just points to where we should send our MLFlow data.
+`mlflow.set_experiment("DNN-credit-card-fraud")` tells MLFlow that we want to create an experiment, and what we are going to call it. In this case I call it "DNN-credit-card-fraud" as we are building a Deep Neural Network.
 `mlflow.tensorflow.autolog(registered_model_name="DNN-credit-card-fraud")` enables autologging of a bunch of variables (such as accuracy, loss, etc) so we don't manually have to track them. It also automatically uploads the model to MLFlow after the training completes. Here we name the model the same as the experiment.
 
 Then in the last cell we have our training code:
-```
+
+```python
 with mlflow.start_run():
     epochs = 2
     history = model.fit(X_train, y_train, epochs=epochs, \
                         validation_data=(scaler.transform(X_val),y_val), \
                         verbose = True, class_weight = class_weights)
 
-    y_pred_temp = model.predict(scaler.transform(X_test)) 
+    y_pred_temp = model.predict(scaler.transform(X_test))
 
     threshold = 0.995
 
@@ -160,7 +167,7 @@ If you opened the MLFlow UI in a new tab in [step 1.1](#11-mlflow-route-through-
 
 ![Open MLFlow UI](img/Open_MLFlow_UI.png)
 
-When inside the MLFlow interface you should see your new experiment in the left menu. Click on it to see all the runs under that experiment name, there should only be a single run from the model we just trained.  
+When inside the MLFlow interface you should see your new experiment in the left menu. Click on it to see all the runs under that experiment name, there should only be a single run from the model we just trained.
 You can now click on the row in the Created column to get more information about the run and how to use the model from MLFlow.
 
 ![MLFlow view](img/MLFlow_view.png)
@@ -246,7 +253,8 @@ model = mlflow.pyfunc.load_model(
     model_uri=f"models:/{model_name}/{model_version}"
 )
 ```
-Here is where we set up everything that's needed for loading the model from MLFlow. The environment variable MLFLOW_ROUTE is set in the Dockerfile.  
+
+Here is where we set up everything that's needed for loading the model from MLFlow. The environment variable MLFLOW_ROUTE is set in the Dockerfile.
 You can also see that we specifically load version 1 of the model called "DNN-credit-card-fraud" from MLFlow. This makes sense since we only ran the model once, but is easy to change if any other version or model should go into production
 
 Follow the steps of the [next section](#6-deploy-the-model-application) to see how to deploy an application, but when given the choice for "Context dir" and "Environment variables (runtime only)", use these settings instead:
@@ -265,13 +273,13 @@ You can find the model application code in the "application" folder in the GitHu
 We are going to deploy the application with OpenShift by pointing to the GitHub repository.  
 It will pull down the folder, automatically build a container image based on the Dockerfile, and publish it.
 
-To do this, go to the OpenShift Console and make sure you are in **Developer** view and have selected the **credit-card-fraud** project.  
-Then press "+Add" in the left menu and select Import from Git.  
+To do this, go to the OpenShift Console and make sure you are in **Developer** view and have selected the **credit-card-fraud** project.
+Then press "+Add" in the left menu and select Import from Git.
 
 ![Import from Git](img/Import_from_Git.png)
 
-In the "Git Repo URL" enter: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo) (this is the same repository we pulled into RHODS earlier).  
-Then press "Show advanced Git options" and set "Context dir" to "/application".  
+In the "Git Repo URL" enter: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo) (this is the same repository we pulled into RHODS earlier).
+Then press "Show advanced Git options" and set "Context dir" to "/application".
 Finally, at the very bottom, click the blue "Deployment" link:
 
 ![Deployment Options](img/Deployment_Options.png)
@@ -298,7 +306,7 @@ When the application has been deployed you can press the "Open URL" button to op
 
 ![Application deployed](img/Application_deployed.png)
 
-Congratulations, you now have an application running your AI model!  
+Congratulations, you now have an application running your AI model!
 
 Try entering a few values and see if it predicts it as a credit fraud or not. You can select one of the examples at the bottom of the application page.
 
