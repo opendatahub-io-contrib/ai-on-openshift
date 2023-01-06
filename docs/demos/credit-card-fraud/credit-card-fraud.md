@@ -270,6 +270,20 @@ You can find the model application code in the "application" folder in the GitHu
 
 ![Model Application Folder](img/Model_Application_Folder.PNG)
 
+If you look inside it `model_application.py`, you will see two particularly important lines of code:
+
+```
+# Get a few environment variables. These are so we:
+# - Know what endpoint we should request
+# - Set server name and port for Gradio
+URL = os.getenv("INFERENCE_ENDPOINT") <----------
+...
+
+    response = requests.post(URL, json=payload, headers=headers)  <----------
+```
+
+This is what we use to send a request to our RHODS Model Server with some data we want it to run a prediction on.
+
 We are going to deploy the application with OpenShift by pointing to the GitHub repository.  
 It will pull down the folder, automatically build a container image based on the Dockerfile, and publish it.
 
