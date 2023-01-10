@@ -10,13 +10,13 @@ theme:
         toggle:
           icon: material/weather-night
           name: Switch to dark mode
-        primary: blue
+        primary: black
         accent: light blue
       - scheme: slate
         toggle:      
           icon: material/weather-sunny
           name: Switch to light mode
-        primary: blue
+        primary: black
         accent: light blue
     features:
         - navigation.instant
@@ -36,7 +36,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting Started:
-    - OpenShift: getting-started/openshift.md
+    - OpenShift and AI: getting-started/openshift.md
     - Open Data Hub: getting-started/opendatahub.md
     - OpenShift Data Science: getting-started/openshift-data-science.md
   - Tools and Applications:
