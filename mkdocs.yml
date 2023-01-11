@@ -1,23 +1,35 @@
+
+## Project information
 site_name: AI on OpenShift
 site_url: https://ai-on-openshift.io/
+site_description: AI on Openshift
+
+## Repository
 repo_url: https://github.com/opendatahub-io-contrib/ai-on-openshift
-edit_uri: https://github.com/opendatahub-io-contrib/ai-on-openshift/tree/main/docs
+edit_uri: ''  #disables edit button
+
+## Plugins
+plugins:
+  - social
+
+## Theme
 theme:
     favicon: img/favicon.png
     name: material
+    custom_dir: docs/theme_override/
     palette:
       - scheme: default
         toggle:
           icon: material/weather-night
           name: Switch to dark mode
         primary: black
-        accent: light blue
+        accent: red
       - scheme: slate
         toggle:      
           icon: material/weather-sunny
           name: Switch to light mode
         primary: black
-        accent: light blue
+        accent: red
     features:
         - navigation.instant
         - navigation.tracking
