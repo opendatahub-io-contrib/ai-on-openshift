@@ -16,9 +16,9 @@
 
     .tx-container {
         padding-top: .0rem;
-        background-image: url(assets/home-robot.png);
-        background-image: url(assets/home-robot.png), linear-gradient(to bottom, #af1a4f,#05061c 99%);;
-        background-size: contain;
+        background-image: url(assets/landscape.png);
+        background-image: url(assets/landscape.png), linear-gradient(to bottom, #af1a4f,#05061c 99%);;
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
     }
@@ -55,7 +55,7 @@
 
     .tx-hero .md-button--primary {
         background-color: var(--md-primary-bg-color);
-        color: rgb(255, 0, 55);
+        color: rgb(255, 0, 0);
         border-color: var(--md-primary-bg-color)
     }
 
@@ -126,11 +126,11 @@
         }
 
         .tx-hero__content {
-            max-width: 16rem;
-            margin-top: 5.5rem;
-            margin-bottom: 0.5rem;
+            max-width: 22rem;
+            margin-top: 3.5rem;
+            margin-bottom: 3.5rem;
             margin-left: 1.0rem;
-            margin-right: 12.0rem;
+            margin-right: 4.0rem;
             align-items: center;
         }
     }
@@ -225,7 +225,11 @@
 <section class="tx-container">
     <div class="md-grid md-typeset">
       <div class="tx-hero">
+        <div class="tx-hero__image">
+            <img src="assets/robot.png" draggable="false">
+          </div>
         <div class="tx-hero__content">
+            <img src="assets/ai-on-openshift-title.svg" draggable="false">
           <p>Welcome to your one-stop shop for installation recipes, patterns, demos for various AI/ML tools and applications used in Data Science and Data Engineering projects running on OpenShift!</p>
           <a href="{{ page.next_page.url | url }}" title="{{ page.next_page.title | striptags }}" class="md-button md-button--primary">
             Get started
