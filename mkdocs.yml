@@ -11,10 +11,12 @@ edit_uri: ''  #disables edit button
 ## Plugins
 plugins:
   - social
+  - search
 
 ## Theme
 theme:
     favicon: img/favicon.png
+    language: en
     name: material
     custom_dir: docs/theme_override/
     palette:

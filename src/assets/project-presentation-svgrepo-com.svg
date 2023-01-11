@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<style>.cls-1{fill:none;stroke:#020202;stroke-miterlimit:10;stroke-width:1.92px;}</style>
+</defs>
+<g id="presentation_standing" data-name="presentation standing">
+<line class="cls-1" x1="0.5" y1="1.48" x2="23.5" y2="1.48"/>
+<line class="cls-1" x1="0.5" y1="16.81" x2="23.5" y2="16.81"/>
+<rect class="cls-1" x="2.42" y="1.48" width="19.17" height="15.33"/>
+<line class="cls-1" x1="12" y1="16.81" x2="12" y2="23.52"/>
+<polyline class="cls-1" points="8.17 23.52 8.17 22.56 12 19.69"/>
+<polyline class="cls-1" points="15.83 23.52 15.83 22.56 12 19.69"/>
+</g>
+</svg>
