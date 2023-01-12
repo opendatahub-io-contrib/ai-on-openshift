@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg799"
+   sodipodi:docname="demos.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview801"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="22.853691"
+     inkscape:cx="7.7449196"
+     inkscape:cy="10.19529"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg799" />
+  <defs
+     id="defs784">
+    <style
+       id="style782">.cls-1{fill:none;stroke:#020202;stroke-miterlimit:10;stroke-width:1.92px;}</style>
+  </defs>
+  <g
+     id="presentation_standing"
+     data-name="presentation standing"
+     transform="matrix(1.0434783,0,0,1.0434578,-0.52173913,-0.54306164)">
+    <line
+       class="cls-1"
+       x1="0.5"
+       y1="1.48"
+       x2="23.5"
+       y2="1.48"
+       id="line786" />
+    <line
+       class="cls-1"
+       x1="0.5"
+       y1="16.809999"
+       x2="23.5"
+       y2="16.809999"
+       id="line788" />
+    <rect
+       class="cls-1"
+       x="2.4200001"
+       y="1.48"
+       width="19.17"
+       height="15.33"
+       id="rect790" />
+    <line
+       class="cls-1"
+       x1="12"
+       y1="16.809999"
+       x2="12"
+       y2="23.52"
+       id="line792" />
+    <polyline
+       class="cls-1"
+       points="8.17 23.52 8.17 22.56 12 19.69"
+       id="polyline794" />
+    <polyline
+       class="cls-1"
+       points="15.83 23.52 15.83 22.56 12 19.69"
+       id="polyline796" />
+  </g>
+</svg>

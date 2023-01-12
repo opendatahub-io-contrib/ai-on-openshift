@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   id="Layer_1"
+   data-name="Layer 1"
+   version="1.1"
+   sodipodi:docname="patterns.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1069"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="22.853691"
+     inkscape:cx="12.995713"
+     inkscape:cy="13.126982"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs1040">
+    <style
+       id="style1038">.cls-1{fill:none;stroke:#020202;stroke-miterlimit:10;stroke-width:1.91px;}</style>
+  </defs>
+  <ellipse
+     class="cls-1"
+     cx="3.0013094"
+     cy="3.0013096"
+     id="circle1042"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="12"
+     cy="3.0013096"
+     id="circle1044"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="20.99869"
+     cy="3.0013096"
+     id="circle1046"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="3.0013094"
+     cy="12"
+     id="circle1048"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="12"
+     cy="12"
+     id="circle1050"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="20.99869"
+     cy="12"
+     id="circle1052"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="3.0013094"
+     cy="20.998692"
+     id="circle1054"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="12"
+     cy="20.998692"
+     id="circle1056"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <ellipse
+     class="cls-1"
+     cx="20.99869"
+     cy="20.998692"
+     id="circle1058"
+     rx="2.0008729"
+     ry="2.0008731" />
+  <line
+     class="cls-1"
+     x1="10.585771"
+     y1="10.585771"
+     x2="4.4155393"
+     y2="4.4155393"
+     id="line1060" />
+  <line
+     class="cls-1"
+     x1="12"
+     y1="18.997818"
+     x2="12"
+     y2="14.000874"
+     id="line1062" />
+  <line
+     class="cls-1"
+     x1="18.997818"
+     y1="3.0013096"
+     x2="14.000873"
+     y2="3.0013096"
+     id="line1064" />
+  <line
+     class="cls-1"
+     x1="9.9991264"
+     y1="3.0013096"
+     x2="5.002183"
+     y2="3.0013096"
+     id="line1066" />
+</svg>
