@@ -14,8 +14,7 @@ plugins:
 
 ## Theme
 theme:
-    icon:  # from .icons path. Add to theme override for custom logo.
-      logo: robot-head  # top left header logo
+    logo: assets/robot-head.svg
     favicon: assets/robot-head.ico
     language: en
     name: material
