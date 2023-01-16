@@ -1,6 +1,6 @@
 # Credit Card Fraud Detection Demo using MLFlow and Red Hat OpenShift Data Science
 
-[GitHub Source](https://github.com/red-hat-data-services/credit-fraud-detection-demo){:target="_blank"}
+The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/credit-fraud-detection-demo){:target="_blank"}**
 
 ## Pre-requisites
 
@@ -275,7 +275,7 @@ Follow the steps of the [next section](#6-deploy-the-model-application) to see h
 The model application is a visual interface for interacting with the model. You can use it to send data to the model and get a prediction of whether a transaction is fraudulent or not.
 You can find the model application code in the "application" folder in the GitHub repository you cloned in [step 3](#3-train-the-model).
 
-![Model Application Folder](img/Model_Application_Folder.PNG)
+![Model Application Folder](img/Model_Application_Folder.png)
 
 If you look inside it `model_application.py`, you will see two particularly important lines of code:
 
