@@ -1,8 +1,8 @@
 # AI on OpenShift
 
-Source code for the AI on OpenShift site, using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
+Source code for the AI on OpenShift site, using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/){:target="_blank"}.
 
-Rendered at [https://ai-on-openshift.io/](https://ai-on-openshift.io/)
+Rendered at [https://ai-on-openshift.io/](https://ai-on-openshift.io/){:target="_blank"}
 
 ## Goal
 

@@ -4,7 +4,7 @@
 
 Red Hat OpenShift brings together tested and trusted services to reduce the friction of developing, modernizing, deploying, running, and managing applications. Built on Kubernetes, it delivers a consistent experience across public cloud, on-premise, hybrid cloud, or edge architecture. Choose a self-managed or fully managed solution. No matter how you run it, OpenShift helps teams focus on the work that matters.
 
-*[Want to know more?](https://www.redhat.com/en/technologies/cloud-computing/openshift)*
+*[Want to know more?](https://www.redhat.com/en/technologies/cloud-computing/openshift){:target="_blank"}*
 
 ## Why AI on OpenShift?
 
@@ -18,7 +18,7 @@ Red Hat OpenShift includes key capabilities to enable machine learning operation
 
 By applying DevOps and GitOps principles, organizations automate and simplify the iterative process of integrating ML models into software development processes, production rollout, monitoring, retraining, and redeployment for continued prediction accuracy.
 
-[Learn more](https://www.redhat.com/en/blog/technically-speaking-mlops-edge)
+[Learn more](https://www.redhat.com/en/blog/technically-speaking-mlops-edge){:target="_blank"}
 
 ### What is a ML lifecycle?
 
@@ -37,4 +37,4 @@ On this site, you will find **recipes, patterns, demos** for various **AI/ML too
 
 Containers and Kubernetes are key to accelerating the ML lifecycle as these technologies provide data scientists the much needed agility, flexibility, portability, and scalability to train, test, and deploy ML models.
 
-Red Hat® OpenShift® is the industry's leading containers and Kubernetes hybrid cloud platform. It provides all these benefits, and through the integrated DevOps capabilities (e.g. [OpenShift Pipelines](https://www.redhat.com/en/topics/devops/what-is-ci-cd), [OpenShift GitOps](https://www.redhat.com/en/topics/devops/what-is-gitops), and [Red Hat Quay](https://www.redhat.com/en/technologies/cloud-computing/quay)) and integration with hardware accelerators, it enables better collaboration between data scientists and software developers, and accelerates the roll out of intelligent applications across hybrid cloud (data center, edge, and public clouds).
+Red Hat® OpenShift® is the industry's leading containers and Kubernetes hybrid cloud platform. It provides all these benefits, and through the integrated DevOps capabilities (e.g. [OpenShift Pipelines](https://www.redhat.com/en/topics/devops/what-is-ci-cd){:target="_blank"}, [OpenShift GitOps](https://www.redhat.com/en/topics/devops/what-is-gitops){:target="_blank"}, and [Red Hat Quay](https://www.redhat.com/en/technologies/cloud-computing/quay){:target="_blank"}) and integration with hardware accelerators, it enables better collaboration between data scientists and software developers, and accelerates the roll out of intelligent applications across hybrid cloud (data center, edge, and public clouds).

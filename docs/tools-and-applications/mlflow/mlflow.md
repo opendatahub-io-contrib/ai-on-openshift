@@ -1,8 +1,10 @@
 # MLFlow
 
+## What is it?
+
 MLflow is an open source platform to manage the ML lifecycle, including experimentation, reproducibility, deployment, and a central model registry. MLflow currently offers four components:
-![The 4 capabilities of MLFlow. Source: https://mlflow.org/](img/MLFlow_capabilities.PNG)
-Read more here: [https://mlflow.org/](https://mlflow.org/)
+![The 4 capabilities of MLFlow. Source: https://mlflow.org/](img/MLFlow_capabilities.png){:target="_blank"}
+Read more here: [https://mlflow.org/](https://mlflow.org/){:target="_blank"}
 
 ## Helm installation into OpenShift namespace
 
@@ -53,11 +55,11 @@ if __name__ == "__main__":
 ## Source Code
 
 MLFlow Server Source Code:
-[https://github.com/strangiato/mlflow-server](https://github.com/strangiato/mlflow-server)
+[https://github.com/strangiato/mlflow-server](https://github.com/strangiato/mlflow-server){:target="_blank"}
 
 MLFlow Server Helm Chart Source Code:
-[https://github.com/strangiato/helm-charts/tree/main/charts/mlflow-server](https://github.com/strangiato/helm-charts/tree/main/charts/mlflow-server)
+[https://github.com/strangiato/helm-charts/tree/main/charts/mlflow-server](https://github.com/strangiato/helm-charts/tree/main/charts/mlflow-server){:target="_blank"}
 
 ## Demos
 
-- Credit Card Fraud Detection pipeline using MLFlow together with RHODS: [Demo](/demos/credit-card-fraud/credit-card-fraud)
+- Credit Card Fraud Detection pipeline using MLFlow together with RHODS: [Demo](/demos/credit-card-fraud/credit-card-fraud){:target="_blank"}
