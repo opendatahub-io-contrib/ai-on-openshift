@@ -12,4 +12,4 @@ Red Hat OpenShift Data Science allows organizations to quickly build and deploy 
 
 The ML models built in Red Hat OpenShift Data Science are easily portable to other platforms, allowing teams to deploy them in production, on containers, whether on-premise, at the edge or in the public cloud.
 
-*[Want to know more?](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-data-science)*
+*[Want to know more?](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-data-science){:target="_blank"}*

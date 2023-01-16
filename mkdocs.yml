@@ -57,13 +57,13 @@ nav:
     - Open Data Hub: getting-started/opendatahub.md
     - OpenShift Data Science: getting-started/openshift-data-science.md
   - Tools and Applications:
-    - Apache Spark: tools-and-applications/apache-spark.md
-    - Apache NiFi: tools-and-applications/apache-nifi.md
+    - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
+    - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
     - MLflow: tools-and-applications/mlflow/mlflow.md
   - Patterns:
     - Bucket notifications: patterns/bucket-notifications.md
     - Kafka to object storage: patterns/kafka-to-object-storage.md
   - Demos:
-    - XRay Pipeline: demos/xray-pipeline.md
-    - Smart City: demos/smart-city.md
+    - XRay Pipeline: demos/xray-pipeline/xray-pipeline.md
+    - Smart City: demos/smart-city/smart-city.md
     - Credit Card Fraud: demos/credit-card-fraud/credit-card-fraud.md

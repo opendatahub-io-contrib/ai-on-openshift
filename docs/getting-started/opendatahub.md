@@ -9,4 +9,4 @@ Included in the Open Data Hub core deployment is several open source components,
 - Data Science Pipelines
 - Model Mesh Serving
 
-*[Want to know more?](https://opendatahub.io)*
+*[Want to know more?](https://opendatahub.io){:target="_blank"}*
