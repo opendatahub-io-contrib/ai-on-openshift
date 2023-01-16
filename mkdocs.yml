@@ -61,8 +61,8 @@ nav:
     - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
     - MLflow: tools-and-applications/mlflow/mlflow.md
   - Patterns:
-    - Bucket notifications: patterns/bucket-notifications.md
-    - Kafka to object storage: patterns/kafka-to-object-storage.md
+    - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
+    - Kafka to object storage: patterns/kafka-to-object-storage/kafka-to-object-storage.md
   - Demos:
     - XRay Pipeline: demos/xray-pipeline/xray-pipeline.md
     - Smart City: demos/smart-city/smart-city.md
