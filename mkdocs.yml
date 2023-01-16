@@ -42,6 +42,8 @@ theme:
 markdown_extensions:
   - admonition
   - pymdownx.details
+  - attr_list
+  - md_in_html
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -50,6 +52,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting Started:
+    - Why this site?: getting-started/why-this-site.md
     - OpenShift and AI: getting-started/openshift.md
     - Open Data Hub: getting-started/opendatahub.md
     - OpenShift Data Science: getting-started/openshift-data-science.md
