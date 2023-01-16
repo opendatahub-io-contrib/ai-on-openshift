@@ -5,7 +5,8 @@ The full source and instructions for this demo are available in **[this repo](ht
 ## Pre-requisites
 
 - Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster
-    - Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
+!!! note
+    Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
 - Have [MLFlow](/tools-and-applications/mlflow/mlflow/) running in a cluster
 
 ## Demo Description & Architecture
@@ -46,7 +47,8 @@ Start by finding your route to MLFlow. You will need it to send any data to MLFl
 - Go to the Resources tab
 - Press mlflow-server under Services
 - Look at the Hostname and mlflow-server Port.
-NOTE: This route and port only work internally in the cluster.
+!!! note
+    This route and port only work internally in the cluster.
 
 ![Find mlflow-server-service](img/mlflow-server-service.png)
 ![Find the hostname and port](img/hostname-and-port.png)
@@ -181,9 +183,10 @@ We will need the Full Path of the model in the next section when we are going to
 
 ### 5: Serve the model
 
-> **NOTE:** You can either serve the model using RHODS Model Serving or use the model straight from MLFlow.
-> We will here show how you serve it with RHODS Model Serving as that scales better for large applications and load.
-> At the bottom of this section we'll go through how it would look like to use MLFlow instead.
+!!! note
+    You can either serve the model using RHODS Model Serving or use the model straight from MLFlow.
+    We will here show how you serve it with RHODS Model Serving as that scales better for large applications and load.
+    At the bottom of this section we'll go through how it would look like to use MLFlow instead.
 
 To start, go to your RHODS Project and click "Add data connection".
 This data connection connects us to a storage we can load our models from.
@@ -196,7 +199,8 @@ Here we need to fill out a few details. These are all assuming that you set up M
 - **AWS_ACCESS_KEY_ID**: Run `oc get secrets mlflow-server -n mlflow -o json | jq -r '.data.AWS_ACCESS_KEY_ID|@base64d'` in your command prompt, in my case it's `nB0z01i0PwD9PMSISQ2W`
 - **AWS_SECRET_ACCESS_KEY**: Run `oc get secrets mlflow-server -n mlflow -o json | jq -r '.data.AWS_SECRET_ACCESS_KEY|@base64d'` in your command prompt, in my case it's `FLgEJmGQm5CdRQRnXc8jVFcc+QDpM1lcrGpiPBzI`.
 
-> **NOTE:** In my case the cluster and storage has already been shut down, don't share this in normal cases.
+!!! note
+    In my case the cluster and storage has already been shut down, don't share this in normal cases.
 
 - **AWS_S3_ENDPOINT**: Run `oc get configmap mlflow-server -n mlflow -o yaml | grep BUCKET_HOS` in your command prompt, in my case it's `http://s3.openshift-storage.svc`
 - **AWS_DEFAULT_REGION**: Where the cluster is being ran
