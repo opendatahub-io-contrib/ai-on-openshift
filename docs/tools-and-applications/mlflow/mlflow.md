@@ -1,5 +1,7 @@
 # MLFlow
 
+## What is it?
+
 MLflow is an open source platform to manage the ML lifecycle, including experimentation, reproducibility, deployment, and a central model registry. MLflow currently offers four components:
 ![The 4 capabilities of MLFlow. Source: https://mlflow.org/](img/MLFlow_capabilities.png){:target="_blank"}
 Read more here: [https://mlflow.org/](https://mlflow.org/){:target="_blank"}
