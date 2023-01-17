@@ -18,7 +18,7 @@ As part of an event-driven architecture, this pattern can be used to trigger an 
 
 The events sent by the RGW are simple messages containing all the metadata relevant to the event and the object. So it can be an excellent source of information for a monitoring system. For example if you want to keep a trace or send an alert whenever a specific type of file, or with a specific name, is uploaded or deleted from the storage.
 
-## Example implementations
+## Implementations examples
 
 This pattern is implemented in the [XRay pipeline demo](../../demos/xray-pipeline/xray-pipeline.md)
 
