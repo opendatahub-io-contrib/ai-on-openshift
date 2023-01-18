@@ -65,6 +65,7 @@ nav:
   - Patterns:
     - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
     - Kafka to object storage: patterns/kafka/kafka-to-object-storage/kafka-to-object-storage.md
+    - Kafka to serverless: patterns/kafka/kafka-to-serverless/kafka-to-serverless.md
   - Demos:
     - XRay Pipeline: demos/xray-pipeline/xray-pipeline.md
     - Smart City: demos/smart-city/smart-city.md
