@@ -1,6 +1,7 @@
 # Smart City, an Edge-to-Core Data Story
 
-The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo2-smart-city){:target="_blank"}**
+!!!info
+    The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo2-smart-city){:target="_blank"}**
 
 In this demo, we show how to implement this scenario:
 

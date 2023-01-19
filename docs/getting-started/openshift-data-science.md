@@ -6,6 +6,10 @@ Red Hat® OpenShift® Data Science is a managed cloud service that IT operations
 
 ![](img/rhods.png)
 
+[Documentation for Managed RHODS](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science){:target="_blank"}
+
+[Documentation for Self-Managed RHODS](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed){:target="_blank"}
+
 ## Accelerate your data science
 
 Red Hat OpenShift Data Science provides a fully managed cloud service environment on Red Hat OpenShift Service on AWS or Red Hat OpenShift Dedicated
