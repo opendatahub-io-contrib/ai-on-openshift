@@ -20,7 +20,7 @@ Read more here: [https://mlflow.org/](https://mlflow.org/){:target="_blank"}
 helm repo add strangiato https://strangiato.github.io/helm-charts/
 helm repo update
 <Log in to the correct OpenShift project through 'oc project project-name'>
-helm install mlflow-server strangiato/mlflow-server
+helm upgrade -i mlflow-server strangiato/mlflow-server
 ```
 
 ### Test MLFlow
