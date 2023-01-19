@@ -1,7 +1,7 @@
 ## Project information
 site_name: AI on OpenShift
 site_url: https://ai-on-openshift.io/
-site_description: AI on Openshift
+site_description: The one-stop shop for Data Science and Data Engineering on OpenShift!
 
 ## Repository
 repo_url: https://github.com/opendatahub-io-contrib/ai-on-openshift
