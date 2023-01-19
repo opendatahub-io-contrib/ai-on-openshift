@@ -2,7 +2,7 @@ name: Manually triggered workflow
 on:
   workflow_dispatch:
     inputs:
-      reeason:
+      reason:
         description: 'Why the manual triggering'
 
 jobs:
