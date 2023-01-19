@@ -1,6 +1,7 @@
 # XRay Analysis Automated Pipeline
 
-The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo1-xray-pipeline){:target="_blank"}**
+!!!info
+    The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/jumpstart-library/tree/main/demo1-xray-pipeline){:target="_blank"}**
 
 In this demo, we implement an automated data pipeline for chest Xray analysis:
 

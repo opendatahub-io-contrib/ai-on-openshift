@@ -1,13 +1,7 @@
 # Credit Card Fraud Detection Demo using MLFlow and Red Hat OpenShift Data Science
 
-The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/credit-fraud-detection-demo){:target="_blank"}**
-
-## Pre-requisites
-
-- Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster
-!!! note
-    Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
-- Have [MLFlow](/tools-and-applications/mlflow/mlflow/) running in a cluster
+!!!info
+    The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/credit-fraud-detection-demo){:target="_blank"}**
 
 ## Demo Description & Architecture
 
@@ -34,6 +28,13 @@ Description of each component:
 The model we will build is a Credit Card Fraud Detection model, which predicts if a credit card usage is fraudulent or not depending on a few parameters such as: distance from home and last transaction, purchase price compared to median, if it's from a retailer that already has been purchased from before, if the PIN number is used and if it's an online order or not.
 
 ## Deploying the demo
+
+### Pre-requisites
+
+- Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster
+!!! note
+    Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
+- Have [MLFlow](/tools-and-applications/mlflow/mlflow/) running in a cluster
 
 ### 1.1: MLFlow Route through the visual interface
 
