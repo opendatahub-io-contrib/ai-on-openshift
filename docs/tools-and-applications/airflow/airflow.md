@@ -3,7 +3,8 @@
 
 ## What is it?
 [**Airflow**](https://airflow.apache.org/) is a platform created by the community to programmatically author, schedule and monitor workflows.  
-It has become popular because of the wide variety of tasks it can use for building pipelines, thanks to how extendable it is. Since it's a Python framework it has also gathered a lot of interest in the Data Science field.
+It has become popular because of how easy it is to use and how extendable it is, covering a wide variety of tasks and allowing you to connect your workflows with virtually any technology.  
+Since it's a Python framework it has also gathered a lot of interest from the Data Science field.
 
 The key features of airflow are:
 
