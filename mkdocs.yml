@@ -39,6 +39,12 @@ theme:
         - navigation.indexes
         - navigation.top
         - navigation.tabs
+
+## CSS
+extra_css:
+  - stylesheets/extra.css
+
+## MD Extensions
 markdown_extensions:
   - abbr
   - admonition
@@ -51,6 +57,8 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+
+## Site layout
 nav:
   - Home: index.md
   - Getting Started:
@@ -58,6 +66,9 @@ nav:
     - OpenShift and AI: getting-started/openshift.md
     - Open Data Hub: getting-started/opendatahub.md
     - OpenShift Data Science: getting-started/openshift-data-science.md
+  - ODH/RHODS How-Tos:
+    - Dashboard configuration: odh-rhods/configuration.md
+    - Custom notebooks: odh-rhods/custom-notebooks.md
   - Tools and Applications:
     - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
     - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
