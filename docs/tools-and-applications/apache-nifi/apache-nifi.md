@@ -12,7 +12,7 @@
 
 The easiest way to install it is to follow the instructions available on the **[Nifi on OpenShift](https://github.com/guimou/nifi-on-openshift){:target="_blank"}** repo.
 
-![Nifi on OpenShift](img/nifi-openshift.png)
+![Nifi on OpenShift](img/nifi-openshift.png){.noborder}
 
 Contrary to other recipes or the images you can find on the Nifi project, the container images available on this repo are all based on UBI8 and follow OpenShift guidelines and constraints, like running with minimal privileges.
 

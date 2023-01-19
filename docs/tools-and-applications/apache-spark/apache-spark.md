@@ -2,7 +2,7 @@
 
 ## What is it?
 
-![Spark](img/spark-logo.png){ align=left }**[Apache Spark](https://spark.apache.org/){:target="_blank"}** is an open-source, **distributed computing system** used for big data processing. It can process **large amounts of data** quickly and efficiently, and handle both **batch and streaming** data. Spark uses the in-memory computing concept, which allows it to process data much faster than traditional disk-based systems.
+![Spark](img/spark-logo.png){ align=left .noborder}**[Apache Spark](https://spark.apache.org/){:target="_blank"}** is an open-source, **distributed computing system** used for big data processing. It can process **large amounts of data** quickly and efficiently, and handle both **batch and streaming** data. Spark uses the in-memory computing concept, which allows it to process data much faster than traditional disk-based systems.
 
 Spark supports a wide range of programming languages including **Java, Python, and Scala**. It provides a number of high-level **libraries and APIs**, such as Spark SQL, Spark Streaming, and MLlib, that make it easy for developers to perform **complex data processing tasks**. Spark SQL allows for querying structured data using SQL and the DataFrame API, Spark Streaming allows for processing real-time data streams, and MLlib is a machine learning library for building and deploying machine learning models. Spark also supports graph processing and graph computation through GraphX and GraphFrames.
 
