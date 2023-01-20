@@ -62,4 +62,4 @@ MLFlow Server Helm Chart Source Code:
 
 ## Demos
 
-- Credit Card Fraud Detection pipeline using MLFlow together with RHODS: [Demo](/demos/credit-card-fraud/credit-card-fraud){:target="_blank"}
+- Credit Card Fraud Detection pipeline using MLFlow together with RHODS: [Demo](../../demos/credit-card-fraud-detection-mlflow/credit-card-fraud.md){:target="_blank"}
