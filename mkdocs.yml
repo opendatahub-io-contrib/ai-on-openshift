@@ -16,31 +16,33 @@ plugins:
 
 ## Theme
 theme:
-    logo: assets/robot-head.svg
-    favicon: assets/robot-head.ico
-    language: en
-    name: material
-    custom_dir: docs/theme_override/
-    palette:
-      - scheme: default
-        toggle:
-          icon: material/weather-night
-          name: Switch to dark mode
-        primary: black
-        accent: red
-      - scheme: slate
-        toggle:      
-          icon: material/weather-sunny
-          name: Switch to light mode
-        primary: black
-        accent: red
-    features:
-        - navigation.instant
-        - navigation.tracking
-        - navigation.sections
-        - navigation.indexes
-        - navigation.top
-        - navigation.tabs
+  icon:
+    repo: fontawesome/brands/github
+  logo: assets/robot-head.svg
+  favicon: assets/robot-head.ico
+  language: en
+  name: material
+  custom_dir: docs/theme_override/
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+      primary: black
+      accent: red
+    - scheme: slate
+      toggle:      
+        icon: material/weather-sunny
+        name: Switch to light mode
+      primary: black
+      accent: red
+  features:
+      - navigation.instant
+      - navigation.tracking
+      - navigation.sections
+      - navigation.indexes
+      - navigation.top
+      - navigation.tabs
 
 ## CSS
 extra_css:
@@ -79,6 +81,7 @@ nav:
     - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
     - Kafka to object storage: patterns/kafka/kafka-to-object-storage/kafka-to-object-storage.md
     - Kafka to serverless: patterns/kafka/kafka-to-serverless/kafka-to-serverless.md
+    - Starburst/Trino proxy: patterns/starproxy/starproxy.md
   - Demos:
     - Credit Card Fraud Detection with MLFlow: demos/credit-card-fraud-detection-mlflow/credit-card-fraud.md
     - Financial Fraud Detection: demos/financial-fraud-detection/financial-fraud-detection.md
