@@ -4,7 +4,7 @@ Custom notebook images are useful if you want to add libraries that you often us
 
 ## Image source and Pre-built images
 
-In [this repository](https://github.com/opendatahub-io-contrib/workbench-images){:target="_blank"}, you will find the source code as well as pre-built images for a lot of use cases. A few of the available images are:
+In the **[opendatahub-io-contrib/workbench-images](https://github.com/opendatahub-io-contrib/workbench-images){:target="_blank"}** repository, you will find the source code as well as pre-built images for a lot of use cases. A few of the available images are:
 
 - Base and CUDA-enabled images for different "lines" of OS: UBI8, UBI9, and Centos Stream 9.
 - Jupyter images enhanced with:
