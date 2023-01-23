@@ -44,6 +44,18 @@ theme:
       - navigation.top
       - navigation.tabs
 
+## Social
+extra:
+  social:
+    - icon: fontawesome/brands/discord 
+      link: https://discord.gg/q2Y6THPQKb
+    - icon: fontawesome/brands/reddit 
+      link: https://www.reddit.com/r/AI_on_OpenShift/
+    - icon: fontawesome/brands/slack 
+      link: https://odh-io.slack.com/
+      #link: https://join.slack.com/t/odh-io/shared_invite/zt-1fl0yr08h-Q8Kr1eLdeJ1FAL_MvaukCA
+
+
 ## CSS
 extra_css:
   - stylesheets/extra.css
