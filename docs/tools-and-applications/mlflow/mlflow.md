@@ -54,6 +54,9 @@ helm upgrade -i mlflow-server strangiato/mlflow-server \
 
 After enabling the odhApplication component, wait 1-2 minutes and the tile should appear in the Explorer view of the dashboard.
 
+!!! note
+    This feature requires ODH v1.4.1 or newer
+
 ### Test MLFlow
 
 - Go to the OpenShift Console and switch to Developer view.
