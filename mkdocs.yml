@@ -114,3 +114,4 @@ nav:
     - Smart City: demos/smart-city/smart-city.md
     - Water Pump Failure Prediction: demos/water-pump-failure-prediction/water-pump-failure-prediction.md
     - XRay Pipeline: demos/xray-pipeline/xray-pipeline.md
+    - Telecom Customer Churn with Airflow: demos/telecom-customer-churn-airflow/telecom-customer-churn-airflow.md
