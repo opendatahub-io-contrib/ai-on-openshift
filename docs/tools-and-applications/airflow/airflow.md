@@ -2,9 +2,14 @@
 # Airflow
 
 ## What is it?
+
 [**Airflow**](https://airflow.apache.org/) is a platform created by the community to programmatically author, schedule and monitor workflows.  
 It has become popular because of how easy it is to use and how extendable it is, covering a wide variety of tasks and allowing you to connect your workflows with virtually any technology.  
 Since it's a Python framework it has also gathered a lot of interest from the Data Science field.
+
+One important key concept used in Airflow is DAGs (Directed Acyclical Graphs).  
+A DAG is a graph without any cycles. In other words, a node in your graph may never point back to a node higher up in your workflow.  
+DAGs are used to model your workflows/pipelines which essentially means that you are building graphs that then get executed.
 
 The key features of airflow are:
 
@@ -16,7 +21,8 @@ The key features of airflow are:
 ![graph](img/graph.png)
 
 ## Installing Airflow on OpenShift
+
 Airflow can be run as a pip package, through docker, or a Helm chart.  
 The official Helm chart can be found here: [https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart](https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart) 
 
-A modified version of the Helm chart which can be installed on OpenShift 4.11: [https://github.com/eformat/openshift-airflow](https://github.com/eformat/openshift-airflow)
+Here is a modified version of the Helm chart which can be installed on OpenShift 4.11: [https://github.com/eformat/openshift-airflow](https://github.com/eformat/openshift-airflow)
