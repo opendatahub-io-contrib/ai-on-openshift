@@ -11,6 +11,8 @@ In the **[opendatahub-io-contrib/workbench-images](https://github.com/opendatahu
     - specific libraries like OptaPy or Monai,
     - with integrated applications like Spark,
     - providing other IDEs like VSCode or RStudio
+- VSCode
+- RStudio
 
 All those images are constantly and automatically updated and rebuilt for the latest patch and fixes, and new releases are available regularly to provide new versions of the libraries or the applications.
 
