@@ -20,8 +20,42 @@ Read more here: [https://mlflow.org/](https://mlflow.org/){:target="_blank"}
 helm repo add strangiato https://strangiato.github.io/helm-charts/
 helm repo update
 <Log in to the correct OpenShift project through 'oc project project-name'>
-helm install mlflow-server strangiato/mlflow-server
+helm upgrade -i mlflow-server strangiato/mlflow-server
 ```
+
+#### Additional Options
+
+The MLFlow Server helm chart provides a number of customizable options when deploying MLFlow.  These options can be configured using the `--set` flag with `helm install` or `helm upgrade` to set options directly on the command line or through a `values.yaml` file using the `--values` flag.
+
+For a full list of configurable options, see the helm chart documentation:
+
+[https://github.com/strangiato/helm-charts/tree/main/charts/mlflow-server#values](https://github.com/strangiato/helm-charts/tree/main/charts/mlflow-server#values){:target="_blank"}
+
+##### OpenDataHub Dashboard Application Tile
+
+As discussed in the [Dashboard Configuration](../odh-rhods/configuration.md#adding-a-custom-application), ODH/RHODS allows administrators to add a custom application tile for additional components on the cluster.
+
+![Enabled tile](img/enabled-tile.png)
+
+The MLFlow Server helm chart supports creation of the Dashboard Application tile as a configurable value.  If MLFlow Server is installed in the same namespace as ODH/RHODS you can install the dashboard tile run the following command:
+
+```bash
+helm upgrade -i mlflow-server strangiato/mlflow-server \
+    --set odhApplication.enabled=true
+```
+
+The MLFlow Server helm chart also supports installing the odhApplication object in a different namespace, if MLFlow Server is not installed in the same namespace as ODH/RHODS:
+
+```bash
+helm upgrade -i mlflow-server strangiato/mlflow-server \
+    --set odhApplication.enabled=true \
+    --set odhApplication.namespaceOverride=redhat-ods-applications
+```
+
+After enabling the odhApplication component, wait 1-2 minutes and the tile should appear in the Explorer view of the dashboard.
+
+!!! note
+    This feature requires ODH v1.4.1 or newer
 
 ### Test MLFlow
 
