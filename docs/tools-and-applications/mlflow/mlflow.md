@@ -33,7 +33,7 @@ For a full list of configurable options, see the helm chart documentation:
 
 ##### OpenDataHub Dashboard Application Tile
 
-As discussed in the [Dashboard Configuration](../odh-rhods/configuration.md#adding-a-custom-application), ODH/RHODS allows administrators to add a custom application tile for additional components on the cluster.
+As discussed in the [Dashboard Configuration](../../odh-rhods/configuration.md#adding-a-custom-application), ODH/RHODS allows administrators to add a custom application tile for additional components on the cluster.
 
 ![Enabled tile](img/enabled-tile.png)
 
