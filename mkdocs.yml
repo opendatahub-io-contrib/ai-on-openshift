@@ -77,6 +77,7 @@ markdown_extensions:
 ## Site layout
 nav:
   - Home: index.md
+  - What's new?: whats-new/whats-new.md
   - Getting Started:
     - Why this site?: getting-started/why-this-site.md
     - OpenShift and AI: getting-started/openshift.md
