@@ -46,6 +46,16 @@ theme:
 
 ## Social
 extra:
+  analytics:
+    provider: google
+    property: G-EXFP0W7LTY
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
   social:
     - icon: fontawesome/brands/discord 
       link: https://discord.gg/q2Y6THPQKb
@@ -77,6 +87,7 @@ markdown_extensions:
 ## Site layout
 nav:
   - Home: index.md
+  - What's new?: whats-new/whats-new.md
   - Getting Started:
     - Why this site?: getting-started/why-this-site.md
     - OpenShift and AI: getting-started/openshift.md
