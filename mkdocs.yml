@@ -97,11 +97,11 @@ nav:
     - Dashboard configuration: odh-rhods/configuration.md
     - Custom notebooks: odh-rhods/custom-notebooks.md
   - Tools and Applications:
+    - Apache Airflow: tools-and-applications/airflow/airflow.md
     - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
     - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
     - MLflow: tools-and-applications/mlflow/mlflow.md
     - Rclone: tools-and-applications/rclone/rclone.md
-    - Airflow: tools-and-applications/airflow/airflow.md
   - Patterns:
     - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
     - Kafka to object storage: patterns/kafka/kafka-to-object-storage/kafka-to-object-storage.md
