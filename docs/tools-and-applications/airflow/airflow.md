@@ -6,7 +6,7 @@
 It has become popular because of how easy it is to use and how extendable it is, covering a wide variety of tasks and allowing you to connect your workflows with virtually any technology.  
 Since it's a Python framework it has also gathered a lot of interest from the Data Science field.
 
-One important key concept used in Airflow is DAGs (Directed Acyclical Graphs).  
+One important key concept used in Airflow is **DAGs** (Directed Acyclical Graphs).  
 A DAG is a graph without any cycles. In other words, a node in your graph may never point back to a node higher up in your workflow.  
 DAGs are used to model your workflows/pipelines which essentially means that you are building graphs that then get executed.
 
