@@ -97,6 +97,7 @@ nav:
     - Dashboard configuration: odh-rhods/configuration.md
     - Custom notebooks: odh-rhods/custom-notebooks.md
   - Tools and Applications:
+    - Apache Airflow: tools-and-applications/airflow/airflow.md
     - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
     - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
     - MLflow: tools-and-applications/mlflow/mlflow.md
