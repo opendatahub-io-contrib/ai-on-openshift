@@ -113,5 +113,6 @@ nav:
     - Object Detection in Retail: demos/retail-object-detection/retail-object-detection.md
     - Robotics at the Edge: demos/robotics-edge/robotics-edge.md
     - Smart City: demos/smart-city/smart-city.md
+    - Telecom Customer Churn with Airflow: demos/telecom-customer-churn-airflow/telecom-customer-churn-airflow.md
     - Water Pump Failure Prediction: demos/water-pump-failure-prediction/water-pump-failure-prediction.md
     - XRay Pipeline: demos/xray-pipeline/xray-pipeline.md
