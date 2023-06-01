@@ -1,2 +1,5 @@
 site/
 .cache
+
+# VSCode personal setting
+.vscode/
