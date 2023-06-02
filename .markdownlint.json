@@ -9,7 +9,7 @@
 
   "MD007": { "indent": 4 },
 
-  "MD046": { "style": "fenced" },
+  "MD046": false,
 
   "MD024": { "siblings_only": true },
 

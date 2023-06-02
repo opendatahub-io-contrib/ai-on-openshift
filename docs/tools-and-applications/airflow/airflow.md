@@ -3,7 +3,7 @@
 
 ## What is it?
 
-![logo](img/logo.png){ align=left .noborder width=35%}[**Apache Airflow**](https://airflow.apache.org/) is a platform created by the community to programmatically author, schedule and monitor workflows.  
+![logo](img/logo.png){ align=left .noborder width=35%}[**Apache Airflow**](https://airflow.apache.org/){:target="_blank"} is a platform created by the community to programmatically author, schedule and monitor workflows.  
 It has become popular because of how easy it is to use and how extendable it is, covering a wide variety of tasks and allowing you to connect your workflows with virtually any technology.  
 Since it's a Python framework it has also gathered a lot of interest from the Data Science field.
 
