@@ -37,6 +37,7 @@ theme:
       primary: black
       accent: red
   features:
+      - content.code.copy
       - navigation.instant
       - navigation.tracking
       - navigation.sections
@@ -78,6 +79,8 @@ markdown_extensions:
   - pymdownx.snippets
   - attr_list
   - md_in_html
+  - codehilite:
+      use_pygments: False
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -101,6 +104,7 @@ nav:
     - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
     - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
     - MLflow: tools-and-applications/mlflow/mlflow.md
+    - NVIDIA Riva: tools-and-applications/riva/riva.md
     - Rclone: tools-and-applications/rclone/rclone.md
   - Patterns:
     - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
