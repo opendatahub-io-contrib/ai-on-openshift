@@ -31,7 +31,7 @@ theme:
       primary: black
       accent: red
     - scheme: slate
-      toggle:      
+      toggle:
         icon: material/weather-sunny
         name: Switch to light mode
       primary: black
@@ -52,17 +52,17 @@ extra:
     property: G-EXFP0W7LTY
   consent:
     title: Cookie consent
-    description: >- 
+    description: >-
       We use cookies to recognize your repeated visits and preferences, as well
       as to measure the effectiveness of our documentation and whether users
       find what they're searching for. With your consent, you're helping us to
       make our documentation better.
   social:
-    - icon: fontawesome/brands/discord 
+    - icon: fontawesome/brands/discord
       link: https://discord.gg/q2Y6THPQKb
-    - icon: fontawesome/brands/reddit 
+    - icon: fontawesome/brands/reddit
       link: https://www.reddit.com/r/AI_on_OpenShift/
-    - icon: fontawesome/brands/slack 
+    - icon: fontawesome/brands/slack
       link: https://odh-io.slack.com/
       #link: https://join.slack.com/t/odh-io/shared_invite/zt-1fl0yr08h-Q8Kr1eLdeJ1FAL_MvaukCA
 
@@ -106,6 +106,7 @@ nav:
     - MLflow: tools-and-applications/mlflow/mlflow.md
     - NVIDIA Riva: tools-and-applications/riva/riva.md
     - Rclone: tools-and-applications/rclone/rclone.md
+    - Minio: tools-and-applications/minio/minio.md
   - Patterns:
     - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
     - Kafka to object storage: patterns/kafka/kafka-to-object-storage/kafka-to-object-storage.md
