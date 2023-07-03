@@ -1,14 +1,16 @@
-# Deploying and using a Custom Serving Runtime in RHODS
+# Deploying and using a Custom Serving Runtime in ODH/RHODS
+
+Although these instructions were tested mostly using RHODS (Red Hat OpenShift Data Science), they apply to ODH (Open Data Hub) as well.
 
 ## Before you start
 
-This document will guide you through the broad steps necessary to deploy a custom Serving Runtime to serve a model using the triton Runtime.
+This document will guide you through the broad steps necessary to deploy a custom Serving Runtime in order to serve a model using the Triton Runtime (NVIDIA [Triton Inference Server](https://developer.nvidia.com/triton-inference-server)).
 
-While RHODS supports your ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain the runtime itself.
+While RHODS supports your ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
 
 This document expects a bit of familiarity with RHODS.
-Click on **D
-The sources used to create this are mostly:
+
+The sources used to create this document are mostly:
 
 * [https://github.com/kserve/modelmesh-serving/tree/main/config/runtimes](https://github.com/kserve/modelmesh-serving/tree/main/config/runtimes)
 * [https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver)
