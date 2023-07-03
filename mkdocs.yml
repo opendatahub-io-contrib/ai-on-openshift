@@ -31,7 +31,7 @@ theme:
       primary: black
       accent: red
     - scheme: slate
-      toggle:      
+      toggle:
         icon: material/weather-sunny
         name: Switch to light mode
       primary: black
@@ -52,17 +52,17 @@ extra:
     property: G-EXFP0W7LTY
   consent:
     title: Cookie consent
-    description: >- 
+    description: >-
       We use cookies to recognize your repeated visits and preferences, as well
       as to measure the effectiveness of our documentation and whether users
       find what they're searching for. With your consent, you're helping us to
       make our documentation better.
   social:
-    - icon: fontawesome/brands/discord 
+    - icon: fontawesome/brands/discord
       link: https://discord.gg/q2Y6THPQKb
-    - icon: fontawesome/brands/reddit 
+    - icon: fontawesome/brands/reddit
       link: https://www.reddit.com/r/AI_on_OpenShift/
-    - icon: fontawesome/brands/slack 
+    - icon: fontawesome/brands/slack
       link: https://odh-io.slack.com/
       #link: https://join.slack.com/t/odh-io/shared_invite/zt-1fl0yr08h-Q8Kr1eLdeJ1FAL_MvaukCA
 
@@ -100,6 +100,7 @@ nav:
     - Dashboard configuration: odh-rhods/configuration.md
     - Custom notebooks: odh-rhods/custom-notebooks.md
     - NVIDIA GPUs: odh-rhods/nvidia-gpus.md
+    - Custom Serving Runtime (Triton): odh-rhods/custom-runtime-triton.md
   - Tools and Applications:
     - Apache Airflow: tools-and-applications/airflow/airflow.md
     - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
