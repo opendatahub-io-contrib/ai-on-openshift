@@ -36,9 +36,12 @@ If you already have your own Data Science Project, or OpenShift project, you can
 
     ![alt_text](img/openshift.console.png)
 
-1. Go to **Workloads** then **Pods**, and confirm the selected project is the right one
+1. Make sure you use the **Administrator** view, not the developer view.
+1. Go to **Workloads** then **Pods**, and confirm the selected **project** is the right one
 
     ![alt_text](img/workloads.pods.png)
+
+1. You now have a project in which to deploy Minio
 
 ### Deploy Minio in your project
 
@@ -228,18 +231,21 @@ If you already have your own Data Science Project, or OpenShift project, you can
 
 1. The `-api` route is for programmatic access to Minio
 1. The `-ui` route is for browser-based access to Minio
+1. Your Minio Object Store is now deployed, but we still need to create at least one bucket in it, to make it useful.
 
 ## Creating a bucket in Minio
 
 ### Log in to Minio
 
-1. Click on the minio `-ui` route URL Location
-1. Log in
-    1. if you kept the default values, then:
-    1. user: `minio`
-    1. pass: `minio123`
+1. Locate the **minio-ui** Route, and open its location URL in a web browser:
+1. When prompted, log in
+    * if you kept the default values, then:
+    * user: `minio`
+    * pass: `minio123`
 
     ![alt_text](img/minio.login.png){style="width:400px"}
+
+1. You should now be logged into your Minio instance.
 
 ### Create a bucket
 
@@ -247,15 +253,15 @@ If you already have your own Data Science Project, or OpenShift project, you can
 
     ![alt_text](img/create.bucket.01.png)
 
-1. Call it `mybucket` and click **Create Bucket**:
+1. Choose a name for your bucket (for example `mybucket`) and click **Create Bucket**:
 
     ![alt_text](img/create.bucket.02.png)
 
-1. Then, to create a folder called `models` in the bucket:
+1. Repeat those steps to create as many buckets as you will need.
 
 ## Create a matching Data Connection for Minio
 
-1. In RHODS, inside of your Data Science Project, Click on **Add data connection**:
+1. Back in RHODS, inside of your Data Science Project, Click on **Add data connection**:
 
     ![alt_text](img/add.connection.png)
 
@@ -263,7 +269,17 @@ If you already have your own Data Science Project, or OpenShift project, you can
 
     ![alt_text](img/connection.details.png)
 
-# Uninstall instructions:
+1. You now have a Data Connection that maps to your **mybucket** bucket in your Minio Instance.
+1. This data connection can be used, among other things
+    * In your Workbenches
+    * For your Model Serving
+    * For your Pipeline Server Configuration
+
+## Notes and FAQ
+
+* As long as you are using the Route URLs, a Minio running in one namespace can be used by any other application, even running in another namespace, or even in another cluster altogether.
+
+## Uninstall instructions:
 
 This will completely remove Minio and all its content. Make sure you have a backup of the things your need before doing so!
 
