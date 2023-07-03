@@ -123,3 +123,4 @@ nav:
     - Telecom Customer Churn with Airflow: demos/telecom-customer-churn-airflow/telecom-customer-churn-airflow.md
     - Water Pump Failure Prediction: demos/water-pump-failure-prediction/water-pump-failure-prediction.md
     - XRay Pipeline: demos/xray-pipeline/xray-pipeline.md
+    - YOLOv5 Training and Serving: demos/yolov5-training-serving/yolov5-training-serving.md
