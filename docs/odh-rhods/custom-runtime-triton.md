@@ -185,7 +185,7 @@ The sources used to create this document are mostly:
       time curl -X POST -k "${myhost}" -d '{"inputs": [{ "name": "dense_input", "shape": [1, 7], "datatype": "FP32", "data": [57.87785658389723,0.3111400080477545,1.9459399775518593,1.0,1.0,0.0,0.0]}]}' | jq
   }
 
-  val-model "https://fraud-model-a-great-project.apps.rhods-internal.61tk.p1.openshiftapps.com/v2/models/fraud-model/infer"
+  val-model "https://fraud-model-fraud.apps.mycluster.openshiftapps.com/v2/models/fraud-model/infer"
   ```
 1. Change the host to match the address for your model.
 1. You should see an output similar to:
@@ -223,7 +223,7 @@ Also, update the YAML definition as needed to point to the image address that ma
 
 Each of the activities performed via the user interface will create a Kubernetes Object inside your OpenShift Cluster.
 
-* The addition of a new runtime adds more content into the ConfigMap called `servingruntimes-config`, stored in the `redhat-ods-applications` namespace.
+* The addition of a new runtime creates a `template` in the `redhat-ods-applications` namespace.
 * Each model server is defined as a `ServingRuntime`
 * Each model is defined as an `InferenceService`
 * Each Data Connection is stored as a `Secret`
