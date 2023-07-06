@@ -14,7 +14,7 @@ The sources used to create this document are mostly:
 
 * [https://github.com/kserve/modelmesh-serving/tree/main/config/runtimes](https://github.com/kserve/modelmesh-serving/tree/main/config/runtimes)
 * [https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver)
-
+* Official [Red Hat OpenShift Data Science Documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/working_on_data_science_projects/working-on-data-science-projects_nb-server#configuring_model_servers)
 
 ## Adding the custom triton runtime
 
