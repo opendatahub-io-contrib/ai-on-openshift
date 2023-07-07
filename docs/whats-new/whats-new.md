@@ -1,8 +1,12 @@
 # What's new?
 
+**2023-07-05**: Add documentation on Time Slicing and Autoscaling for NVIDIA GPUs [ODH/RHODS How-Tos->NVIDIA GPUs](../odh-rhods/nvidia-gpus.md)
+
 **2023-07-05**: New example of how to configure a [Custom Serving Runtime with Triton](../odh-rhods/custom-runtime-triton.md).
 
 **2023-07-03**: New [Minio](../tools-and-applications/minio/minio.md) tutorial on how to quickly deploy a simple Object Storage inside your OpenShift Project, for quick prototyping.
+
+**2023-06-30**: New NVIDIA GPU installation documentation with Node tainting in [ODH/RHODS How-Tos->NVIDIA GPUs](../odh-rhods/nvidia-gpus.md)
 
 **2023-06-02**: **NVIDIA Riva** documentation in [Tools and Applications->NVIDIA Riva](../tools-and-applications/riva/riva.md)
 
