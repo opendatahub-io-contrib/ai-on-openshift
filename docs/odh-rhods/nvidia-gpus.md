@@ -62,7 +62,7 @@ In this case you must:
         spec:
           ...
           taints:
-            - key: nvidia.com/gpu
+            - key: restrictedaccess
               value: "yes"
               effect: NoSchedule
     ```
@@ -70,7 +70,7 @@ In this case you must:
 - Apply the relevant toleration to the NVIDIA Operator.
     - In the `nvidia-gpu-operator` namespace, get to the Installed Operator menu, open the NVIDIA GPU Operator settings, get to the ClusterPolicy tab, and edit the ClusterPolicy.
 
-         ![Cluster Policy](img/cluster-policy.png)
+        ![Cluster Policy](img/cluster-policy.png)
 
     - Edit the YAML, and add the toleration in the daemonset section:
 
@@ -98,7 +98,7 @@ In this case you must:
             ...
             tolerations:
               - effect: NoSchedule
-                key: nvidia.com/gpu
+                key: restrictedaccess
                 operator: Exists
           sandboxWorkloads: ...
           gds: ...
@@ -108,12 +108,12 @@ In this case you must:
         ...
         ```
 
-That's it, the operator is now able to deploy all the NVIDIA tooling on the nodes, even if they have the `nvidia.com/gpu` taint. Repeat the procedure for any other taint you want to apply to your nodes.
+That's it, the operator is now able to deploy all the NVIDIA tooling on the nodes, even if they have the `restrictedaccess` taint. Repeat the procedure for any other taint you want to apply to your nodes.
 
 !!! note
-    You can apply many different taints at the same time. In this example we only made sure that Pods really needing GPUs are scheduled on a GPU Node. Notebooks, Workbenches or other components from ODH/RHODS that request GPUs will already have this toleration in place. For other Pods you schedule yourself, or using Pipelines, you should make sure the toleration is also applied.
+    The first taint that you want to apply on GPU nodes is `nvidia.com/gpu`. This is the standard taint for which the NVIDIA Operator has a built-in toleration, so no need to add it. Likewise, Notebooks, Workbenches or other components from ODH/RHODS that request GPUs will already have this toleration in place. For other Pods you schedule yourself, or using Pipelines, you should make sure the toleration is also applied. Doing this will ensure that only Pods really requiring GPUs are scheduled on those nodes.
 
-    But you could also add another taint to restrict access to certain type of GPUs. Of course, you would have to apply the matching toleration on the NVIDIA GPU Operator, as well as on the Pods that need to run there.
+    You can of course apply many different taints at the same time. You would simply have to apply the matching toleration on the NVIDIA GPU Operator, as well as on the Pods that need to run there.
 
 ### Time Slicing (GPU sharing)
 
