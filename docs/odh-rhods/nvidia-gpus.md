@@ -48,65 +48,67 @@ In this case you must:
 
 - Apply the taints you need to your Nodes or MachineSets, for example:
 
-```yaml
-apiVersion: machine.openshift.io/v1beta1
-kind: MachineSet
-metadata:
-  ...
-spec:
-  replicas: 1
-  selector:
+  ```yaml
+  apiVersion: machine.openshift.io/v1beta1
+  kind: MachineSet
+  metadata:
     ...
-  template:
-    ...
-    spec:
+  spec:
+    replicas: 1
+    selector:
       ...
-      taints:
-        - key: nvidia.com/gpu
-          value: "yes"
-          effect: NoSchedule
-```
+    template:
+      ...
+      spec:
+        ...
+        taints:
+          - key: nvidia.com/gpu
+            value: "yes"
+            effect: NoSchedule
+  ```
 
 - Apply the relevant toleration to the NVIDIA Operator.
     - In the `nvidia-gpu-operator` namespace, get to the Installed Operator menu, open the NVIDIA GPU Operator settings, get to the ClusterPolicy tab, and edit the ClusterPolicy.
-![Cluster Policy](img/cluster-policy.png)
+
+       ![Cluster Policy](img/cluster-policy.png)
+
     - Edit the YAML, and add the toleration in the daemonset section:
 
-```yaml
-apiVersion: nvidia.com/v1
-kind: ClusterPolicy
-metadata:
-  ...
-  name: gpu-cluster-policy
-spec:
-  vgpuDeviceManager: ...
-  migManager: ...
-  operator: ...
-  dcgm: ...
-  gfd: ...
-  dcgmExporter: ...
-  cdi: ...
-  driver: ...
-  devicePlugin: ...
-  mig: ...
-  sandboxDevicePlugin: ...
-  validator: ...
-  nodeStatusExporter: ...
-  daemonsets:
-    ...
-    tolerations:
-      - effect: NoSchedule
-        key: nvidia.com/gpu
-        operator: Exists
-  sandboxWorkloads: ...
-  gds: ...
-  vgpuManager: ...
-  vfioManager: ...
-  toolkit: ...
-...
-```
+      ```yaml
+      apiVersion: nvidia.com/v1
+      kind: ClusterPolicy
+      metadata:
+        ...
+        name: gpu-cluster-policy
+      spec:
+        vgpuDeviceManager: ...
+        migManager: ...
+        operator: ...
+        dcgm: ...
+        gfd: ...
+        dcgmExporter: ...
+        cdi: ...
+        driver: ...
+        devicePlugin: ...
+        mig: ...
+        sandboxDevicePlugin: ...
+        validator: ...
+        nodeStatusExporter: ...
+        daemonsets:
+          ...
+          tolerations:
+            - effect: NoSchedule
+              key: nvidia.com/gpu
+              operator: Exists
+        sandboxWorkloads: ...
+        gds: ...
+        vgpuManager: ...
+        vfioManager: ...
+        toolkit: ...
+      ...
+      ```
 
-That's it, the operator is now able to deploy all the NVIDIA tooling on the nodes, regardless of their taints. Repeat the procedure for any taint you want to apply to your nodes.
+That's it, the operator is now able to deploy all the NVIDIA tooling on the nodes, even if they have the `nvidia.com/gpu` taint. Repeat the procedure for any other taint you want to apply to your nodes.
 
 !!! note
     You can apply many different taints at the same time. In this example we only made sure that Pods really needing GPUs are scheduled on a GPU Node. Notebooks, Workbenches or other components from ODH/RHODS that request GPUs will already have this toleration in place. For other Pods you schedule yourself, or using Pipelines, you should make sure the toleration is also applied.
@@ -129,57 +131,57 @@ This is a simple example on how to quickly setup Time Slicing on your OpenShift 
 
 - Create the ConfigMap that will define how we want to slice our GPU:
 
-```yaml
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: time-slicing-config
-  namespace: nvidia-gpu-operator
-data:
-  tesla-t4: |-
-    version: v1
-    sharing:
-      timeSlicing:
-        resources:
-        - name: nvidia.com/gpu
-          replicas: 4
-```
+  ```yaml
+  kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: time-slicing-config
+    namespace: nvidia-gpu-operator
+  data:
+    tesla-t4: |-
+      version: v1
+      sharing:
+        timeSlicing:
+          resources:
+          - name: nvidia.com/gpu
+            replicas: 4
+  ```
 
 !!! note
     - The ConfigMap has to be called `time-slicing-config` and must be created in the `nvidia-gpu-operator` namespace.
     - You can add many different resources with different configurations. You simply have to provide the corresponding Node label that has been applied by the operator, for example `name: nvidia.com/mig-1g.5gb / replicas: 2` if you have a MIG configuration applied to a Node with a A100.
     - You can modify the value of `replicas` to present less/more GPUs. Be warned though: all the Pods on this node will share the GPU memory, with no reservation. The more slices you create, the more risks of OOM errors (out of memory) you get if your Pods are hungry (or even only one!).
 
-- Modify the `gpu-cluster-policy` (accessible from the NVIDIA Operator view in the `nvidia-gpu-operator` namespace) to point to this configuration, and eventually add the default configuration (in case you nodes are not labelled correctly, see below)
-  
-```yaml
-apiVersion: nvidia.com/v1
-kind: ClusterPolicy
-metadata:
-  ...
-  name: gpu-cluster-policy
-spec:
-  ...
-  devicePlugin:
-    config:
-      default: tesla-t4
-      name: time-slicing-config
-  ...
-```
+- Modify the ClusterPolicy called `gpu-cluster-policy` (accessible from the NVIDIA Operator view in the `nvidia-gpu-operator` namespace) to point to this configuration, and eventually add the default configuration (in case you nodes are not labelled correctly, see below)
+
+  ```yaml
+  apiVersion: nvidia.com/v1
+  kind: ClusterPolicy
+  metadata:
+    ...
+    name: gpu-cluster-policy
+  spec:
+    ...
+    devicePlugin:
+      config:
+        default: tesla-t4
+        name: time-slicing-config
+    ...
+  ```
 
 - Apply label to your MachineSet for the specific slicing configuration you want to use on it:
 
-```yaml
-apiVersion: machine.openshift.io/v1beta1
-kind: MachineSet
-metadata:
-spec:
-  template:
-    spec:
-      metadata:
-        labels:
-          nvidia.com/device-plugin.config: tesla-t4
-```
+  ```yaml
+  apiVersion: machine.openshift.io/v1beta1
+  kind: MachineSet
+  metadata:
+  spec:
+    template:
+      spec:
+        metadata:
+          labels:
+            nvidia.com/device-plugin.config: tesla-t4
+  ```
 
 ### Autoscaler and GPUs
 
@@ -194,63 +196,63 @@ As they are expensive, GPUs are good candidates to put behind an Autoscaler. But
 
 - Edit the MachineSet configuration to add the label that the Autoscaler will expect:
 
-```yaml
-apiVersion: machine.openshift.io/v1beta1
-kind: MachineSet
-...
-spec:
+  ```yaml
+  apiVersion: machine.openshift.io/v1beta1
+  kind: MachineSet
   ...
-  template:
+  spec:
     ...
-    spec:
-      metadata:
-        labels:
-          cluster-api/accelerator: Tesla-T4-SHARED
-```
+    template:
+      ...
+      spec:
+        metadata:
+          labels:
+            cluster-api/accelerator: Tesla-T4-SHARED
+  ```
 
 - Create your ClusterAutoscaler configuration (example):
 
-```yaml
-apiVersion: autoscaling.openshift.io/v1
-kind: ClusterAutoscaler
-metadata:
-  name: "default"
-spec:
-  logVerbosity: 4
-  maxNodeProvisionTime: 15m
-  podPriorityThreshold: -10
-  resourceLimits:
-    gpus:
-      - type: Tesla-T4-SHARED
-        min: 0 
-        max: 8
-  scaleDown: 
-    enabled: true 
-    delayAfterAdd: 20m 
-    delayAfterDelete: 5m 
-    delayAfterFailure: 30s 
-    unneededTime: 5m
-```
+  ```yaml
+  apiVersion: autoscaling.openshift.io/v1
+  kind: ClusterAutoscaler
+  metadata:
+    name: "default"
+  spec:
+    logVerbosity: 4
+    maxNodeProvisionTime: 15m
+    podPriorityThreshold: -10
+    resourceLimits:
+      gpus:
+        - type: Tesla-T4-SHARED
+          min: 0
+          max: 8
+    scaleDown:
+      enabled: true
+      delayAfterAdd: 20m
+      delayAfterDelete: 5m
+      delayAfterFailure: 30s
+      unneededTime: 5m
+  ```
 
 !!! note
     The `delayAfterAdd` parameter has to be set higher than standard value as NVIDIA tooling can take a lot of time to deploy, 10-15mn.
 
 - Create the MachineSet Autoscaler:
 
-```yaml
-apiVersion: autoscaling.openshift.io/v1beta1
-kind: MachineAutoscaler
-metadata:
-  name: machineset-name
-  namespace: "openshift-machine-api"
-spec:
-  minReplicas: 1 
-  maxReplicas: 2
-  scaleTargetRef: 
-    apiVersion: machine.openshift.io/v1beta1
-    kind: MachineSet 
-    name: machineset-name 
-```
+  ```yaml
+  apiVersion: autoscaling.openshift.io/v1beta1
+  kind: MachineAutoscaler
+  metadata:
+    name: machineset-name
+    namespace: "openshift-machine-api"
+  spec:
+    minReplicas: 1
+    maxReplicas: 2
+    scaleTargetRef:
+      apiVersion: machine.openshift.io/v1beta1
+      kind: MachineSet
+      name: machineset-name
+  ```
 
 #### Scaling to zero
 
@@ -264,37 +266,37 @@ That's all perfect and everything, but for GPUs, if you don't start the Node for
 
 - Set this annotation manually if it's not there. It will stick after the first scale up though, along with some other annotations the Autoscaler will add, thanks for its newly discovered knowledge.
 
-```yaml
-apiVersion: machine.openshift.io/v1beta1
-kind: MachineSet
-metadata:
-  annotations:
-    machine.openshift.io/GPU: "1"
-```
+  ```yaml
+  apiVersion: machine.openshift.io/v1beta1
+  kind: MachineSet
+  metadata:
+    annotations:
+      machine.openshift.io/GPU: "1"
+  ```
 
-Now to the other issue that may happen if you are in an environment with multiple availability zones (AZ)...
+Now to the other issue that may happen if you are in an environment with multiple Availability Zones (AZ)...
 
 Although when you define a MachineSet you can set the AZ and have all the Nodes spawned properly in it, the Autoscaler simulator is not that clever. So it will simply pick a Zone at random. If this is not the one where you want/need your Pod to run, this will be a problem...
 
-For example, you may already have a Persistent Volume attached to you Notebook. If your storage does now support AZ-spanning (like AWS EBS volumes), your PV is bound to a specific AZ. If the Simulator creates a virtual Node in a different AZ, there will be a mismatch, your Pod would not be schedulable on this Node, and the Autoscaler will (wrongly) conclude that it cannot use this MachineSet for a scale up!
+For example, you may already have a Persistent Volume (PV) attached to you Notebook. If your storage does now support AZ-spanning (like AWS EBS volumes), your PV is bound to a specific AZ. If the Simulator creates a virtual Node in a different AZ, there will be a mismatch, your Pod would not be schedulable on this Node, and the Autoscaler will (wrongly) conclude that it cannot use this MachineSet for a scale up!
 
 Here again, we have to give a hint to the Autoscaler to what the Node will look like in the end.
 
 - In you MachineSet, in the labels that will be added to the node, add information regarding the topology of the Node, as well as for the volumes that may be attached to it. For example:
 
-```yaml
-apiVersion: machine.openshift.io/v1beta1
-kind: MachineSet
-metadata:
-spec:
-  template:
-    spec:
-      metadata:
-        labels:
-          ...
-          topology.kubernetes.io/zone: us-east-2a
-          topology.ebs.csi.aws.com/zone: us-east-2a
-```
+  ```yaml
+  apiVersion: machine.openshift.io/v1beta1
+  kind: MachineSet
+  metadata:
+  spec:
+    template:
+      spec:
+        metadata:
+          labels:
+            ...
+            topology.kubernetes.io/zone: us-east-2a
+            topology.ebs.csi.aws.com/zone: us-east-2a
+  ```
 
 With this, the simulated Node will be at the right place, and the Autoscaler will consider the MachineSet valid for scale up!
 
