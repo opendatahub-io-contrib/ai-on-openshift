@@ -8,14 +8,16 @@ Spark supports a wide range of programming languages including **Java, Python, a
 
 ## Working with Spark on OpenShift
 
-Spark can be fully containerized. Therefore a standalone Spark cluster can of course be installed on OpenShift. However, it sorts of breaks the cloud-native approach brought by Kubernetes of ephemeral workloads. Therefore, an operator for Spark has been developed by Google originally for their GCP platform.
+Spark can be fully containerized. Therefore a standalone Spark cluster can of course be installed on OpenShift. However, it sorts of breaks the cloud-native approach brought by Kubernetes of ephemeral workloads. There are in fact many ways to work with Spark on OpenShift, either with Spark-on-Kubernetes operator, or directly through PySpark or spark-submit commands.
 
-In this **[Spark on OpenShift](https://github.com/opendatahub-io-contrib/spark-on-openshift){:target="_blank"}** repository, you will find all the instructions to deploy this operator specifically on OpenShift.
+In this **[Spark on OpenShift](https://github.com/opendatahub-io-contrib/spark-on-openshift){:target="_blank"}** repository, you will find all the instructions to work with Sparl on OpenShift.
 
 It includes:
 
 - pre-built UBI-based Spark images including the drivers to work with S3 storage,
 - instructions and examples to build your own images (to include your own libraries for example),
 - instructions to deploy the Spark history server to gather your processing logs,
+- instructions to deploy the Spark on Kubernetes operator,
 - Prometheus and Grafana configuration to monitor your data processing and operator in real time,
-- examples to test your installation.
+- instructions to work without the operator, from a Notebook or a Terminal, inside or outside the OpenShit Cluster,
+- various examples to test your installation and the different methods.
