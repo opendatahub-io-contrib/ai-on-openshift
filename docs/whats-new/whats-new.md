@@ -1,5 +1,7 @@
 # What's new?
 
+**2023-08-01**: Update to Spark documentation to include usage without the operator [Tools and Applications->Apache Spark](../tools-and-applications/apache-spark/apache-spark.md)
+
 **2023-07-05**: Add documentation on Time Slicing and Autoscaling for NVIDIA GPUs [ODH/RHODS How-Tos->NVIDIA GPUs](../odh-rhods/nvidia-gpus.md)
 
 **2023-07-05**: New example of how to configure a [Custom Serving Runtime with Triton](../odh-rhods/custom-runtime-triton.md).
