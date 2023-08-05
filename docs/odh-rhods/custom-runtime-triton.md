@@ -47,12 +47,12 @@ The sources used to create this document are mostly:
   # kind: ClusterServingRuntime     ## changed by EG
   kind: ServingRuntime
   metadata:
-    name: triton-23.05-20230630
+    name: triton-23.05-20230804
     labels:
-      name: triton-23.05-20230630
+      name: triton-23.05-20230804
     annotations:
       maxLoadingConcurrency: "2"
-      openshift.io/display-name: "Triton runtime 23.05 - added on 20230630"
+      openshift.io/display-name: "Triton runtime 23.05 - added on 20230804 - with /dev/shm"
   spec:
     supportedModelFormats:
       - name: keras
@@ -81,6 +81,11 @@ The sources used to create this document are mostly:
     grpcEndpoint: "port:8085"
     grpcDataEndpoint: "port:8001"
 
+    volumes:
+      - name: shm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 2Gi
     containers:
       - name: triton
         # image: tritonserver-2:replace   ## changed by EG
@@ -98,6 +103,9 @@ The sources used to create this document are mostly:
             "--allow-http=true"
             "--allow-sagemaker=false"
             '
+        volumeMounts:
+          - name: shm
+            mountPath: /dev/shm
         resources:
           requests:
             cpu: 500m
