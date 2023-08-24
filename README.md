@@ -26,6 +26,17 @@ The AI on OpenShift site aims at being a one-stop shop for installation recipes,
 * The documentation will be accessible at [http://127.0.0.1:8000](http://127.0.0.1:8000)
 * All saved modifications are watched and rendered real time
 
+Alternatively, you can also try serving the content using a container image.
+
+* For example, using podman and an image from DockerHub
+
+    ```bash
+    podman run --rm -it \
+        -p 8000:8000 \
+        -v ${PWD}:/docs \
+        squidfunk/mkdocs-material
+    ```
+
 ### Contributions
 
 * Create a branch (maintainers team) or fork the repo (other contributors)
