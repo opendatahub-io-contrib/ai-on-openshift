@@ -76,7 +76,7 @@ Here, we will create the groups mentioned above. Note that you can alter those n
 
 To confirm this works, add a user to the `rhods-admin` group. In my example, I'll add `user1`
 
-## Capture the URL needed to edit the `rhods-user` group
+## Capture the URL needed to edit the `rhods-users` group
 
 Since people who are not cluster admin won't be able to browse the list of groups, capture the URL that allows to control the membership of `rhods-users`.
 
