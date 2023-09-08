@@ -24,6 +24,6 @@ The key features of Airflow are:
 ## Installing Apache Airflow on OpenShift
 
 Airflow can be run as a pip package, through docker, or a Helm chart.  
-The official Helm chart can be found here: [https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart](https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart) 
+The official Helm chart can be found here: [https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart](https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart)
 
-Here is a modified version of the Helm chart which can be installed on OpenShift 4.12: [https://github.com/eformat/openshift-airflow](https://github.com/eformat/openshift-airflow)
+See [OpenDataHub Airflow Info](https://github.com/opendatahub-io-contrib/airflow-on-openshift)
