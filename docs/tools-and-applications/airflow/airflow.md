@@ -26,4 +26,4 @@ The key features of Airflow are:
 Airflow can be run as a pip package, through docker, or a Helm chart.  
 The official Helm chart can be found here: [https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart](https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html#using-official-airflow-helm-chart)
 
-See [OpenDataHub Airflow Info](https://github.com/opendatahub-io-contrib/airflow-on-openshift)
+See [OpenDataHub Airflow - Example Helm Values](https://github.com/opendatahub-io-contrib/airflow-on-openshift)
