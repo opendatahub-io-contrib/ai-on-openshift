@@ -101,6 +101,7 @@ nav:
     - Custom notebooks: odh-rhods/custom-notebooks.md
     - NVIDIA GPUs: odh-rhods/nvidia-gpus.md
     - Custom Serving Runtime (Triton): odh-rhods/custom-runtime-triton.md
+    - OpenShift Group Management: odh-rhods/openshift-group-management.md
   - Tools and Applications:
     - Apache Airflow: tools-and-applications/airflow/airflow.md
     - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
