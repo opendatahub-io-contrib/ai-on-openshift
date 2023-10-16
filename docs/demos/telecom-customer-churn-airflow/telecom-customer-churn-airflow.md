@@ -15,7 +15,7 @@ In the end, you will have a pipeline that:
 - Saves that model to S3
 
 !!!hint
-    You can expand on this demo by loading the pushed model into [MLFlow](/tools-and-applications/mlflow/mlflow), or automatically deploying it into some application, like in the [Credit Card Fraud Demo](/demos/credit-card-fraud-detection-mlflow/credit-card-fraud)
+    You can expand on this demo by loading the pushed model into [MLFlow](../../tools-and-applications/mlflow/mlflow.md), or automatically deploying it into some application, like in the [Credit Card Fraud Demo](../../demos/credit-card-fraud-detection-mlflow/credit-card-fraud.md)
 
 The models we build are used to predict customer churn for a Telecom company using structured data. The data contains fields such as: If they are a senior citizen, if they are a partner, their tenure, etc.
 
@@ -24,12 +24,12 @@ The models we build are used to predict customer churn for a Telecom company usi
 ### Pre-requisites
 
 - Fork this git repository into a GitHub or GitLab repo (the demo shows steps for GitHub, but either works): [https://github.com/red-hat-data-services/telecom-customer-churn-airflow](https://github.com/red-hat-data-services/telecom-customer-churn-airflow)
-- Have [Airflow](/tools-and-applications/airflow/airflow/) running in a cluster and point Airflow to the cloned git repository.
+- Have [Airflow](../../tools-and-applications/airflow/airflow.md) running in a cluster and point Airflow to the cloned git repository.
 - Have access to some S3 storage (this guide uses ODF with a bucket created in the namespace "airflow").
-- Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster. Make sure you have admin access in RHODS, or know someone who does.
+- Have [Red Hat OpenShift Data Science](../../getting-started/openshift-data-science.md) (RHODS) running in a cluster. Make sure you have admin access in RHODS, or know someone who does.
 
 !!! note
-    Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
+    Note: You can use [Open Data Hub](../../getting-started/opendatahub.md) instead of RHODS, but some instructions and screenshots may not apply
 
 ### 1: Open up Airflow
 

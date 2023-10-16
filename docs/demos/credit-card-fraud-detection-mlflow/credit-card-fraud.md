@@ -21,7 +21,7 @@ Description of each component:
 - **RHODS Notebook:** We will build and train the model using a Jupyter Notebook running in RHODS.
 - **MLFlow Experiment tracking:** We use MLFlow to track the parameters and metrics (such as accuracy, loss, etc) of a model training run. These runs can be grouped under different "experiments", making it easy to keep track of the runs.
 - **MLFlow Model registry:** As we track the experiment we also store the trained model through MLFlow so we can easily version it and assign a stage to it (for example Staging, Production, Archive).
-- **S3 (ODF):** This is where the models are stored and what the MLFlow model registry interfaces with. We use ODF (OpenShift Data Foundation) according to the [MLFlow guide](/tools-and-applications/mlflow/mlflow/), but it can be replaced with another solution.
+- **S3 (ODF):** This is where the models are stored and what the MLFlow model registry interfaces with. We use ODF (OpenShift Data Foundation) according to the [MLFlow guide](../../tools-and-applications/mlflow/mlflow.md), but it can be replaced with another solution.
 - **RHODS Model Serving:** We recommend using RHODS Model Serving for serving the model. It's based on ModelMesh and allows us to easily send requests to an endpoint for getting predictions.
 - **Application interface:** This is the interface used to run predictions with the model. In our case, we will build a visual interface (interactive app) using Gradio and let it load the model from the MLFlow model registry.
 
@@ -31,10 +31,10 @@ The model we will build is a Credit Card Fraud Detection model, which predicts i
 
 ### Pre-requisites
 
-- Have [Red Hat OpenShift Data Science](/getting-started/openshift-data-science/) (RHODS) running in a cluster
+- Have [Red Hat OpenShift Data Science](../../getting-started/openshift-data-science.md) (RHODS) running in a cluster
 !!! note
-    Note: You can use [Open Data Hub](/getting-started/opendatahub/) instead of RHODS, but some instructions and screenshots may not apply
-- Have [MLFlow](/tools-and-applications/mlflow/mlflow/) running in a cluster
+    Note: You can use [Open Data Hub](../../getting-started/opendatahub.md) instead of RHODS, but some instructions and screenshots may not apply
+- Have [MLFlow](../../tools-and-applications/mlflow/mlflow.md) running in a cluster
 
 ### 1.1: MLFlow Route through the visual interface
 
@@ -194,7 +194,7 @@ This data connection connects us to a storage we can load our models from.
 
 ![Add Data Connection](img/Add_Data_Connection.png)
 
-Here we need to fill out a few details. These are all assuming that you set up MLFlow according to this [guide](/tools-and-applications/mlflow/mlflow/) and have it connected to ODF. If that's not the case then enter the relevant details for your use case.
+Here we need to fill out a few details. These are all assuming that you set up MLFlow according to this [guide](../../tools-and-applications/mlflow/mlflow.md) and have it connected to ODF. If that's not the case then enter the relevant details for your use case.
 
 - **Name**: mlflow-connection
 - **AWS_ACCESS_KEY_ID**: Run `oc get secrets mlflow-server -n mlflow -o json | jq -r '.data.AWS_ACCESS_KEY_ID|@base64d'` in your command prompt, in my case it's `nB0z01i0PwD9PMSISQ2W`

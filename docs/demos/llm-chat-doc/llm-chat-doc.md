@@ -237,4 +237,7 @@ Some info on the code itself (`app.py`):
 
 Here is what you RAG-based Chatbot should look like (some tweaking on the App title that you can do through the environment variable):
 
-![Chatbot UI](img/chatbot-ui.png)
+<video controls autoplay loop muted>
+      <source id="mp4" src="/demos/llm-chat-doc/img/chatbot-demo.mp4" type="video/mp4">
+      <img src="/demos/llm-chat-doc/img/chatbot-ui.png" title="Your browser does not support the <video> tag" />
+</videos>

@@ -6,9 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-cairosvg = "~=2.5.2"
-mkdocs-material = "~=9.0.3"
-pillow = "~=9.4.0"
+cairosvg = "~=2.7.1"
+mkdocs-material = "~=9.4.6"
+pillow = "~=10.1.0"
 
 [requires]
 python_version = "3.9"
