@@ -4,4 +4,4 @@ As **data scientists and engineers**, it's **easy** to find detailed **documenta
 
 We've created a **one-stop-shop for data practitioners** to find **recipes, reusable patterns, and actionable demos** for building **AI/ML solutions on OpenShift**. And the best part? It's a **community-driven resource site**! So, feel free to ask questions, make feature requests, file issues, and even submit PRs to help us improve the content. Together, we can make data pipeline solutions easier to find and implement.
 
-![Happy Robot](/assets/robot.png){ align=right .noborder }
+![Happy Robot](../assets/robot.png){ align=right .noborder }
