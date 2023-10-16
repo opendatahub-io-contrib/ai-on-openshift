@@ -5,11 +5,11 @@
 
 **LLMs (Large Language Models)** are the subject of the day. And of course, you can definitely work with them on OpenShift with ODH or RHODS, from creating a simple Chatbot, or using them as simple APIs to summarize or translate texts, to deploying a full application that will allow you to quickly query your documentation or knowledge base in natural language.
 
-You will find on this page instructions and examples on how to set up the different elements that are needed for those different uses case, as well as fully implemented and ready-to-use applications.
+You will find on this page instructions and examples on how to set up the different elements that are needed for those different use cases, as well as fully implemented and ready-to-use applications.
 
 ## Context and definitions
 
-Many people are only beginning to discover those technologies. After all it has been less than a year since the general public is aware of them, and many related technologies, tools or applications are only a few months, even weeks (and sometimes days!) old. So here are a few definitions of the different terms that will be used in this article.
+Many people are only beginning to discover those technologies. After all, it has been less than a year since the general public is aware of them, and many related technologies, tools or applications are only a few months, even weeks (and sometimes days!) old. So here are a few definitions of the different terms that will be used in this article.
 
 - **LLM**: A Large Language Model (LLM) is a sophisticated artificial intelligence system designed for natural language processing. It leverages deep learning techniques to understand and generate human-like text. LLMs use vast datasets to learn language patterns, enabling tasks like text generation, translation, summarization, and more. These models are versatile and can be fine-tuned for specific applications, like chatbots or content creation. LLMs have wide-ranging potential in various industries, from customer support and content generation to research and education, but their use also raises concerns about ethics, bias, and data privacy, necessitating responsible deployment and ongoing research.
 - **Fine-tuning**: Fine-tuning in the context of Large Language Models (LLMs) is a process of adapting a pre-trained, general-purpose model to perform specific tasks or cater to particular applications. It involves training the model on a narrower dataset related to the desired task, allowing it to specialize and improve performance. Fine-tuning customizes the LLM's capabilities for tasks like sentiment analysis, question answering, or chatbots. This process involves adjusting hyperparameters, data preprocessing, and possibly modifying the model architecture. Fine-tuning enables LLMs to be more effective and efficient in specific domains, extending their utility across various applications while preserving their initial language understanding capabilities.
@@ -33,7 +33,7 @@ LLM Serving is not a trivial task, at least in a production environment...
 
 ![One does not simply serve an LLM](img/one-does-not.png){ width="500" }
 
-- LLM are usually huge (several GBs, tens of GBs...) and require GPU(s) with enough memory if you want decent accuracy and performance. Granted, you can run smaller models on home hardware with good results, but that's not the subject here. After all we are on OpenShift, so more in large organization environment than in an enthusiastic programmer basement!
+- LLMs are usually huge (several GBs, tens of GBs...) and require GPU(s) with enough memory if you want decent accuracy and performance. Granted, you can run smaller models on home hardware with good results, but that's not the subject here. After all we are on OpenShift, so more in a large organization environment than in an enthusiastic programmer basement!
 - A served LLM will generally be used by multiple applications and users simultaneously. Since you can't just throw resources at it and scale your infrastructure easily because of the previous point, you want to optimize response time by for example batching queries, caching or buffering them,... Those are special operations that have to be handled specifically.
 - When you load an LLM, there are parameters you want to tweak at load time, so a "generic" loader is not the best suited solution.
 
@@ -48,13 +48,13 @@ What are the differences between the two?
 
 - At the moment, the Caikit+TGIS stack installation may be a little bit more complicated, requiring different operators, configuration, certificate generation...
 - Also, at the moment, Caikit+TGIS has a gRPC interface only, which makes it more complicated to use, especially with other tools and SDKs that may not have integration with it.
-- HF TGI, while easier and providing a REST interface, comes with a caveat: its special license does not allow you to use it for a business that would provide on-demand LLM endpoint. You can totally use it for your own chatbots, even commercially (meaning the chatbots will be used by customers). But you cannot use it to make a business of simply hosting and serving LLMs.
+- HF TGI, while easier and providing a REST interface, comes with a caveat: its special license does not allow you to use it for a business that would provide on-demand LLM endpoints. You can totally use it for your own chatbots, even commercially (meaning the chatbots will be used by customers). But you cannot use it to make a business of simply hosting and serving LLMs.
 
 ### Which model to use?
 
 In this section we will assume that you want to work with a "local" open source model, and not consume a commercial one through an API, like OpenAI's ChatGPT or Anthropic's Claude.
 
-There are literally hundreds of thousands of models available, almost all of them available on the [Hugging Face](https://huggingface.co/) site. If you don't know what this site is, you can think of it as what Quay or DockerHub are for containers: a big repository of models and datasets ready to download and use. Of course Hugging Face (the company) is also creating code, provides hosting capabilities,... but that's another story.
+There are literally hundreds of thousands of models available, almost all of them available on the [Hugging Face](https://huggingface.co/) site. If you don't know what this site is, you can think of it as what Quay or DockerHub are for containers: a big repository of models and datasets ready to download and use. Of course Hugging Face (the company) is also creating code, providing hosting capabilities,... but that's another story.
 
 So which model to choose will depend on several factors:
 
@@ -67,7 +67,7 @@ Currently, a good model with interesting performance for a relatively small size
 
 ## LLM Consumption
 
-Once served, consuming an LLM is pretty straightforward, as in the end of the day it's *only* an API call.
+Once served, consuming an LLM is pretty straightforward, as at the end of the day it's *only* an API call.
 
 - For Caikit+TGIS you will [find here](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/examples/notebooks/caikit-basic-query/caikit_grpc_query_example.ipynb){:target="_blank"} a notebook example on how to connect and use the gRPC interface.
 - As HF TGI provides a REST interface, its usage is more straightforward. Here is the [full API Swagger doc](https://huggingface.github.io/text-generation-inference/){:target="_blank"} (also available when you deploy the server yourself).
@@ -131,7 +131,7 @@ After you follow those instructions you should have a Database ready to be popul
 
 In [this notebook](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/examples/notebooks/langchain/Langchain-Redis-Ingest.ipynb){:target="_blank"} you will find detailed instructions on how to ingest different types of documents: PDFs first, then Web pages.
 
-The examples are based on RHODS documentation, but of course we encourage you to use your own documentation. After all it's the purpose of all of this!
+The examples are based on RHODS documentation, but of course we encourage you to use your own documentation. After all that's the purpose of all of this!
 
 This [other notebook](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/examples/notebooks/langchain/Langchain-Redis-Query.ipynb){:target="_blank"} will allow you to execute simple queries against your Vector Store to make sure it works alright.
 
@@ -221,7 +221,7 @@ for s in results:
 
 Notebooks are great and everything, but it's not what you want to show to your users. I hope...
 
-So [here is simple UI](https://github.com/rh-aiservices-bu/llm-on-openshift/tree/main/examples/ui/gradio/gradio-hftgi-rag-redis) you can put around the same code we used in the notebooks.
+So [here is a simple UI](https://github.com/rh-aiservices-bu/llm-on-openshift/tree/main/examples/ui/gradio/gradio-hftgi-rag-redis) you can put around the same code we used in the notebooks.
 
 The deployment is already explained in the repo and pretty straightforward as the application will only "consume" the same Vector Store and LLM Serving we have used in the notebooks. However I will point out some specificities:
 
