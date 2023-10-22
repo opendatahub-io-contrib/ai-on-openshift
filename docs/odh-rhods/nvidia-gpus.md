@@ -34,7 +34,7 @@ But don't worry, OpenShift Data Science and Open Data Hub take care of this part
 Here is the documentation you can follow:
 
 - [OpenShift Data Science documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/installing_openshift_data_science_self-managed/enabling-gpu-support-in-openshift-data-science_install)
-- [NVIDIA documentation (more detailed)](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/openshift/contents.html)
+- [NVIDIA documentation (more detailed)](https://docs.nvidia.com/datacenter/cloud-native/openshift/latest/index.html)
 
 ## Advanced configuration
 
