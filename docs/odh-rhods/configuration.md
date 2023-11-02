@@ -74,6 +74,16 @@ In the `spec` section, the following items are of interest:
 - `dashboardConfig`: The different toggles will allow you to activate/deactivate certain features. For example, you may want to hide Model Serving for your users or prevent them from importing custom images.
 - `notebookSizes`: This is where you can fully customize the sizes of the notebooks. You can modify the resources and add or remove sizes from the default configuration as needed.
 - `modelServerSizes`: This setting operates on the same concept as the previous setting but for model servers.
+- `notebookController`: In this section you will find various settings related to the Workbenches and how they are launched.
+- If your GPUs are not correctly detected, the dropdown allowing you to select how many GPUs you want to use for a workbench will not be displayed. To force it, you can create/modify the parameter `gpuSetting` under `notebookController`. This will force the dropdown to appear, with the maximum being the number you set for the parameter. Example:
+
+```yaml
+notebookController:
+    enabled: true
+    gpuSetting: '4'
+    ...
+```
+
 
 ### Adding a custom application
 
