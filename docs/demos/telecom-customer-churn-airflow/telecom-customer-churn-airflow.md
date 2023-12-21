@@ -1,11 +1,11 @@
-# Telecom Customer Churn using Airflow and Red Hat OpenShift Data Science
+# Telecom Customer Churn using Airflow and Red Hat OpenShift AI
 
 !!!info
     The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/telecom-customer-churn-airflow){:target="_blank"}**
 
 ## Demo description
 
-The goal of this demo is to demonstrate how Red Hat OpenShift Data Science (RHODS) and Airflow can be used together to build an easy-to-manage pipeline.  
+The goal of this demo is to demonstrate how Red Hat OpenShift AI (RHOAI) and Airflow can be used together to build an easy-to-manage pipeline.  
 To do that, we will show how to build and deploy an airflow pipeline, mainly with Elyra but also some tips if you want to build it manually.  
 In the end, you will have a pipeline that:
 
@@ -26,10 +26,10 @@ The models we build are used to predict customer churn for a Telecom company usi
 - Fork this git repository into a GitHub or GitLab repo (the demo shows steps for GitHub, but either works): [https://github.com/red-hat-data-services/telecom-customer-churn-airflow](https://github.com/red-hat-data-services/telecom-customer-churn-airflow)
 - Have [Airflow](../../tools-and-applications/airflow/airflow.md) running in a cluster and point Airflow to the cloned git repository.
 - Have access to some S3 storage (this guide uses ODF with a bucket created in the namespace "airflow").
-- Have [Red Hat OpenShift Data Science](../../getting-started/openshift-data-science.md) (RHODS) running in a cluster. Make sure you have admin access in RHODS, or know someone who does.
+- Have [Red Hat OpenShift AI](../../getting-started/openshift-ai.md) (RHOAI) running in a cluster. Make sure you have admin access in RHOAI, or know someone who does.
 
 !!! note
-    Note: You can use [Open Data Hub](../../getting-started/opendatahub.md) instead of RHODS, but some instructions and screenshots may not apply
+    Note: You can use [Open Data Hub](../../getting-started/opendatahub.md) instead of RHOAI, but some instructions and screenshots may not apply
 
 ### 1: Open up Airflow
 
@@ -49,9 +49,9 @@ It's possible to build pipelines by creating an Airflow DAG script in python. An
 Most of this demo is going to be revolving around using Elyra together with Airflow, but at the very end, there will be a bonus section for how to use Airflow independently.
 
 To get access to Elyra, we will simply import it as a custom notebook image.  
-Start by opening up RHODS by clicking on the 9-square symbol in the top menu and choosing "Red Hat OpenShift Data Science".
+Start by opening up RHOAI by clicking on the 9-square symbol in the top menu and choosing "Red Hat OpenShift AI".
 
-![Open RHODS](img/Open_RHODS.png)
+![Open RHOAI](img/Open_RHOAI.png)
 
 Then go to Settings -> Notebook Images and press "Import new image".  
 If you can't see Settings then you are lacking sufficient access. Ask your admin to add this image instead.
@@ -60,9 +60,9 @@ If you can't see Settings then you are lacking sufficient access. Ask your admin
 
 Under Repository enter: `quay.io/eformat/elyra-base:0.2.1` and then name it something like `Elyra`.
 
-### 3: Create a RHODS workbench
+### 3: Create a RHOAI workbench
 
-A workbench in RHODS lets us spin up and down notebooks as needed and bundle them under Projects, which is a great way to get easy access to compute resources and keep track of your work.  
+A workbench in RHOAI lets us spin up and down notebooks as needed and bundle them under Projects, which is a great way to get easy access to compute resources and keep track of your work.  
 Start by creating a new Data Science project (see image). I'm calling my project 'Telecom Customer Churn', feel free to call yours something different but be aware that some things further down in the demo may change.
 
 ![Create Data Science Project](img/Create_data_science_project.png)
@@ -266,16 +266,16 @@ In Airflow you will see a dag called `train_and_compare_models` with some number
 
 If all are dark green that means that the run has completed successfully.
 
-We can now also confirm that the trained model was saved in our bucket by going back to the RHODS notebook and running the notebook `test_airflow_success.ipynb`.  
+We can now also confirm that the trained model was saved in our bucket by going back to the RHOAI notebook and running the notebook `test_airflow_success.ipynb`.  
 If all went well it should print the model, its type and its accuracy.
 ![Test Airflow Successs](img/Test_Airflow_Success.png)
 
-And that's how you can use Airflow together with RHODS to create a pipeline!
+And that's how you can use Airflow together with RHOAI to create a pipeline!
 
 ### Bonus section: Use an Airflow DAG file
 
 Instead of building a pipeline through notebooks in Elyra, we can of course build and use an Airflow DAG.  
-You can develop individual methods (data processing, mode training, etc) in RHODS notebooks and then pull them all together in a DAG python file.  
+You can develop individual methods (data processing, mode training, etc) in RHOAI notebooks and then pull them all together in a DAG python file.  
 This is a more segmented way for a Data Scientist to work than with Elyra, but still very possible within OpenShift and provides some more flexibility.  
 
 I have created a simple `test_dag.py` just to show what it can look like. You can find it in the `/dags` folder.  

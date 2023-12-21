@@ -29,8 +29,8 @@ Ultralytics have fully integrated the transfer learning process in YOLOv5, makin
 ### Environment and prerequisites
 
 - This training should be done in a **Data Science Project** to be able to modify the Workbench configuration (see below the /dev/shm issue).
-- YOLOv5 is using **PyTorch**, so in RHODS it's better to start with a notebook image already including this library, rather than having to install it afterwards.
-- PyTorch is internally using shared memory (/dev/shm) to exchange data between its internal worker processes. However, default container engine configurations limit this memory to the bare minimum, which can make the process exhaust this memory and crash. The solution is to manually increase this memory by mounting a specific volume with enough space at this emplacement. This problem will be fixed in an upcoming version. Meanwhile you can use **[this procedure](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1.28/html-single/1.28_release_notes/index#known-issues_RHODS-8939_relnotes){:target="_blank"}**.
+- YOLOv5 is using **PyTorch**, so in RHOAI it's better to start with a notebook image already including this library, rather than having to install it afterwards.
+- PyTorch is internally using shared memory (/dev/shm) to exchange data between its internal worker processes. However, default container engine configurations limit this memory to the bare minimum, which can make the process exhaust this memory and crash. The solution is to manually increase this memory by mounting a specific volume with enough space at this emplacement. This problem will be fixed in an upcoming version. Meanwhile you can use **[this procedure](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1.28/html-single/1.28_release_notes/index#known-issues_RHOAI-8939_relnotes){:target="_blank"}**.
 - Finally, a **GPU** is strongly recommended for this type of training.
 
 ### Data Preparation
@@ -45,7 +45,7 @@ For this first step:
 
 - If not already done, create your Data Science Project,
 - Create a Workbench of type **PyTorch**, with at least **8Gi** of memory, **1 GPU** and **20GB** of storage.
-- Apply [this procedure](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1.28/html-single/1.28_release_notes/index#known-issues_RHODS-8939_relnotes){:target="_blank"} to increase shared memory.
+- Apply [this procedure](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1.28/html-single/1.28_release_notes/index#known-issues_RHOAI-8939_relnotes){:target="_blank"} to increase shared memory.
 - Start the workbench.
 - Clone the repository [https://github.com/rh-aiservices-bu/yolov5-transfer-learning](https://github.com/rh-aiservices-bu/yolov5-transfer-learning){:target="_blank"}, open the notebook 01-data_preparation.ipynb and follow the instructions.
 
@@ -73,14 +73,14 @@ Once you have completed to whole notebook you have a model that is able to recog
 
 ## Model Serving
 
-We are going to serve a YOLOv5 model using the ONNX format, a general purpose open format built to represent machine learning models. RHODS Model Serving includes the OpenVino serving runtime that accepts two formats for models: OpenVino IR, its own format, and ONNX.
+We are going to serve a YOLOv5 model using the ONNX format, a general purpose open format built to represent machine learning models. RHOAI Model Serving includes the OpenVino serving runtime that accepts two formats for models: OpenVino IR, its own format, and ONNX.
 
 !!! note
     Many files and code we are going to use, especially the ones from the utils and models folders, come directly from the YOLOv5 repository. They includes many utilities and functions needed for image pre-processing and post-processing. We kept only what is needed, rearranged in a way easier to follow within notebooks. YOLOv5 includes many different tools and CLI commands that are worth learning, so don't hesitate to have a look at it directly.
 
 ### Environment and prerequisites
 
-- YOLOv5 is using PyTorch, so in RHODS it's better to start with a notebook image already including this library, rather than having to install it afterwards.
+- YOLOv5 is using PyTorch, so in RHOAI it's better to start with a notebook image already including this library, rather than having to install it afterwards.
 - Although not necessary as in this example we won't use the model we trained in the previous section, the same environment can totally be reused.
 
 ### Converting a YOLOv5 model to ONNX
@@ -91,17 +91,17 @@ YOLOv5 is based on PyTorch. So base YOLOv5 models, or the ones you retrain using
 - Open the notebook `01-yolov5_to_onnx.ipynb` and follow the instructions.
 - The notebook will guide you through all the steps for the conversion. If you don't want to do it at this time, you can also find in this repo the original YOLOv5 "nano" model, `yolov5n.pt`, and its already converted ONNX version, `yolov5n.onnx`.
 
-Once converted, you can save/upload your ONNX model to the storage you will use in your Data Connection on RHODS. At the moment it has to be an S3-Compatible Object Storage, and the model must be in it own folder (not at the root of the bucket).
+Once converted, you can save/upload your ONNX model to the storage you will use in your Data Connection on RHOAI. At the moment it has to be an S3-Compatible Object Storage, and the model must be in it own folder (not at the root of the bucket).
 
 ### Serving the model
 
-Here we can use the standard configuration path for RHODS Model Serving:
+Here we can use the standard configuration path for RHOAI Model Serving:
 
-- Create a Data Connection to the storage where you saved your model. In this example we don't need to expose an external Route, but of course you can. In this case though, you won't be able to directly see the internal gRPC and REST endpoints in the RHODS UI, you will have to get them from the Network->Services panel in the OpenShift Console.
+- Create a Data Connection to the storage where you saved your model. In this example we don't need to expose an external Route, but of course you can. In this case though, you won't be able to directly see the internal gRPC and REST endpoints in the RHOAI UI, you will have to get them from the Network->Services panel in the OpenShift Console.
 - Create a Model Server, then deploy the model using the ONNX format.
 
 !!! note
-    You can find full detailed versions of this procedure [in this Learning Path](https://developers.redhat.com/learn/openshift-data-science/model-serving-rhods){:target="_blank"} or in the [RHODS documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/working_on_data_science_projects/model-serving-on-openshift-data-science_model-serving){:target="_blank"}.
+    You can find full detailed versions of this procedure [in this Learning Path](https://developers.redhat.com/learn/openshift-data-science/model-serving-rhods){:target="_blank"} or in the [RHOAI documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/working_on_data_science_projects/model-serving-on-openshift-data-science_model-serving){:target="_blank"}.
 
 ### gRPC connection
 

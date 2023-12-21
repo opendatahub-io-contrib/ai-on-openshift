@@ -12,15 +12,15 @@ Rclone really looks after your data. It preserves timestamps and verifies checks
 
 Rclone is mature, open-source software originally inspired by rsync and written in Go. The friendly support community is familiar with varied use cases.
 
-[The implementation](https://github.com/guimou/rclone-web-on-openshift) described here is a containerized version of Rclone to run on OpenShift, alongside or integrated within ODH/RHODS.
+[The implementation](https://github.com/guimou/rclone-web-on-openshift) described here is a containerized version of Rclone to run on OpenShift, alongside or integrated within ODH/RHOAI.
 
 ## Deployment
 
-### Integrated in Open Data Hub or OpenShift Data Science
+### Integrated in Open Data Hub or OpenShift AI
 
-Use this method if you want to use **Rclone from the ODH/RHODS launcher or in a Data Science Project**.
+Use this method if you want to use **Rclone from the ODH/RHOAI launcher or in a Data Science Project**.
 
-- In the Cluster Settings menu, import the image `quay.io/guimou/rclone-web-openshift:odh-rhods_latest`. You can name it Rclone.
+- In the Cluster Settings menu, import the image `quay.io/guimou/rclone-web-openshift:odh-rhoai_latest`. You can name it Rclone.
 ![Import image](img/import-rclone-image.png)
 - In your DSP project, create a new workbench using the Rclone image. You can set the storage size as minimal as it's only there to store the configuration of the endpoints.
 ![Workbench](img/workbench-1.png)
@@ -34,7 +34,7 @@ Use this method if you want to use **Rclone from the ODH/RHODS launcher or in a 
 
 ### Standalone deployment
 
-Use this method if you want to use **Rclone on its own in a namespace**. You can still optionally make a shortcut appear in the ODH/RHODS dashboard.
+Use this method if you want to use **Rclone on its own in a namespace**. You can still optionally make a shortcut appear in the ODH/RHOAI dashboard.
 
 - Create a project/namespace for your installation.
 - Clone or head to [this repo](https://github.com/guimou/rclone-web-on-openshift).
@@ -42,7 +42,7 @@ Use this method if you want to use **Rclone on its own in a namespace**. You can
     - 01-pvc.yaml: creates a persistent volume to hold the configuration
     - 02-deployment.yaml: creates the deployment. Modify admin account and password if you want to restrict access. You should!
     - 03-service.yaml, 04-route.yaml: create the external access so that you can connect to the Web UI.
-    - **Optionally**, to create a tile on the ODH/RHODS dashboard:
+    - **Optionally**, to create a tile on the ODH/RHOAI dashboard:
         - modify the 05-tile.yaml file with the address of the Route that was created previously (namespace and name of the Route object).
         - the will appear under the available applications in the dashboard. Select it and click on "Enable" to make it appear in the "Enabled" menu.
 

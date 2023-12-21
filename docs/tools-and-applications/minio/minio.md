@@ -8,7 +8,7 @@
 
 This guide is a very quick way of deploying the community version of Minio in order to quickly setup a fully standalone Object Store, in an OpenShift Cluster. This can then be used for various prototyping tasks that require Object Storage.
 
-Note that nothing in this guide should be used in production-grade environments. Also, Minio is not included in RHODS, and Red Hat does not provide support for Minio.
+Note that nothing in this guide should be used in production-grade environments. Also, Minio is not included in RHOAI, and Red Hat does not provide support for Minio.
 
 ## Pre-requisites
 
@@ -21,7 +21,7 @@ Note that nothing in this guide should be used in production-grade environments.
 
 If you already have your own Data Science Project, or OpenShift project, you can skip this step.
 
-1. If your cluster already has [Red Hat OpenShift Data Science](https://developers.redhat.com/products/red-hat-openshift-data-science/overview) installed, you can use the Dashboard Web Interface to create a Data Science project.
+1. If your cluster already has [Red Hat OpenShift AI](https://developers.redhat.com/products/red-hat-openshift-ai/overview) installed, you can use the Dashboard Web Interface to create a Data Science project.
 1. Simply navigate to **Data Science Projects**
 1. And click **Create Project**
 1. Choose a name for your project (here, **Showcase**) and click **Create**:
@@ -261,7 +261,7 @@ If you already have your own Data Science Project, or OpenShift project, you can
 
 ## Create a matching Data Connection for Minio
 
-1. Back in RHODS, inside of your Data Science Project, Click on **Add data connection**:
+1. Back in RHOAI, inside of your Data Science Project, Click on **Add data connection**:
 
     ![alt_text](img/add.connection.png)
 
