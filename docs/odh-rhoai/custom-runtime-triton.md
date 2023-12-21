@@ -1,24 +1,24 @@
-# Deploying and using a Custom Serving Runtime in ODH/RHODS
+# Deploying and using a Custom Serving Runtime in ODH/RHOAI
 
-Although these instructions were tested mostly using RHODS (Red Hat OpenShift Data Science), they apply to ODH (Open Data Hub) as well.
+Although these instructions were tested mostly using RHOAI (Red Hat OpenShift AI), they apply to ODH (Open Data Hub) as well.
 
 ## Before you start
 
 This document will guide you through the broad steps necessary to deploy a custom Serving Runtime in order to serve a model using the Triton Runtime (NVIDIA [Triton Inference Server](https://developer.nvidia.com/triton-inference-server)).
 
-While RHODS supports your ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
+While RHOAI supports your ability to add your own runtime, it does not support the runtimes themselves. Therefore, it is up to you to configure, adjust and maintain your custom runtimes.
 
-This document expects a bit of familiarity with RHODS.
+This document expects a bit of familiarity with RHOAI.
 
 The sources used to create this document are mostly:
 
 * [https://github.com/kserve/modelmesh-serving/tree/main/config/runtimes](https://github.com/kserve/modelmesh-serving/tree/main/config/runtimes)
 * [https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver)
-* Official [Red Hat OpenShift Data Science Documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/working_on_data_science_projects/working-on-data-science-projects_nb-server#configuring_model_servers)
+* Official [Red Hat OpenShift AI Documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/working_on_data_science_projects/working-on-data-science-projects_nb-server#configuring_model_servers)
 
 ## Adding the custom triton runtime
 
-1. Log in to your OpenShift Data Science with a user who is part of the RHODS admin group.
+1. Log in to your OpenShift AI with a user who is part of the RHOAI admin group.
     1. (by default, cluster-admins and dedicated admins are).
 1. Navigate to the **Settings** menu, then **Serving Runtimes**
 

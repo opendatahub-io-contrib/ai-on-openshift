@@ -1,11 +1,11 @@
 # OpenShift Group Management
 
-In the Red Hat OpenShift Documentation, there are [instructions](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science/1/html/managing_users_and_user_resources/defining-openshift-data-science-admin-and-user-groups_user-mgmt) on how to configure a specific list of RHODS Administrators and RHODS Users.
+In the Red Hat OpenShift Documentation, there are [instructions](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science/1/html/managing_users_and_user_resources/defining-openshift-data-science-admin-and-user-groups_user-mgmt) on how to configure a specific list of RHOAI Administrators and RHOAI Users.
 
-However, if the list of users keeps changing, the membership of the groupd called `rhods-users` will have to be updated frequently. By default, in OpenShift, only OpenShift admins can edit group membership. Being a RHODS Admin does not confer you those admin privileges, and so, it would fall to the OpenShift admin to administer that list.
+However, if the list of users keeps changing, the membership of the groupe called `rhods-users` will have to be updated frequently. By default, in OpenShift, only OpenShift admins can edit group membership. Being a RHOAI Admin does not confer you those admin privileges, and so, it would fall to the OpenShift admin to administer that list.
 
 The instructions in this page will show how the OpenShift Admin can create these groups in such a way that any member of the group `rhods-admins` can edit the users listed in the group `rhods-users`.
-These makes the RHODS Admins more self-sufficient, without giving them unneeded access.
+These makes the RHOAI Admins more self-sufficient, without giving them unneeded access.
 
 For expediency in the instructions, we are using the `oc` cli, but these can also be achieved using the OpenShift Web Console. We will assume that the user setting this up has admin privileges to the cluster.
 

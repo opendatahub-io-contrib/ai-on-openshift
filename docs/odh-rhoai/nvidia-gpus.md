@@ -27,13 +27,13 @@ spec:
         cpu: "500m"
 ```
 
-But don't worry, OpenShift Data Science and Open Data Hub take care of this part for you when you launch notebooks, workbenches, model servers, or pipeline runtimes!
+But don't worry, OpenShift AI and Open Data Hub take care of this part for you when you launch notebooks, workbenches, model servers, or pipeline runtimes!
 
 ### Installation
 
 Here is the documentation you can follow:
 
-- [OpenShift Data Science documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/installing_openshift_data_science_self-managed/enabling-gpu-support-in-openshift-data-science_install)
+- [OpenShift AI documentation](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science_self-managed/1-latest/html/installing_openshift_data_science_self-managed/enabling-gpu-support-in-openshift-data-science_install)
 - [NVIDIA documentation (more detailed)](https://docs.nvidia.com/datacenter/cloud-native/openshift/latest/index.html)
 
 ## Advanced configuration
@@ -111,7 +111,7 @@ In this case you must:
 That's it, the operator is now able to deploy all the NVIDIA tooling on the nodes, even if they have the `restrictedaccess` taint. Repeat the procedure for any other taint you want to apply to your nodes.
 
 !!! note
-    The first taint that you want to apply on GPU nodes is `nvidia.com/gpu`. This is the standard taint for which the NVIDIA Operator has a built-in toleration, so no need to add it. Likewise, Notebooks, Workbenches or other components from ODH/RHODS that request GPUs will already have this toleration in place. For other Pods you schedule yourself, or using Pipelines, you should make sure the toleration is also applied. Doing this will ensure that only Pods really requiring GPUs are scheduled on those nodes.
+    The first taint that you want to apply on GPU nodes is `nvidia.com/gpu`. This is the standard taint for which the NVIDIA Operator has a built-in toleration, so no need to add it. Likewise, Notebooks, Workbenches or other components from ODH/RHOAI that request GPUs will already have this toleration in place. For other Pods you schedule yourself, or using Pipelines, you should make sure the toleration is also applied. Doing this will ensure that only Pods really requiring GPUs are scheduled on those nodes.
 
     You can of course apply many different taints at the same time. You would simply have to apply the matching toleration on the NVIDIA GPU Operator, as well as on the Pods that need to run there.
 

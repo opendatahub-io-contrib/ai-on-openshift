@@ -33,18 +33,18 @@ For a full list of configurable options, see the helm chart documentation:
 
 ##### OpenDataHub Dashboard Application Tile
 
-As discussed in the [Dashboard Configuration](../../odh-rhods/configuration.md#adding-a-custom-application), ODH/RHODS allows administrators to add a custom application tile for additional components on the cluster.
+As discussed in the [Dashboard Configuration](../../odh-rhoai/configuration.md#adding-a-custom-application), ODH/RHOAI allows administrators to add a custom application tile for additional components on the cluster.
 
 ![Enabled tile](img/enabled-tile.png)
 
-The MLFlow Server helm chart supports creation of the Dashboard Application tile as a configurable value.  If MLFlow Server is installed in the same namespace as ODH/RHODS you can install the dashboard tile run the following command:
+The MLFlow Server helm chart supports creation of the Dashboard Application tile as a configurable value.  If MLFlow Server is installed in the same namespace as ODH/RHOAI you can install the dashboard tile run the following command:
 
 ```bash
 helm upgrade -i mlflow-server strangiato/mlflow-server \
     --set odhApplication.enabled=true
 ```
 
-The MLFlow Server helm chart also supports installing the odhApplication object in a different namespace, if MLFlow Server is not installed in the same namespace as ODH/RHODS:
+The MLFlow Server helm chart also supports installing the odhApplication object in a different namespace, if MLFlow Server is not installed in the same namespace as ODH/RHOAI:
 
 ```bash
 helm upgrade -i mlflow-server strangiato/mlflow-server \
@@ -96,4 +96,4 @@ MLFlow Server Helm Chart Source Code:
 
 ## Demos
 
-- Credit Card Fraud Detection pipeline using MLFlow together with RHODS: [Demo](../../demos/credit-card-fraud-detection-mlflow/credit-card-fraud.md){:target="_blank"}
+- Credit Card Fraud Detection pipeline using MLFlow together with RHOAI: [Demo](../../demos/credit-card-fraud-detection-mlflow/credit-card-fraud.md){:target="_blank"}

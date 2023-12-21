@@ -1,15 +1,15 @@
-# Credit Card Fraud Detection Demo using MLFlow and Red Hat OpenShift Data Science
+# Credit Card Fraud Detection Demo using MLFlow and Red Hat OpenShift AI
 
 !!!info
     The full source and instructions for this demo are available in **[this repo](https://github.com/red-hat-data-services/credit-fraud-detection-demo){:target="_blank"}**
 
 ## Demo Description & Architecture
 
-The goal of this demo is to demonstrate how RHODS and MLFlow can be used together to build an end-to-end MLOps platform where we can:
+The goal of this demo is to demonstrate how RHOAI and MLFlow can be used together to build an end-to-end MLOps platform where we can:
 
-- Build and train models in RHODS
+- Build and train models in RHOAI
 - Track and store those models with MLFlow
-- Serve a model stored in MLFlow using RHODS Model Serving (or MLFlow serving)
+- Serve a model stored in MLFlow using RHOAI Model Serving (or MLFlow serving)
 - Deploy a model application in OpenShift that runs sends data to the served model and displays the prediction
 
 The architecture looks like this:
@@ -18,11 +18,11 @@ The architecture looks like this:
 Description of each component:
 
 - **Data Set:** The data set contains the data used for training and evaluating the model we will build in this demo.
-- **RHODS Notebook:** We will build and train the model using a Jupyter Notebook running in RHODS.
+- **RHOAI Notebook:** We will build and train the model using a Jupyter Notebook running in RHOAI.
 - **MLFlow Experiment tracking:** We use MLFlow to track the parameters and metrics (such as accuracy, loss, etc) of a model training run. These runs can be grouped under different "experiments", making it easy to keep track of the runs.
 - **MLFlow Model registry:** As we track the experiment we also store the trained model through MLFlow so we can easily version it and assign a stage to it (for example Staging, Production, Archive).
 - **S3 (ODF):** This is where the models are stored and what the MLFlow model registry interfaces with. We use ODF (OpenShift Data Foundation) according to the [MLFlow guide](../../tools-and-applications/mlflow/mlflow.md), but it can be replaced with another solution.
-- **RHODS Model Serving:** We recommend using RHODS Model Serving for serving the model. It's based on ModelMesh and allows us to easily send requests to an endpoint for getting predictions.
+- **RHOAI Model Serving:** We recommend using RHOAI Model Serving for serving the model. It's based on ModelMesh and allows us to easily send requests to an endpoint for getting predictions.
 - **Application interface:** This is the interface used to run predictions with the model. In our case, we will build a visual interface (interactive app) using Gradio and let it load the model from the MLFlow model registry.
 
 The model we will build is a Credit Card Fraud Detection model, which predicts if a credit card usage is fraudulent or not depending on a few parameters such as: distance from home and last transaction, purchase price compared to median, if it's from a retailer that already has been purchased from before, if the PIN number is used and if it's an online order or not.
@@ -31,9 +31,9 @@ The model we will build is a Credit Card Fraud Detection model, which predicts i
 
 ### Pre-requisites
 
-- Have [Red Hat OpenShift Data Science](../../getting-started/openshift-data-science.md) (RHODS) running in a cluster
+- Have [Red Hat OpenShift AI](../../getting-started/openshift-ai.md) (RHOAI) running in a cluster
 !!! note
-    Note: You can use [Open Data Hub](../../getting-started/opendatahub.md) instead of RHODS, but some instructions and screenshots may not apply
+    Note: You can use [Open Data Hub](../../getting-started/opendatahub.md) instead of RHOAI, but some instructions and screenshots may not apply
 - Have [MLFlow](../../tools-and-applications/mlflow/mlflow.md) running in a cluster
 
 ### 1.1: MLFlow Route through the visual interface
@@ -62,11 +62,11 @@ Alternatively, you can use the OC command to get the hostname through:
 The port you will find with: `oc get svc mlflow-server -n mlflow -o yaml`
 ![OC Get Port](img/OC_Get_Port.png)
 
-### 2: Create a RHODS workbench
+### 2: Create a RHOAI workbench
 
-Start by opening up RHODS by clicking on the 9 square symbol in the top menu and choosing "Red Hat OpenShift Data Science".
+Start by opening up RHOAI by clicking on the 9 square symbol in the top menu and choosing "Red Hat OpenShift AI".
 
-![Open RHODS](img/Open_RHODS.png)
+![Open RHOAI](img/Open_RHODS.png)
 
 Then create a new Data Science project (see image), this is where we will build and train our model. This will also create a namespace in OpenShift which is where we will be running our application after the model is done.
 I'm calling my project 'Credit Card Fraud', feel free to call yours something different but be aware that some things further down in the demo may change.
@@ -152,7 +152,7 @@ with mlflow.start_run():
 ```
 
 `with mlflow.start_run():` is used to tell MLFlow that we are starting a run, and we wrap our training code with it to define exactly what code belongs to the "run".
-Most of the rest of the code in this cell is normal model training and evaluation code, but at the bottom we can see how we send some custom metrics to MLFlow through `mlflow.log_metric` and then convert the model to ONNX. This is because ONNX is one of the standard formats for RHODS Model Serving which we will use later.
+Most of the rest of the code in this cell is normal model training and evaluation code, but at the bottom we can see how we send some custom metrics to MLFlow through `mlflow.log_metric` and then convert the model to ONNX. This is because ONNX is one of the standard formats for RHOAI Model Serving which we will use later.
 
 Now run all the cells in the notebook from top to bottom, either by clicking Shift-Enter on every cell, or by going to Run->Run All Cells in the very top menu.
 If everything is set up correctly it will train the model and push both the run and the model to MLFlow.
@@ -185,11 +185,11 @@ We will need the Full Path of the model in the next section when we are going to
 ### 5: Serve the model
 
 !!! note
-    You can either serve the model using RHODS Model Serving or use the model straight from MLFlow.
-    We will here show how you serve it with RHODS Model Serving as that scales better for large applications and load.
+    You can either serve the model using RHOAI Model Serving or use the model straight from MLFlow.
+    We will here show how you serve it with RHOAI Model Serving as that scales better for large applications and load.
     At the bottom of this section we'll go through how it would look like to use MLFlow instead.
 
-To start, go to your RHODS Project and click "Add data connection".
+To start, go to your RHOAI Project and click "Add data connection".
 This data connection connects us to a storage we can load our models from.
 
 ![Add Data Connection](img/Add_Data_Connection.png)
@@ -239,8 +239,8 @@ Click on "Internal Service" in the same row to see the endpoints, we will need t
 
 **[Optional] MLFlow Serving**:
 !!! warning "This section is optional"
-    This section explains how to use MLFlow Serving instead of RHODS Model Serving.
-    We recommend using RHODS Model Serving as it scales better. However, if you quickly want to get a model up and running for testing, this would be an easy way.
+    This section explains how to use MLFlow Serving instead of RHOAI Model Serving.
+    We recommend using RHOAI Model Serving as it scales better. However, if you quickly want to get a model up and running for testing, this would be an easy way.
 
 To use MLFlow serving, simply deploy an application which loads the model straight from MLFlow.
 You can find the model application code for using MLFlow serving in the "application_mlflow_serving" folder in the GitHub repository you cloned in [step 3](#3-train-the-model).
@@ -294,7 +294,7 @@ URL = os.getenv("INFERENCE_ENDPOINT") <----------
     response = requests.post(URL, json=payload, headers=headers)  <----------
 ```
 
-This is what we use to send a request to our RHODS Model Server with some data we want it to run a prediction on.
+This is what we use to send a request to our RHOAI Model Server with some data we want it to run a prediction on.
 
 We are going to deploy the application with OpenShift by pointing to the GitHub repository.
 It will pull down the folder, automatically build a container image based on the Dockerfile, and publish it.
@@ -304,7 +304,7 @@ Then press "+Add" in the left menu and select Import from Git.
 
 ![Import from Git](img/Import_from_Git.png)
 
-In the "Git Repo URL" enter: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo){:target="_blank"} (this is the same repository we pulled into RHODS earlier).
+In the "Git Repo URL" enter: [https://github.com/red-hat-data-services/credit-fraud-detection-demo](https://github.com/red-hat-data-services/credit-fraud-detection-demo){:target="_blank"} (this is the same repository we pulled into RHOAI earlier).
 Then press "Show advanced Git options" and set "Context dir" to "/application".
 Finally, at the very bottom, click the blue "Deployment" link:
 
@@ -313,7 +313,7 @@ Finally, at the very bottom, click the blue "Deployment" link:
 Set these values in the **Environment variables (runtime only)** fields:
 
 - **Name**: `INFERENCE_ENDPOINT`
-- **Value**: In the RHODS projects interface (from the previous section), copy the "restURL" and add `/v2/models/credit-card-fraud/infer` to the end if it's not already there. For example: `http://modelmesh-serving.credit-card-fraud:8008/v2/models/credit-card-fraud/infer`
+- **Value**: In the RHOAI projects interface (from the previous section), copy the "restURL" and add `/v2/models/credit-card-fraud/infer` to the end if it's not already there. For example: `http://modelmesh-serving.credit-card-fraud:8008/v2/models/credit-card-fraud/infer`
 ![Model Serving UR](img/Model_Serving_URL.png)
 
 Your full settings page should look something like this:

@@ -95,13 +95,13 @@ nav:
     - Why this site?: getting-started/why-this-site.md
     - OpenShift and AI: getting-started/openshift.md
     - Open Data Hub: getting-started/opendatahub.md
-    - OpenShift Data Science: getting-started/openshift-data-science.md
-  - ODH/RHODS How-Tos:
-    - Dashboard configuration: odh-rhods/configuration.md
-    - Custom notebooks: odh-rhods/custom-notebooks.md
-    - NVIDIA GPUs: odh-rhods/nvidia-gpus.md
-    - Custom Serving Runtime (Triton): odh-rhods/custom-runtime-triton.md
-    - OpenShift Group Management: odh-rhods/openshift-group-management.md
+    - OpenShift AI: getting-started/openshift-ai.md
+  - ODH/RHOAI How-Tos:
+    - Dashboard configuration: odh-rhoai/configuration.md
+    - Custom notebooks: odh-rhoai/custom-notebooks.md
+    - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
+    - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
+    - OpenShift Group Management: odh-rhoai/openshift-group-management.md
   - Tools and Applications:
     - Apache Airflow: tools-and-applications/airflow/airflow.md
     - Apache Spark: tools-and-applications/apache-spark/apache-spark.md

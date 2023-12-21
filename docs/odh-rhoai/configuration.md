@@ -1,8 +1,8 @@
-# ODH and RHODS Configuration
+# ODH and RHOAI Configuration
 
 ## Standard configuration
 
-As an administrator of ODH/RHODS, you have access to different settings through the Settings menu on the dashboard:
+As an administrator of ODH/RHOAI, you have access to different settings through the Settings menu on the dashboard:
 
 ![Settings](img/settings.png){ style="width:200px"}
 
@@ -47,7 +47,7 @@ In this panel, you can adjust:
 
 ### User management
 
-In this panel, you can edit who has access to RHODS by defining the "Data Science user groups", and who has access to the Settings by defining the "Data Science administrator groups".
+In this panel, you can edit who has access to RHOAI by defining the "Data Science user groups", and who has access to the Settings by defining the "Data Science administrator groups".
 
 ![User management](img/user-management.png)
 
@@ -55,7 +55,7 @@ In this panel, you can edit who has access to RHODS by defining the "Data Scienc
 
 ### Dashboard configuration
 
-RHODS or ODH main configuration is done through a Custom Resource (CR) of type `odhdashboardconfigs.opendatahub.io`.
+RHOAI or ODH main configuration is done through a Custom Resource (CR) of type `odhdashboardconfigs.opendatahub.io`.
 
 - To get access to it, from your OpenShift console, navigate to Home->API Explorer, and filter for `OdhDashboardConfig`:
 

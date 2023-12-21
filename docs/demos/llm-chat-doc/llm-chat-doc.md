@@ -3,7 +3,7 @@
 !!! info
     All source files and examples used in this article are available on **[this repo](https://github.com/rh-aiservices-bu/llm-on-openshift){:target="_blank"}**!
 
-**LLMs (Large Language Models)** are the subject of the day. And of course, you can definitely work with them on OpenShift with ODH or RHODS, from creating a simple Chatbot, or using them as simple APIs to summarize or translate texts, to deploying a full application that will allow you to quickly query your documentation or knowledge base in natural language.
+**LLMs (Large Language Models)** are the subject of the day. And of course, you can definitely work with them on OpenShift with ODH or RHOAI, from creating a simple Chatbot, or using them as simple APIs to summarize or translate texts, to deploying a full application that will allow you to quickly query your documentation or knowledge base in natural language.
 
 You will find on this page instructions and examples on how to set up the different elements that are needed for those different use cases, as well as fully implemented and ready-to-use applications.
 
@@ -41,7 +41,7 @@ LLM Serving is not a trivial task, at least in a production environment...
 
 Fortunately, we have different solutions to handle LLM Serving:
 
-- **[Caikit-TGIS-Serving](https://github.com/opendatahub-io/caikit-tgis-serving){:target="_blank"}** is a solution already available in ODH, soon to be included in RHODS, specially designed to serve LLMs. You will find all [installation instructions](https://github.com/opendatahub-io/caikit-tgis-serving#installation){:target="_blank"} on its repo.
+- **[Caikit-TGIS-Serving](https://github.com/opendatahub-io/caikit-tgis-serving){:target="_blank"}** is a solution already available in ODH, soon to be included in RHOAI, specially designed to serve LLMs. You will find all [installation instructions](https://github.com/opendatahub-io/caikit-tgis-serving#installation){:target="_blank"} on its repo.
 - **[Hugging Face Text Generation Inference](https://github.com/huggingface/text-generation-inference){:target="_blank"}** is another solution that you can deploy on OpenShift following those [installation instructions](https://github.com/rh-aiservices-bu/llm-on-openshift/tree/main/hf_tgis_deployment).
 
 What are the differences between the two?
@@ -84,9 +84,9 @@ For this walkthrough we will be using [this application](https://github.com/rh-a
 
 ### Requirements
 
-- An OpenShift cluster with RHODS or ODH deployed.
+- An OpenShift cluster with RHOAI or ODH deployed.
 - A node with a GPU card. For the model we will use, 24GB memory on the GPU (VRAM) is necessary. If you have less than that you can either use quantization when loading the model, use an already quantized model (results may vary as they are not all compatible with the model server), or choose another compatible smaller model.
-- If you don't want to have to manually install different requirements in the notebooks environment (mostly Langchain and its dependencies), which may take time, you may want to directly import this custom workbench image, [quay.io/opendatahub-contrib/workbench-images:cuda-jupyter-langchain-c9s-py311_2023c_latest](http://quay.io/opendatahub-contrib/workbench-images:cuda-jupyter-langchain-c9s-py311_2023c_latest){:target="_blank"}, inside your RHODS/ODH environment. It comes pre-installed with Langchain and many other LLM-related tools. If you don't know how to do this, see the [instructions here](../../odh-rhods/configuration.md#custom-notebook-images){:target="_blank"}.
+- If you don't want to have to manually install different requirements in the notebooks environment (mostly Langchain and its dependencies), which may take time, you may want to directly import this custom workbench image, [quay.io/opendatahub-contrib/workbench-images:cuda-jupyter-langchain-c9s-py311_2023c_latest](http://quay.io/opendatahub-contrib/workbench-images:cuda-jupyter-langchain-c9s-py311_2023c_latest){:target="_blank"}, inside your RHOAI/ODH environment. It comes pre-installed with Langchain and many other LLM-related tools. If you don't know how to do this, see the [instructions here](../../odh-rhoai/configuration.md#custom-notebook-images){:target="_blank"}.
 
 ### Model Serving
 
@@ -131,7 +131,7 @@ After you follow those instructions you should have a Database ready to be popul
 
 In [this notebook](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/examples/notebooks/langchain/Langchain-Redis-Ingest.ipynb){:target="_blank"} you will find detailed instructions on how to ingest different types of documents: PDFs first, then Web pages.
 
-The examples are based on RHODS documentation, but of course we encourage you to use your own documentation. After all that's the purpose of all of this!
+The examples are based on RHOAI documentation, but of course we encourage you to use your own documentation. After all that's the purpose of all of this!
 
 This [other notebook](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/examples/notebooks/langchain/Langchain-Redis-Query.ipynb){:target="_blank"} will allow you to execute simple queries against your Vector Store to make sure it works alright.
 

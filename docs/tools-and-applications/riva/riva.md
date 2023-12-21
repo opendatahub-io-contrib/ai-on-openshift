@@ -139,7 +139,7 @@ If you want to use the API outside of the OpenShift cluster, you will have to cr
 
 ## Example
 
-* On the same cluster where NVIDIA Riva is deployed, deploy RHODS or ODH and launch a Notebook (Standard DataScience is enough).
+* On the same cluster where NVIDIA Riva is deployed, deploy RHOAI or ODH and launch a Notebook (Standard DataScience is enough).
 * Clone the NVIDIA Riva tutorials repository at [https://github.com/nvidia-riva/tutorials](https://github.com/nvidia-riva/tutorials){:target="_blank"}
 * Open a Terminal and install the client with `pip install nvidia-riva-client`:
 
