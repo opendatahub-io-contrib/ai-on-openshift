@@ -11,6 +11,6 @@ Red Hat OpenShift AI (RHOAI) builds on the capabilities of Red Hat OpenShift to 
 
 [Documentation for Self-Managed RHOAI](https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/){:target="_blank"}
 
-[Documentation for Managed RHOAI](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science/){:target="_blank"}
+[Documentation for Managed RHOAI](https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_cloud_service/){:target="_blank"}
 
 *[Want to know more?](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai){:target="_blank"}*

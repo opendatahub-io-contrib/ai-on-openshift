@@ -18,3 +18,7 @@ div.tx-hero__image img {
 a.md-logo img {
     border: none;
 }
+
+.md-nav__item--section>.md-nav__link[for] {
+    color:grey;
+}
