@@ -228,7 +228,7 @@ for s in results:
 
 Notebooks are great and everything, but it's not what you want to show to your users. I hope...
 
-So instead, [here is a simple UI](https://github.com/rh-aiservices-bu/llm-on-openshift/tree/main/examples/ui/gradio/gradio-rag-milvus-vllm-openai) that implements mostly the same code we used in the notebooks.
+So instead, [here is a simple UI](https://github.com/rh-aiservices-bu/llm-on-openshift/tree/main/examples/ui/gradio/gradio-rag-milvus-vllm-openai){:target="_blank"} that implements mostly the same code we used in the notebooks.
 
 ![chatbot](img/kbchat.png)
 

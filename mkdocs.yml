@@ -105,6 +105,7 @@ nav:
     - Custom notebooks: odh-rhoai/custom-notebooks.md
     - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
     - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
+    - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
     - OpenShift Group Management: odh-rhoai/openshift-group-management.md
   - Applications and Patterns:
     - Data processing:
