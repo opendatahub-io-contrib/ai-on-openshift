@@ -1,5 +1,11 @@
 # Model Training and Serving - YOLOv5
 
+!!!info
+    The full source and instructions for this demo are available in these repos:
+
+    -  **[Model Training](https://github.com/rh-aiservices-bu/yolov5-transfer-learning){:target="_blank"}**
+    -  **[Model Serving](https://github.com/rh-aiservices-bu/yolov5-transfer-learning){:target="_blank"}**
+
 In this tutorial, we're going to see how you can customize YOLOv5, an object detection model, to recognize specific objects in pictures, and how to deploy and use this model.
 
 ## YOLO and YOLOv5
