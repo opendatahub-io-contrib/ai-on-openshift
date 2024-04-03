@@ -101,12 +101,17 @@ nav:
       - Open Data Hub: getting-started/opendatahub.md
       - OpenShift AI: getting-started/openshift-ai.md
   - ODH/RHOAI How-Tos:
-    - Dashboard configuration: odh-rhoai/configuration.md
-    - Custom notebooks: odh-rhoai/custom-notebooks.md
-    - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
-    - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
-    - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
-    - OpenShift Group Management: odh-rhoai/openshift-group-management.md
+    - From Zero to Workbench:
+      - Using the CLI: odh-rhoai/from-zero-to-workbench/using-cli.md
+      - Using the UI: odh-rhoai/from-zero-to-workbench/using-ui.md
+      - Using Developer Hub: odh-rhoai/from-zero-to-workbench/using-developer-hub.md
+    - Advanced Configuration:
+      - Dashboard configuration: odh-rhoai/configuration.md
+      - Custom notebooks: odh-rhoai/custom-notebooks.md
+      - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
+      - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
+      - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
+      - OpenShift Group Management: odh-rhoai/openshift-group-management.md
   - Applications and Patterns:
     - Data processing:
       - Starburst/Trino proxy: patterns/starproxy/starproxy.md
