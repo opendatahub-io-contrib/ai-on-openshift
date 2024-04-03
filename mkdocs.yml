@@ -11,7 +11,9 @@ edit_uri: ''  #disables edit button
 
 ## Plugins
 plugins:
-  - social
+  - social:
+      cards_layout_options:
+        font_family: Roboto
   - search
 
 ## Theme
