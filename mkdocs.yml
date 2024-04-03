@@ -113,6 +113,8 @@ nav:
       - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
       - OpenShift Group Management: odh-rhoai/openshift-group-management.md
   - Applications and Patterns:
+    - Model Serving:
+      - Ensemble Serving: tools-and-applications/ensemble-serving/ensemble-serving.md
     - Data processing:
       - Starburst/Trino proxy: patterns/starproxy/starproxy.md
       - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
@@ -122,8 +124,8 @@ nav:
       - Apache Airflow: tools-and-applications/airflow/airflow.md
       - MLflow: tools-and-applications/mlflow/mlflow.md
     - Storage:
-      - Rclone: tools-and-applications/rclone/rclone.md
       - Minio: tools-and-applications/minio/minio.md
+      - Rclone: tools-and-applications/rclone/rclone.md
     - Architecture Patterns:
       - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
       - Kafka to object storage: patterns/kafka/kafka-to-object-storage/kafka-to-object-storage.md
