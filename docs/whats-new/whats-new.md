@@ -1,6 +1,8 @@
 # What's new?
 
-**2024-04-04**: Refactoring of the site. Update on the [LLMs deployment and RAG demo](../demos/llm-chat-doc/llm-chat-doc.md). Single Stack Serving certificate [how-to](../odh-rhoai/single-stack-serving-certificate.md).
+**2024-03-28**: Add [Zero to Workbench documentation](../odh-rhoai/from-zero-to-workbench/using-cli.md).
+
+**2024-03-04**: Refactoring of the site. Update on the [LLMs deployment and RAG demo](../demos/llm-chat-doc/llm-chat-doc.md). Single Stack Serving certificate [how-to](../odh-rhoai/single-stack-serving-certificate.md).
 
 **2023-12-21**: Name change for Red Hat OpenShift Data Science, which becomes Red Hat OpenShift AI.
 
