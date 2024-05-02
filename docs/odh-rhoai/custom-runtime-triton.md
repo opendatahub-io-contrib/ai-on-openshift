@@ -22,11 +22,15 @@ The sources used to create this document are mostly:
     1. (by default, cluster-admins and dedicated admins are).
 1. Navigate to the **Settings** menu, then **Serving Runtimes**
 
-    ![alt_text](img-triton/ServingRuntimes.png ){ style="width:200px"}
+    ![Serving Runtime Settings](img-triton/ServingRuntimes.png ){ style="width:200px"}
 
 1. Click on the **Add Serving Runtime** button:
 
-    ![alt_text](img-triton/add.serving.runtime.png){ style="width:200px"}
+    ![Add Serving Runtime](img-triton/add.serving.runtime.png){ style="width:200px"}
+
+1. From the drop down menu, select **Multi-model serving platform.  The option for REST will be selected automatically:
+
+    ![Select Multi-model serving](img-triton/multi-model-serving.png){ style="width:200px"}
 
 1. Click on **Start from scratch** and in the window that opens up, paste the following YAML:
   ```yaml
@@ -142,7 +146,7 @@ The sources used to create this document are mostly:
 1. Confirm the new Runtime is in the list, and re-order the list as needed.
   (the order chosen here is the order in which the users will see these choices)
 
-    ![alt_text](img-triton/runtimes.list.png ){ style="width:800px"}
+    ![Runtime List](img-triton/runtimes.list.png ){ style="width:800px"}
 
 ## Creating a project
 
@@ -154,13 +158,13 @@ The sources used to create this document are mostly:
 1. In your project, scroll down to the "Models and Model Servers" Section
 1. Click on **Configure server**
 
-    ![alt_text](img-triton/configure.server.png ){ style="width:500px"}
+    ![Configure Server](img-triton/configure.server.png ){ style="width:500px"}
 
 1. Fill out the details:
 
-    ![alt_text](img-triton/server.details.01.png ){ style="width:300px"}
+    ![Server Details - 1](img-triton/server.details.01.png ){ style="width:300px"}
 
-    ![alt_text](img-triton/server.details.02.png ){ style="width:300px"}
+    ![Server Details - 2](img-triton/server.details.02.png ){ style="width:300px"}
 
 1. Click **Configure**
 
@@ -169,19 +173,19 @@ The sources used to create this document are mostly:
 1. If you don't have any model files handy, you can grab a copy of [this file](img-triton/card.fraud.detection.onnx) and upload it to your Object Storage of choice.
 1. Click on **Deploy Model**
 
-    ![alt_text](img-triton/deploy.model.png ){ style="width:800px"}
+    ![Deploy a Model](img-triton/deploy.model.png ){ style="width:800px"}
 
 1. Choose a model name and a framework:
 
-    ![alt_text](img-triton/model.name.framework.png ){ style="width:400px"}
+    ![Configure a Model](img-triton/model.name.framework.png ){ style="width:400px"}
 
 1. Then create a new data connection containing the details of where your model is stored in Object Storage:
 
-    ![alt_text](img-triton/data.connection.png ){ style="width:400px"}
+    ![Create a Data Connection](img-triton/data.connection.png ){ style="width:400px"}
 
 1. After a little while, you should see the following:
 
-    ![alt_text](img-triton/model.deployed.png ){ style="width:800px"}
+    ![Deploy model](img-triton/model.deployed.png ){ style="width:800px"}
 
 ## Validating the model
 
