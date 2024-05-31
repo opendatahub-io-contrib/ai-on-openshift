@@ -275,6 +275,104 @@ If you already have your own Data Science Project, or OpenShift project, you can
     * For your Model Serving
     * For your Pipeline Server Configuration
 
+## Validate 
+
+To test if everything is working correctly, you can access the workbench associated with your Data Connection and run the following commands (i.e., inside a Jupyter notebook): 
+
+1. Install and import MinIO Python Client SDK
+``` python
+!pip install minio
+```
+``` python
+from minio import Minio
+from minio.error import S3Error
+import  os
+import datetime
+```
+
+1. Access Data Connection properties as environment variables:
+``` python
+# MinIO client doesn't like URLs with procotol/schema, so use
+# yourendpoint.com instead of https://yourtendpoint.com
+AWS_S3_ENDPOINT = os.getenv("AWS_S3_ENDPOINT")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
+```
+
+1. Create the MinIO client
+``` python 
+# Create the MinIO client
+client = Minio(
+    AWS_S3_ENDPOINT,
+    access_key=AWS_ACCESS_KEY_ID,
+    secret_key=AWS_SECRET_ACCESS_KEY,
+    secure=True  # Set to True if you are using HTTPS
+)
+```
+
+1. Test the connection by listing all buckets
+``` python 
+#List all buckets
+try:
+    buckets = client.list_buckets()
+    for bucket in buckets:
+        print(bucket.name, bucket.creation_date)
+except S3Error as e:
+    print("Error occurred: ", e)
+```
+
+1. Create a sample local file
+``` python 
+# Create File
+FILE_ON_DISK = 'file.txt'
+ 
+file = open(f"{FILE_ON_DISK}", "w")
+file.write('Hello there %s recorded at %s.\n' % (FILE_ON_DISK, datetime.datetime.now()))
+file.close()
+```
+
+1. Upload a file to MinIO
+``` python 
+# Upload a File 
+file_path = FILE_ON_DISK
+object_name = 'target-file.txt'
+
+try:
+    client.fput_object(AWS_S3_BUCKET, object_name, file_path)
+    print(f"'{object_name}' is successfully uploaded as object to bucket '{bucket_name}'.")
+except S3Error as e:
+    print("Error occurred: ", e)
+```
+
+1. Download a file from MinIO
+``` python 
+# Download a file 
+object_name = 'target-file.txt'
+file_path = 'file-froms3.txt'
+
+try:
+ client.fget_object(AWS_S3_BUCKET, object_name, file_path)
+ print(f"'{object_name}' is successfully downloaded to '{file_path}'.")
+except S3Error as e:
+ print("Error occurred: ", e)
+```
+
+1. List objects in our bucket 
+``` python 
+# Download a file 
+object_name = 'target-file.txt'
+file_path = 'file-froms3.txt'
+
+try:
+    client.fget_object(AWS_S3_BUCKET, object_name, file_path)
+    print(f"'{object_name}' is successfully downloaded to '{file_path}'.")
+except S3Error as e:
+    print("Error occurred: ", e)
+``` 
+
+For more complete and detailed information about MinIO Python Client SDK usage, please check the official [documentation](https://min.io/docs/minio/linux/developers/python/minio-py.html). 
+
 ## Notes and FAQ
 
 * As long as you are using the Route URLs, a Minio running in one namespace can be used by any other application, even running in another namespace, or even in another cluster altogether.
