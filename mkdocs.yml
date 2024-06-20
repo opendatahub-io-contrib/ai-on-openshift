@@ -114,6 +114,7 @@ nav:
       - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
       - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
       - OpenShift Group Management: odh-rhoai/openshift-group-management.md
+      - Accelerator Profiles: odh-rhoai/accelerator-profiles.md
   - Applications and Patterns:
     - Model Serving:
       - Ensemble Serving: tools-and-applications/ensemble-serving/ensemble-serving.md
