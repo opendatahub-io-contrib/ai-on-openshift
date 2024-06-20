@@ -25,6 +25,7 @@ The AI on OpenShift site aims at being a one-stop shop for installation recipes,
 * From the root of the repo, launch `mkdocs serve`
 * The documentation will be accessible at [http://127.0.0.1:8000](http://127.0.0.1:8000)
 * All saved modifications are watched and rendered real time
+* Once your environment is fully set up, you can also start the development environment by launching the `start-dev.sh` file.
 
 Alternatively, you can also try serving the content using a container image.
 

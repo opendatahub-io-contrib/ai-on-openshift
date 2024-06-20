@@ -11,7 +11,9 @@ edit_uri: ''  #disables edit button
 
 ## Plugins
 plugins:
-  - social
+  - social:
+      cards_layout_options:
+        font_family: Roboto
   - search
 
 ## Theme
@@ -101,14 +103,21 @@ nav:
       - Open Data Hub: getting-started/opendatahub.md
       - OpenShift AI: getting-started/openshift-ai.md
   - ODH/RHOAI How-Tos:
-    - Dashboard configuration: odh-rhoai/configuration.md
-    - Custom notebooks: odh-rhoai/custom-notebooks.md
-    - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
-    - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
-    - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
-    - OpenShift Group Management: odh-rhoai/openshift-group-management.md
-    - Accelerator Profiles: odh-rhoai/accelerator-profiles.md
+    - From Zero to Workbench:
+      - Using the CLI: odh-rhoai/from-zero-to-workbench/using-cli.md
+      - Using the UI: odh-rhoai/from-zero-to-workbench/using-ui.md
+      - Using Developer Hub: odh-rhoai/from-zero-to-workbench/using-developer-hub.md
+    - Advanced Configuration:
+      - Dashboard configuration: odh-rhoai/configuration.md
+      - Custom notebooks: odh-rhoai/custom-notebooks.md
+      - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
+      - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
+      - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
+      - OpenShift Group Management: odh-rhoai/openshift-group-management.md
+      - Accelerator Profiles: odh-rhoai/accelerator-profiles.md
   - Applications and Patterns:
+    - Model Serving:
+      - Ensemble Serving: tools-and-applications/ensemble-serving/ensemble-serving.md
     - Data processing:
       - Starburst/Trino proxy: patterns/starproxy/starproxy.md
       - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
@@ -118,13 +127,14 @@ nav:
       - Apache Airflow: tools-and-applications/airflow/airflow.md
       - MLflow: tools-and-applications/mlflow/mlflow.md
     - Storage:
-      - Rclone: tools-and-applications/rclone/rclone.md
       - Minio: tools-and-applications/minio/minio.md
+      - Rclone: tools-and-applications/rclone/rclone.md
     - Architecture Patterns:
       - Bucket notifications: patterns/bucket-notifications/bucket-notifications.md
       - Kafka to object storage: patterns/kafka/kafka-to-object-storage/kafka-to-object-storage.md
       - Kafka to serverless: patterns/kafka/kafka-to-serverless/kafka-to-serverless.md
   - Predictive AI:
+    - What is Predictive AI?: predictive-ai/what-is-predictive-ai.md
     - Demos:
       - Credit Card Fraud Detection with MLFlow: demos/credit-card-fraud-detection-mlflow/credit-card-fraud.md
       - Financial Fraud Detection: demos/financial-fraud-detection/financial-fraud-detection.md
@@ -135,6 +145,9 @@ nav:
       - XRay Pipeline: demos/xray-pipeline/xray-pipeline.md
       - YOLOv5 Training and Serving: demos/yolov5-training-serving/yolov5-training-serving.md
   - Generative AI:
+    - What is Generative AI?: generative-ai/what-is-generative-ai.md
+    - LLM Serving: generative-ai/llm-serving.md
     - Demos: 
-      - LLMs, Chatbots, Talk with your Doc,...: demos/llm-chat-doc/llm-chat-doc.md
+      - Chat with your documentation: demos/llm-chat-doc/llm-chat-doc.md
+      - Code assistant: demos/codellama-continue/codellama-continue.md
     
