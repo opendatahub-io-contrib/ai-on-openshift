@@ -50,169 +50,169 @@ If you already have your own Data Science Project, or OpenShift project, you can
     ![alt_text](img/import.yaml.png)
 
 1. Paste the following YAML in the box, but **don't press ok yet!**:
-  ```yaml
-  ---
-  kind: PersistentVolumeClaim
-  apiVersion: v1
-  metadata:
-    name: minio-pvc
-  spec:
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 20Gi
-    volumeMode: Filesystem
-  ---
-  kind: Secret
-  apiVersion: v1
-  metadata:
-    name: minio-secret
-  stringData:
-    # change the username and password to your own values.
-    # ensure that the user is at least 3 characters long and the password at least 8
-    minio_root_user: minio
-    minio_root_password: minio123
-  ---
-  kind: Deployment
-  apiVersion: apps/v1
-  metadata:
-    name: minio
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: minio
-    template:
-      metadata:
-        creationTimestamp: null
-        labels:
+    ```yaml
+    ---
+    kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: minio-pvc
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+      volumeMode: Filesystem
+    ---
+    kind: Secret
+    apiVersion: v1
+    metadata:
+      name: minio-secret
+    stringData:
+      # change the username and password to your own values.
+      # ensure that the user is at least 3 characters long and the password at least 8
+      minio_root_user: minio
+      minio_root_password: minio123
+    ---
+    kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: minio
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
           app: minio
-      spec:
-        volumes:
-          - name: data
-            persistentVolumeClaim:
-              claimName: minio-pvc
-        containers:
-          - resources:
-              limits:
-                cpu: 250m
-                memory: 1Gi
-              requests:
-                cpu: 20m
-                memory: 100Mi
-            readinessProbe:
-              tcpSocket:
-                port: 9000
-              initialDelaySeconds: 5
-              timeoutSeconds: 1
-              periodSeconds: 5
-              successThreshold: 1
-              failureThreshold: 3
-            terminationMessagePath: /dev/termination-log
-            name: minio
-            livenessProbe:
-              tcpSocket:
-                port: 9000
-              initialDelaySeconds: 30
-              timeoutSeconds: 1
-              periodSeconds: 5
-              successThreshold: 1
-              failureThreshold: 3
-            env:
-              - name: MINIO_ROOT_USER
-                valueFrom:
-                  secretKeyRef:
-                    name: minio-secret
-                    key: minio_root_user
-              - name: MINIO_ROOT_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: minio-secret
-                    key: minio_root_password
-            ports:
-              - containerPort: 9000
-                protocol: TCP
-              - containerPort: 9090
-                protocol: TCP
-            imagePullPolicy: IfNotPresent
-            volumeMounts:
-              - name: data
-                mountPath: /data
-                subPath: minio
-            terminationMessagePolicy: File
-            image: >-
-              quay.io/minio/minio:RELEASE.2023-06-19T19-52-50Z
-            args:
-              - server
-              - /data
-              - --console-address
-              - :9090
-        restartPolicy: Always
-        terminationGracePeriodSeconds: 30
-        dnsPolicy: ClusterFirst
-        securityContext: {}
-        schedulerName: default-scheduler
-    strategy:
-      type: Recreate
-    revisionHistoryLimit: 10
-    progressDeadlineSeconds: 600
-  ---
-  kind: Service
-  apiVersion: v1
-  metadata:
-    name: minio-service
-  spec:
-    ipFamilies:
-      - IPv4
-    ports:
-      - name: api
-        protocol: TCP
-        port: 9000
-        targetPort: 9000
-      - name: ui
-        protocol: TCP
-        port: 9090
-        targetPort: 9090
-    internalTrafficPolicy: Cluster
-    type: ClusterIP
-    ipFamilyPolicy: SingleStack
-    sessionAffinity: None
-    selector:
-      app: minio
-  ---
-  kind: Route
-  apiVersion: route.openshift.io/v1
-  metadata:
-    name: minio-api
-  spec:
-    to:
-      kind: Service
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: minio
+        spec:
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: minio-pvc
+          containers:
+            - resources:
+                limits:
+                  cpu: 250m
+                  memory: 1Gi
+                requests:
+                  cpu: 20m
+                  memory: 100Mi
+              readinessProbe:
+                tcpSocket:
+                  port: 9000
+                initialDelaySeconds: 5
+                timeoutSeconds: 1
+                periodSeconds: 5
+                successThreshold: 1
+                failureThreshold: 3
+              terminationMessagePath: /dev/termination-log
+              name: minio
+              livenessProbe:
+                tcpSocket:
+                  port: 9000
+                initialDelaySeconds: 30
+                timeoutSeconds: 1
+                periodSeconds: 5
+                successThreshold: 1
+                failureThreshold: 3
+              env:
+                - name: MINIO_ROOT_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-secret
+                      key: minio_root_user
+                - name: MINIO_ROOT_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-secret
+                      key: minio_root_password
+              ports:
+                - containerPort: 9000
+                  protocol: TCP
+                - containerPort: 9090
+                  protocol: TCP
+              imagePullPolicy: IfNotPresent
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                  subPath: minio
+              terminationMessagePolicy: File
+              image: >-
+                quay.io/minio/minio:RELEASE.2023-06-19T19-52-50Z
+              args:
+                - server
+                - /data
+                - --console-address
+                - :9090
+          restartPolicy: Always
+          terminationGracePeriodSeconds: 30
+          dnsPolicy: ClusterFirst
+          securityContext: {}
+          schedulerName: default-scheduler
+      strategy:
+        type: Recreate
+      revisionHistoryLimit: 10
+      progressDeadlineSeconds: 600
+    ---
+    kind: Service
+    apiVersion: v1
+    metadata:
       name: minio-service
-      weight: 100
-    port:
-      targetPort: api
-    wildcardPolicy: None
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect
-  ---
-  kind: Route
-  apiVersion: route.openshift.io/v1
-  metadata:
-    name: minio-ui
-  spec:
-    to:
-      kind: Service
-      name: minio-service
-      weight: 100
-    port:
-      targetPort: ui
-    wildcardPolicy: None
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect
-  ```
+    spec:
+      ipFamilies:
+        - IPv4
+      ports:
+        - name: api
+          protocol: TCP
+          port: 9000
+          targetPort: 9000
+        - name: ui
+          protocol: TCP
+          port: 9090
+          targetPort: 9090
+      internalTrafficPolicy: Cluster
+      type: ClusterIP
+      ipFamilyPolicy: SingleStack
+      sessionAffinity: None
+      selector:
+        app: minio
+    ---
+    kind: Route
+    apiVersion: route.openshift.io/v1
+    metadata:
+      name: minio-api
+    spec:
+      to:
+        kind: Service
+        name: minio-service
+        weight: 100
+      port:
+        targetPort: api
+      wildcardPolicy: None
+      tls:
+        termination: edge
+        insecureEdgeTerminationPolicy: Redirect
+    ---
+    kind: Route
+    apiVersion: route.openshift.io/v1
+    metadata:
+      name: minio-ui
+    spec:
+      to:
+        kind: Service
+        name: minio-service
+        weight: 100
+      port:
+        targetPort: ui
+      wildcardPolicy: None
+      tls:
+        termination: edge
+        insecureEdgeTerminationPolicy: Redirect
+    ```
 
 1. By default, the size of the storage is 20 GB. (see line 11). Change it if you need to.
 1. If you want to, edit lines 21-22 to change the default user/password.
@@ -274,6 +274,112 @@ If you already have your own Data Science Project, or OpenShift project, you can
     * In your Workbenches
     * For your Model Serving
     * For your Pipeline Server Configuration
+
+## Validate 
+
+To test if everything is working correctly, you can access the workbench associated with your Data Connection and run the following commands (i.e., inside a Jupyter notebook): 
+
+1. Install and import MinIO Python Client SDK
+
+    ``` python
+    !pip install minio
+    ```
+    ``` python
+    from minio import Minio
+    from minio.error import S3Error
+    import  os
+    import datetime
+    ```
+
+1. Access Data Connection properties as environment variables:
+
+    ``` python
+    # MinIO client doesn't like URLs with procotol/schema, so use
+    # yourendpoint.com instead of https://yourtendpoint.com
+    AWS_S3_ENDPOINT = os.getenv("AWS_S3_ENDPOINT")
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
+    ```
+
+1. Create the MinIO client
+
+    ``` python 
+    # Create the MinIO client
+    client = Minio(
+        AWS_S3_ENDPOINT,
+        access_key=AWS_ACCESS_KEY_ID,
+        secret_key=AWS_SECRET_ACCESS_KEY,
+        secure=True  # Set to True if you are using HTTPS
+    )
+    ```
+
+1. Test the connection by listing all buckets
+
+    ``` python 
+    #List all buckets
+    try:
+        buckets = client.list_buckets()
+        for bucket in buckets:
+            print(bucket.name, bucket.creation_date)
+    except S3Error as e:
+        print("Error occurred: ", e)
+    ```
+
+1. Create a sample local file
+
+    ``` python 
+    # Create File
+    FILE_ON_DISK = 'file.txt'
+     
+    file = open(f"{FILE_ON_DISK}", "w")
+    file.write('Hello there %s recorded at %s.\n' % (FILE_ON_DISK, datetime.datetime.now()))
+    file.close()
+    ```
+
+1. Upload a file to MinIO
+
+    ``` python 
+    # Upload a File 
+    file_path = FILE_ON_DISK
+    object_name = 'target-file.txt'
+    
+    try:
+        client.fput_object(AWS_S3_BUCKET, object_name, file_path)
+        print(f"'{object_name}' is successfully uploaded as object to bucket '{bucket_name}'.")
+    except S3Error as e:
+        print("Error occurred: ", e)
+    ```
+
+1. Download a file from MinIO
+
+    ``` python 
+    # Download a file 
+    object_name = 'target-file.txt'
+    file_path = 'file-froms3.txt'
+    
+    try:
+     client.fget_object(AWS_S3_BUCKET, object_name, file_path)
+     print(f"'{object_name}' is successfully downloaded to '{file_path}'.")
+    except S3Error as e:
+     print("Error occurred: ", e)
+    ```
+
+1. List objects in our bucket
+
+    ``` python 
+    # Download a file 
+    object_name = 'target-file.txt'
+    file_path = 'file-froms3.txt'
+    
+    try:
+        client.fget_object(AWS_S3_BUCKET, object_name, file_path)
+        print(f"'{object_name}' is successfully downloaded to '{file_path}'.")
+    except S3Error as e:
+        print("Error occurred: ", e)
+    ``` 
+
+For more complete and detailed information about MinIO Python Client SDK usage, please check the official [documentation](https://min.io/docs/minio/linux/developers/python/minio-py.html). 
 
 ## Notes and FAQ
 

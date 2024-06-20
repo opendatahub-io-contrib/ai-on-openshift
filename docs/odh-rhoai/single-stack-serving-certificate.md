@@ -43,3 +43,29 @@ This following procedure explains how to use the same certificate that you alrea
     ```
 
 Your Model Servers will now be deployed with the same certificate as you are using for OpenShift Routes. If this is a trusted certificate, your Endpoints will be accessible using SSL without having to ignore error messages or create special configurations.
+
+## Other Workarounds
+
+If the above method does not work or you don't want or can't do any modification, you can try to bypass the certificate verification in your application or code. Depending on the library used, there are different solutions.
+
+### Using Langchain with OpenAI API compatible runtimes
+
+The underlying library used for communication by the base OpenAI module of Langchain is `httpx`. You can directly specify `httpx` settings when you instantiate the llm object in Langchain. With the following settings on the last two lines of this example, any certificate error will be ignored:
+
+```python
+import httpx
+# LLM definition
+llm = VLLMOpenAI(
+    openai_api_key="EMPTY",
+    openai_api_base= f"{inference_server_url}/v1",
+    model_name="/mnt/models/",
+    top_p=0.92,
+    temperature=0.01,
+    max_tokens=512,
+    presence_penalty=1.03,
+    streaming=True,
+    callbacks=[StreamingStdOutCallbackHandler()]
+    async_client=httpx.AsyncClient(verify=False),
+    http_client=httpx.Client(verify=False)
+)
+```
