@@ -1,4 +1,4 @@
-# Working with NVIDIA GPUs
+# Working with GPUs
 
 ## Using NVIDIA GPUs on OpenShift
 
@@ -114,74 +114,6 @@ That's it, the operator is now able to deploy all the NVIDIA tooling on the node
     The first taint that you want to apply on GPU nodes is `nvidia.com/gpu`. This is the standard taint for which the NVIDIA Operator has a built-in toleration, so no need to add it. Likewise, Notebooks, Workbenches or other components from ODH/RHOAI that request GPUs will already have this toleration in place. For other Pods you schedule yourself, or using Pipelines, you should make sure the toleration is also applied. Doing this will ensure that only Pods really requiring GPUs are scheduled on those nodes.
 
     You can of course apply many different taints at the same time. You would simply have to apply the matching toleration on the NVIDIA GPU Operator, as well as on the Pods that need to run there.
-
-### Time Slicing (GPU sharing)
-
-Do you want to **share GPUs** between different Pods? Time Slicing is one of the solutions you can use!
-
-The NVIDIA GPU Operator enables oversubscription of GPUs through a set of extended options for the NVIDIA Kubernetes Device Plugin. GPU time-slicing enables workloads that are scheduled on oversubscribed GPUs to interleave with one another.
-
-This mechanism for enabling time-slicing of GPUs in Kubernetes enables a system administrator to define a set of replicas for a GPU, each of which can be handed out independently to a pod to run workloads on. Unlike Multi-Instance GPU (MIG), there is no memory or fault-isolation between replicas, but for some workloads this is better than not being able to share at all. Internally, GPU time-slicing is used to multiplex workloads from replicas of the same underlying GPU.
-
-*[Full reference](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-sharing.html)*
-
-#### Configuration
-
-This is a simple example on how to quickly setup Time Slicing on your OpenShift cluster. In this example, we have a MachineSet that can provide nodes with one T4 card each that we want to make "seen" as 4 different cards so that multiple Pods requiring GPUs can be launched, even if we only have one node of this type.
-
-- Create the ConfigMap that will define how we want to slice our GPU:
-
-    ```yaml
-    kind: ConfigMap
-    apiVersion: v1
-    metadata:
-      name: time-slicing-config
-      namespace: nvidia-gpu-operator
-    data:
-      tesla-t4: |-
-        version: v1
-        sharing:
-          timeSlicing:
-            resources:
-            - name: nvidia.com/gpu
-              replicas: 4
-    ```
-
-    !!! note
-        - The ConfigMap has to be called `time-slicing-config` and must be created in the `nvidia-gpu-operator` namespace.
-        - You can add many different resources with different configurations. You simply have to provide the corresponding Node label that has been applied by the operator, for example `name: nvidia.com/mig-1g.5gb / replicas: 2` if you have a MIG configuration applied to a Node with a A100.
-        - You can modify the value of `replicas` to present less/more GPUs. Be warned though: all the Pods on this node will share the GPU memory, with no reservation. The more slices you create, the more risks of OOM errors (out of memory) you get if your Pods are hungry (or even only one!).
-
-- Modify the ClusterPolicy called `gpu-cluster-policy` (accessible from the NVIDIA Operator view in the `nvidia-gpu-operator` namespace) to point to this configuration, and eventually add the default configuration (in case you nodes are not labelled correctly, see below)
-
-    ```yaml
-    apiVersion: nvidia.com/v1
-    kind: ClusterPolicy
-    metadata:
-      ...
-      name: gpu-cluster-policy
-    spec:
-      ...
-      devicePlugin:
-        config:
-          default: tesla-t4
-          name: time-slicing-config
-      ...
-    ```
-
-- Apply label to your MachineSet for the specific slicing configuration you want to use on it:
-
-    ```yaml
-    apiVersion: machine.openshift.io/v1beta1
-    kind: MachineSet
-    metadata:
-    spec:
-      template:
-        spec:
-          metadata:
-            labels:
-              nvidia.com/device-plugin.config: tesla-t4
-    ```
 
 ### Autoscaler and GPUs
 
@@ -305,3 +237,119 @@ Reference material:
 - [https://cloud.redhat.com/blog/autoscaling-nvidia-gpus-on-red-hat-openshift](https://cloud.redhat.com/blog/autoscaling-nvidia-gpus-on-red-hat-openshift)
 - [https://access.redhat.com/solutions/6055181](https://access.redhat.com/solutions/6055181)
 - [https://bugzilla.redhat.com/show_bug.cgi?id=1943194](https://bugzilla.redhat.com/show_bug.cgi?id=1943194)
+
+### GPU Partitioning / Sharing
+
+There are also situations where the GPU(s) you have access to might be oversized for the task at hand, and having a single user or process lock-up and "hog" that GPU can be inefficient. 
+There are thankfully some partitioning strategies that can be brought to bear in order to deal with these situations. 
+Although there are multiple techniques, with [various pros and cons](https://github.com/rh-aiservices-bu/gpu-partitioning-guide?tab=readme-ov-file#14-pros-and-cons-of-gpu-sharing-methods), the net effect of these implementations is that what used to look like a single GPU will then look like multiple GPUs. 
+Obviously, there is no magic in the process, and the laws of physics still hold: there are trade-offs, and the multiple "partitioned" GPUs are not going to be faster or crunch more data than the real underlying physical GPU.  
+
+If this is a situation that you are facing, consult this [repository](https://github.com/rh-aiservices-bu/gpu-partitioning-guide) for more detailed information and examples.
+
+#### Time Slicing (GPU sharing)
+
+Do you want to **share GPUs** between different Pods? Time Slicing is one of the solutions you can use!
+
+The NVIDIA GPU Operator enables oversubscription of GPUs through a set of extended options for the NVIDIA Kubernetes Device Plugin. GPU time-slicing enables workloads that are scheduled on oversubscribed GPUs to interleave with one another.
+
+This mechanism for enabling time-slicing of GPUs in Kubernetes enables a system administrator to define a set of replicas for a GPU, each of which can be handed out independently to a pod to run workloads on. Unlike Multi-Instance GPU (MIG), there is no memory or fault-isolation between replicas, but for some workloads this is better than not being able to share at all. Internally, GPU time-slicing is used to multiplex workloads from replicas of the same underlying GPU.
+
+* *[Time Slicing Full reference](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-sharing.html)*
+* *[Time Slicing Example Repository](https://github.com/rh-aiservices-bu/gpu-partitioning-guide?tab=readme-ov-file#31-time-slicing)*
+
+##### Configuration
+
+This is a simple example on how to quickly setup Time Slicing on your OpenShift cluster. In this example, we have a MachineSet that can provide nodes with one T4 card each that we want to make "seen" as 4 different cards so that multiple Pods requiring GPUs can be launched, even if we only have one node of this type.
+
+- Create the ConfigMap that will define how we want to slice our GPU:
+
+    ```yaml
+    kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: time-slicing-config
+      namespace: nvidia-gpu-operator
+    data:
+      tesla-t4: |-
+        version: v1
+        sharing:
+          timeSlicing:
+            resources:
+            - name: nvidia.com/gpu
+              replicas: 4
+    ```
+
+    > NOTE
+        - The ConfigMap has to be called `time-slicing-config` and must be created in the `nvidia-gpu-operator` namespace.
+        - You can add many different resources with different configurations. You simply have to provide the corresponding Node label that has been applied by the operator, for example `name: nvidia.com/mig-1g.5gb / replicas: 2` if you have a MIG configuration applied to a Node with a A100.
+        - You can modify the value of `replicas` to present less/more GPUs. Be warned though: all the Pods on this node will share the GPU memory, with no reservation. The more slices you create, the more risks of OOM errors (out of memory) you get if your Pods are hungry (or even only one!).
+
+- Modify the ClusterPolicy called `gpu-cluster-policy` (accessible from the NVIDIA Operator view in the `nvidia-gpu-operator` namespace) to point to this configuration, and eventually add the default configuration (in case you nodes are not labelled correctly, see below)
+
+    ```yaml
+    apiVersion: nvidia.com/v1
+    kind: ClusterPolicy
+    metadata:
+      ...
+      name: gpu-cluster-policy
+    spec:
+      ...
+      devicePlugin:
+        config:
+          default: tesla-t4
+          name: time-slicing-config
+      ...
+    ```
+
+- Apply label to your MachineSet for the specific slicing configuration you want to use on it:
+
+    ```yaml
+    apiVersion: machine.openshift.io/v1beta1
+    kind: MachineSet
+    metadata:
+    spec:
+      template:
+        spec:
+          metadata:
+            labels:
+              nvidia.com/device-plugin.config: tesla-t4
+    ```
+
+#### Multi-Instance GPU (MIG)
+
+[Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/index.html) enables a single physical GPU to be partitioned into several isolated instances, each with its own compute resources, memory, and performance profiles.
+
+There are two types of MIG strategies: `Single` and `Mixed`. The single MIG strategy should be utilized when all GPUs on a node have MIG enabled, while the `Mixed` MIG strategy should be utilized when not all GPUs on a node have MIG enabled.
+
+> NOTE: MIG is only supported with the following NVIDIA GPU Types - A30, A100, A100X, A800, AX800, H100, H200, and H800.
+
+* *[MIG Full reference](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator-mig.html)*
+* *[MIG Single Example Repository](https://github.com/rh-aiservices-bu/gpu-partitioning-guide/blob/main/gpu-sharing-instance/instance/components/mig-single/README.md)*
+* *[MIG Mixed Example Repository](https://github.com/rh-aiservices-bu/gpu-partitioning-guide/blob/main/gpu-sharing-instance/instance/components/mig-mixed/README.md)*
+
+#### Multi-Process Service (MPS)
+
+Multi-Process Service (MPS) facilitates concurrent sharing of a single GPU among multiple CUDA applications.
+
+MPS is an alternative, binary-compatible implementation of the CUDA Application Programming Interface (API). The MPS runtime architecture is designed to transparently enable co-operative multi-process CUDA applications.
+
+* *[MPS Full reference](https://docs.nvidia.com/deploy/mps/index.html)*
+* *[MPS Example Repository](https://github.com/rh-aiservices-bu/gpu-partitioning-guide/blob/main/gpu-sharing-instance/instance/components/mps/README.md)*
+
+> NOTE: Despite the tests passing, MPS isn't working correctly on OpenShift currently, due to only one process per GPU can run at any time. RH and NVIDIA engineers are working to fix this issue as soon as possible.
+
+### Aggregating GPUs (Multi-GPU)
+
+Some Large Language Models (LLMs), such as Llama-3-70B and [Falcon 180B](https://huggingface.co/blog/falcon-180b#hardware-requirements), can be too large to fit into the memory of a single GPU (vRAM). Or in some cases, GPUs that would be large-enough might be difficult to obtain.  If you find yourself in such a situation, it is natural to wonder whether an aggregation of multiple, smaller GPUs can be used instead of one single large GPU.
+
+Thankfully, the answer is essentially Yes. To address these challenges, we can use more advanced configurations to distribute the LLM workload across several GPUs. One option is leveraging [tensor parallelism](https://huggingface.co/docs/transformers/perf_train_gpu_many#tensor-parallelism), where the LLM is split across several GPUs, with each GPU processing a portion of the model's tensors. This approach ensures efficient utilization of available resources (GPUs) across one or several workers.
+
+Some Serving Runtimes, such as vLLM, support tensor parallelism, allowing for both single-worker and multi-worker configurations (the difference whether your GPUs are all in the same machine, or are spread across machines). 
+
+vLLM has been added as an Out-of-the-box serving runtime, starting with Red Hat OpenShift AI version 2.10 link to our [RHOAI doc](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models)
+
+For a detailed guide on implementing these solutions, refer to [our repository](https://github.com/rh-aiservices-bu/multi-gpu-llms).
+
+* *[Single Worker Node - Multiple GPUs Example Repository](https://github.com/rh-aiservices-bu/multi-gpu-llms?tab=readme-ov-file#71-single-node---multiple-gpu-demos)*
+* *[Multiple Worker Node - Multiple GPUs Example Repository](https://github.com/rh-aiservices-bu/multi-gpu-llms?tab=readme-ov-file#72-multi-node---multiple-gpu-demos)*
