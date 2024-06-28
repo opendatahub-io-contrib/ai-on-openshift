@@ -150,4 +150,5 @@ nav:
     - Demos: 
       - Chat with your documentation: demos/llm-chat-doc/llm-chat-doc.md
       - Code assistant: demos/codellama-continue/codellama-continue.md
+      - Text to Image: demos/stable-diffusion/stable-diffusion.md
     
