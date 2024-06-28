@@ -82,7 +82,7 @@ So which model to choose will depend on several factors:
 
 Currently, a good **LLM** with interesting performance for a relatively small size is **[Mistral-7B](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2){:target="_blank"}**. Fully Open Source with an Apache 2.0 license, it will fit in an unquantized version on about 22GB of VRAM, which is perfect for an A10G card.
 
-**Embeddings** are another type of model often associated with LLMs are they are used to convert documented into vectors. A database of those vectors can then be queries to find the documents related to a query you make. This is very useful for the RAG solution we are going to talk about later on. NomicAI recently released a really performant and fully open source embeddings model, **[nomic-embed-text-v1](https://huggingface.co/nomic-ai/nomic-embed-text-v1){:target="_blank"}**
+**Embeddings** are another type of model often associated with LLMs as they are used to convert documents into vectors. A database of those vectors can then be queried to find the documents related to a query you make. This is very useful for the RAG solution we are going to talk about later on. NomicAI recently released a really performant and fully open source embeddings model, **[nomic-embed-text-v1](https://huggingface.co/nomic-ai/nomic-embed-text-v1){:target="_blank"}**
 
 ## LLM Consumption
 
