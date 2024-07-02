@@ -1,5 +1,11 @@
 # What's new?
 
+**2024-07-02**: Add [Llama2 fine-tuning with Ray and DeepSpeed](../demos/llama2-finetune/llama2-finetune.md) demo.
+
+**2024-06-25**: Add [GPU partitioning and sharing](../odh-rhoai/nvidia-gpus.md).
+
+**2024-06-18**: Add [Accelerator profiles](../odh-rhoai/accelerator-profiles.md) documentation.
+
 **2024-01-03**: Add [Ensemble models](../tools-and-applications/ensemble-serving/ensemble-serving.md) demo.
 
 **2024-03-28**: Add [Zero to Workbench documentation](../odh-rhoai/from-zero-to-workbench/using-cli.md).
