@@ -83,6 +83,7 @@ markdown_extensions:
   - pymdownx.snippets
   - attr_list
   - md_in_html
+  - footnotes
   - codehilite:
       use_pygments: False
   - pymdownx.superfences:
@@ -150,4 +151,5 @@ nav:
     - Demos: 
       - Chat with your documentation: demos/llm-chat-doc/llm-chat-doc.md
       - Code assistant: demos/codellama-continue/codellama-continue.md
+      - Fine-tune Llama2: demos/llama2-finetune/llama2-finetune.md
     

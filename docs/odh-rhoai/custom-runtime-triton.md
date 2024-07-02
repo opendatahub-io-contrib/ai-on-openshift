@@ -30,7 +30,7 @@ The sources used to create this document are mostly:
 
 1. From the drop down menu, select **Multi-model serving platform.  The option for REST will be selected automatically:
 
-    ![Select Multi-model serving](img-triton/multi-model-serving.png){ style="width:200px"}
+    ![Select Multi-model serving](img-triton/multi.model.serving.png){ style="width:200px"}
 
 1. Click on **Start from scratch** and in the window that opens up, paste the following YAML:
   ```yaml
