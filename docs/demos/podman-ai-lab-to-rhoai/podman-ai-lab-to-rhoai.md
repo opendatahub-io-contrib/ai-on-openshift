@@ -70,18 +70,20 @@ Make sure to select _TheBloke/Mistral-7B-Instruct-v0.2-GGUF_ as your model and t
 
 ## Deploying OpenShift AI
 
-1. Login to your OpenShift cluster in a terminal with the API token. You can get your API token from the OpenShift web console.
+1. Clone [podman-ai-lab-to-rhoai](https://github.com/redhat-ai-services/podman-ai-lab-to-rhoai){:target="_blank"}
+
+2. Login to your OpenShift cluster in a terminal with the API token. You can get your API token from the OpenShift web console.
     ![OpenShift API Login Command](img/ocp_api_login.png) 
     ```
     oc login --token=<YOUR_OPENSHIFT_API_TOKEN> --server=https://<YOUR_OPENSHIFT_API_URL>:6443
     ```
 
-2. We'll first deploy the OpenShift AI operator. 
+3. We'll first deploy the OpenShift AI operator. 
     ```
     oc apply -k ./components/openshift-ai/operator/overlays/fast
     ```
 
-3. Now we'll create a Data Science Cluster. Make sure the operator is fully deployed before creating the Data Science Cluster.
+4. Now we'll create a Data Science Cluster. Make sure the operator is fully deployed before creating the Data Science Cluster.
     ```
     watch oc get pods -n redhat-ods-operator
     ```
