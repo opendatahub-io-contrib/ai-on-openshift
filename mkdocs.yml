@@ -152,4 +152,5 @@ nav:
       - Chat with your documentation: demos/llm-chat-doc/llm-chat-doc.md
       - Code assistant: demos/codellama-continue/codellama-continue.md
       - Fine-tune Llama2: demos/llama2-finetune/llama2-finetune.md
+      - From Podman AI Lab to OpenShift AI: demos/podman-ai-lab-to-rhoai/podman-ai-lab-to-rhoai.md
     
