@@ -1,5 +1,9 @@
 # What's new?
 
+**2024-07-16**: Add [ODH Tools and Extensions Companion](../odh-rhoai/odh-tools-and-extensions-companion.md) documentation.
+
+**2024-07-16**: Add [GPU pruner](../odh-rhoai/gpu-pruner.md) documentation.
+
 **2024-07-02**: Add [Llama2 fine-tuning with Ray and DeepSpeed](../demos/llama2-finetune/llama2-finetune.md) demo.
 
 **2024-06-25**: Add [GPU partitioning and sharing](../odh-rhoai/nvidia-gpus.md).
