@@ -68,51 +68,68 @@ Make sure to select _TheBloke/Mistral-7B-Instruct-v0.2-GGUF_ as your model and t
 7. At the bottom of the AI App Details section you'll see a **_Open in VSCode_** button. Clicking on that will open all of the code that is running your chatbot. Later we'll modify that code to connect langchain, TheBloke/Mistral-7B-Instruct-v0.2-GGUF model, and the Elasticsearch Vector Database. 
 ![Podman AI Chatbot Recipe](img/podman_AI_chatbot.png)
 
-## Deploying OpenShift AI
+## Deploying OpenShift AI 
+**Optional:** *If you already have an OpenShift AI instance with a Data Science Cluster you can skip this section.*
 
-1. Clone [podman-ai-lab-to-rhoai](https://github.com/redhat-ai-services/podman-ai-lab-to-rhoai){:target="_blank"}
+Follow the [product documentation](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.11/html-single/installing_and_uninstalling_openshift_ai_self-managed/index#installing-and-deploying-openshift-ai_install){:target="_blank"} to install OpenShift AI.
 
-2. Login to your OpenShift cluster in a terminal with the API token. You can get your API token from the OpenShift web console.
-    ![OpenShift API Login Command](img/ocp_api_login.png) 
-    ```
-    oc login --token=<YOUR_OPENSHIFT_API_TOKEN> --server=https://<YOUR_OPENSHIFT_API_URL>:6443
-    ```
+OR
 
-3. We'll first deploy the OpenShift AI operator. 
-    ```
-    oc apply -k ./components/openshift-ai/operator/overlays/fast
-    ```
+??? note "OpenShift AI automated install"
 
-4. Now we'll create a Data Science Cluster. Make sure the operator is fully deployed before creating the Data Science Cluster.
-    ```
-    watch oc get pods -n redhat-ods-operator
-    ```
+    1. Clone [podman-ai-lab-to-rhoai](https://github.com/redhat-ai-services/podman-ai-lab-to-rhoai){:target="_blank"}
 
-    ![OpenShift AI Operator Status](img/oc_rhoai_operator_status.png)
+    2. Login to your OpenShift cluster in a terminal with the API token. You can get your API token from the OpenShift web console.  
+    
+        ![OpenShift API Login Command](img/ocp_api_login.png) 
+        ```
+        oc login --token=<YOUR_OPENSHIFT_API_TOKEN> --server=https://<YOUR_OPENSHIFT_API_URL>:6443
+        ```
 
-    Once the pod has a Running status and is ready you can run the below command.
-    + ```
-    oc apply -k ./components/openshift-ai/instance/overlays/fast
-    ```
+    3. We'll first deploy the OpenShift AI operator. 
+        ```
+        oc apply -k ./components/openshift-ai/operator/overlays/fast
+        ```
+
+    4. Now we'll create a Data Science Cluster. Make sure the operator is fully deployed before creating the Data Science Cluster.
+        ```
+        watch oc get pods -n redhat-ods-operator
+        ```
+
+        ![OpenShift AI Operator Status](img/oc_rhoai_operator_status.png)
+
+        Once the pod has a Running status and is ready you can run the below command. 
+        ```
+        oc apply -k ./components/openshift-ai/instance/overlays/fast
+        ```
 
 ## Deploy Elasticsearch Vector DB
+**Optional:** *If you already have an Elasticsearch instance you can skip this section.*
 
-1. We'll now deploy the Elasticsearch operator. This will be our vector database.
+Follow the [product documentation](https://catalog.redhat.com/software/container-stacks/detail/5f32f067651c4c0bcecf1bfe#deploy-instructions) to install Elasticsearch 
 
-    ```
-    oc apply -k ./components/elasticsearch/base/
-    ```
+OR 
 
-2. Now we can create an Elasticsearch cluster instance. Make sure the Elasticsearch operator pod is in a running state and ready.
-    ```
-    watch oc get pods -n elastic-vectordb
-    ```
+??? note "Elasticsearch automated install"
 
-    ![Elasticserach Operator Status](img/oc_elastic_operator_status.png)
+    1. Clone [podman-ai-lab-to-rhoai](https://github.com/redhat-ai-services/podman-ai-lab-to-rhoai){:target="_blank"}
 
-    ```
-    oc apply -f ./components/elasticsearch/cluster/instance.yaml
-    ```
+    2. We'll now deploy the Elasticsearch operator. This will be our vector database.
+
+        ```
+        oc apply -k ./components/elasticsearch/base/
+        ```
+
+    3. Now we can create an Elasticsearch cluster instance. Make sure the Elasticsearch operator pod is in a running state and ready.
+        ```
+        watch oc get pods -n elastic-vectordb
+        ```
+
+        ![Elasticserach Operator Status](img/oc_elastic_operator_status.png)
+
+        ```
+        oc apply -f ./components/elasticsearch/cluster/instance.yaml
+        ```
 
 ### Ingest data into the Elasticsearch Vector Database
 
@@ -190,34 +207,25 @@ Now that the Elasticsearch operator has been deployed and an instance created, w
     ![Notebook Execution - Third Section](img/query_data_cell.png)
 
 ## Deploy s3 Storage (Minio)
+**Optional:** *If you already have s3 compatible storage you can skip to step 2 to create the bucket.*
+
 OpenShift AI model serving has a dependency on s3 storage. We'll deploy Minio for this tutorial, but any s3 compatible storage should work. For an enterprise s3 storage solution consider [OpenShift Data Foundation](https://www.redhat.com/en/technologies/cloud-computing/openshift-data-foundation){:target="_blank"}.
 
-1. Make sure you're still logged into your cluster in your terminal. Run the below command to deploy Minio.
-    ```
-    oc apply -k ./components/minio/base
-    ```
+Follow the [Minio Installation](https://ai-on-openshift.io/tools-and-applications/minio/minio/){:target="_blank"} if you don't have s3 compatible storage.
 
-    Make sure the pod is running.
-
-    ```
-    watch oc get pods -n minio
-    ```
-
-    ![Minio Pod Status](img/minio_pod_status.png)
-
-2. Login to the Minio UI. You can find the route in either the web console or from the oc cli in your terminal. Login with *minio/minio123*. Minio contains 2 routes, an API route and UI route. Make sure you use the UI route.
+1. Login to the Minio UI. You can find the route in either the web console or from the oc cli in your terminal. Login with *minio/minio123*. Minio contains 2 routes, an API route and UI route. Make sure you use the UI route.
 
     ![Minio Login](img/minio_login.png)
 
-3. Create a bucket named *models* and click the **Create Bucket** button.
+2. Create a bucket named *models* and click the **Create Bucket** button.
 
     ![Minio bucket](img/minio_bucket.png)
 
-4. Go to **Object Browser**, select the *models* bucket you just created, and click the **Create new path** button. Name the folder path *mistral7b* and click the **Create** button.
+3. Go to **Object Browser**, select the *models* bucket you just created, and click the **Create new path** button. Name the folder path *mistral7b* and click the **Create** button.
 
     ![Minio path](img/minio_path.png)
 
-5. Upload the Mistral7b model to the folder path you just created. You can find out where the model was downloaded if you go back to Podman AI Lab and click the **Open Model Folder** icon.
+4. Upload the Mistral7b model to the folder path you just created. You can find out where the model was downloaded if you go back to Podman AI Lab and click the **Open Model Folder** icon.
 
     ![Model folder](img/podman_ai_model_folder.png)
 
@@ -225,81 +233,91 @@ OpenShift AI model serving has a dependency on s3 storage. We'll deploy Minio fo
 
     ![Model upload](img/minio_model_upload.png)
 
-6. If the model is uploaded successfully you should see the below screen.
+5. If the model is uploaded successfully you should see the below screen.
 
     ![Model upload success](img/minio_model_upload_success.png)
 
 ## Create Custom Model Serving Runtime
 
-1. We first need to enable the single serving runtime before we can add our custom serving runtime.
+Follow the [product documentation](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.11/html/serving_models/serving-large-models_serving-large-models#configuring-automated-installation-of-kserve_serving-large-models){:target="_blank"} to install the single-model serving platform.
 
-    1. Run the following oc command to deploy Service Mesh.
-        ```
-        oc apply -k ./components/openshift-servicemesh/operator/overlays/stable
-        ```
-    2. Run the following oc command to deploy Serverless.
-        ```
-        oc apply -k ./components/openshift-serverless/operator/overlays/stable
-        ```
+OR 
 
-    3. Wait until the Service Mesh and Serverless operators have installed successfully. 
-        ```
-        watch oc get csv -n openshift-operators
-        ```
+??? note "Single-model serving platform automated install"
 
-        ![Operator Status](img/csv_status.png)
+    1. Clone [podman-ai-lab-to-rhoai](https://github.com/redhat-ai-services/podman-ai-lab-to-rhoai){:target="_blank"}
 
-    4. We'll be using the single stack serving in OpenShift AI so we'll want use a trusted certificate instead of a self signed one. This will allow our chatbot to access the model inference endpoint.
+    2. We first need to enable the single serving runtime before we can add our custom serving runtime.
 
-          Run the below oc commands
+        1. Run the following oc command to deploy Service Mesh.
+            ```
+            oc apply -k ./components/openshift-servicemesh/operator/overlays/stable
+            ```
+        2. Run the following oc command to deploy Serverless.
+            ```
+            oc apply -k ./components/openshift-serverless/operator/overlays/stable
+            ```
 
-          1. Get the name of the ingress cert we will need to copy. Select a secret that has **cert** in the name.
-              ```
-              oc get secrets -n openshift-ingress | grep cert
-              ```
+        3. Wait until the Service Mesh and Serverless operators have installed successfully. 
+            ```
+            watch oc get csv -n openshift-operators
+            ```
 
-              ![Ingress Cert Secret Name](img/ingress_cert_secret.png)
+            ![Operator Status](img/csv_status.png)
 
-          2. Copy the full name of the secret and replace the name in the below oc command. Make sure you're in the top level directory of this project and run the below command.
-              ```
-              oc extract secret/ingress-certs-2024-06-03 -n openshift-ingress --to=ingress-certs --confirm
-              ```
+        4. We'll be using the single stack serving in OpenShift AI so we'll want use a trusted certificate instead of a self signed one. This will allow our chatbot to access the model inference endpoint.
 
-              You should now have a *ingress-certs* directory with a tls.crt and tls.key file.
+            Run the below oc commands
 
-              ![Ingress Cert Directory](img/ingress_certs_directory.png)
+            1. Get the name of the ingress cert we will need to copy. Select a secret that has **cert** in the name.
+                ```
+                oc get secrets -n openshift-ingress | grep cert
+                ```
 
-          3. We'll now update the secret that will be used in our OpenShift AI data science cluster.
+                ![Ingress Cert Secret Name](img/ingress_cert_secret.png)
 
-              ```
-              cd ingress-certs
+            2. Copy the full name of the secret and replace the name in the below oc command. Make sure you're in the top level directory of this project and run the below command.
+                ```
+                oc extract secret/ingress-certs-2024-06-03 -n openshift-ingress --to=ingress-certs --confirm
+                ```
 
-              oc create secret generic knative-serving-cert -n istio-system --from-file=. --dry-run=client -o yaml | oc apply -f -
+                You should now have a *ingress-certs* directory with a tls.crt and tls.key file.
 
-              cd ..
-              ```
+                ![Ingress Cert Directory](img/ingress_certs_directory.png)
 
-              **NOTE:** *You can delete the ingress-certs folder after you have created the knative-serving-cert secret.*
+            3. We'll now update the secret that will be used in our OpenShift AI data science cluster.
 
-    5. Run the following oc commands to enable the Single Model Serving runtime for OpenShift AI. 
-        ```
-        oc apply -k ./components/model-server/components-serving
-        ```
+                ```
+                cd ingress-certs
 
-    6. It will take around 5 to 10 minutes for the changes to be applied. Single-model serving should be ready when Service Mesh and Serverless have the below instances created. Open the OpenShift web console and go to **Operators -> Installed Operators**.
+                oc create secret generic knative-serving-cert -n istio-system --from-file=. --dry-run=client -o yaml | oc apply -f -
 
-        ![Knative Instance](img/knative_instance.png)
+                cd ..
+                ```
 
-        ![Service Mesh Instance](img/servicemesh_instance.png)
+                **NOTE:** *You can delete the ingress-certs folder after you have created the knative-serving-cert secret.*
 
-2. Go to the OpenShift AI dashboard and expand **Settings** and select **Serving Runtimes**. You should now see that Single-model serving enabled at the top of the page.
+        5. Run the following oc commands to enable the Single Model Serving runtime for OpenShift AI. 
+            ```
+            oc apply -k ./components/model-server/components-serving
+            ```
 
-    **NOTE:** *You might need to refresh the page and it could take a few minutes for the changes to be applied.*
+        6. It will take around 5 to 10 minutes for the changes to be applied. Single-model serving should be ready when Service Mesh and Serverless have the below instances created. Open the OpenShift web console and go to **Operators -> Installed Operators**.
 
-    ![Single serving enabled](img/rhoai_single_serving_enabled.png)
+            ![Knative Instance](img/knative_instance.png)
+
+            ![Service Mesh Instance](img/servicemesh_instance.png)
+
+    3. Go to the OpenShift AI dashboard and expand **Settings** and select **Serving Runtimes**. You should now see that Single-model serving enabled at the top of the page.
+
+        **NOTE:** *You might need to refresh the page and it could take a few minutes for the changes to be applied.*
+
+        ![Single serving enabled](img/rhoai_single_serving_enabled.png)
 
 ### Add a Custom Serving Runtime
-We'll now add a custom serving runtime so we can deploy GGUF versions of models.
+We'll now add a custom serving runtime so we can deploy the GGUF version of model. 
+
+**NOTE:** *We will continue to use the GGUF version of the model to be able to deploy this model without the need for a hardware accelerator (e.g. GPU). OpenShift AI contains a scalable model serving platform to accommodate deploying multiple full sized LLMs.*
 
 1. Click on the **Add serving runtime** button. 
 
@@ -315,11 +333,12 @@ We'll now add a custom serving runtime so we can deploy GGUF versions of models.
 
     ![Serving runtime list](img/rhoai-llamacpp-runtime.png)
 
-4. Go to your *podman-ai-lab-rag-project* and select **Models**. You should see two model serving type options. Click on the **Deploy model** under the Single-model serving platform. 
+### Deploy Model
+1. Go to your *podman-ai-lab-rag-project* and select **Models**. You should see two model serving type options. Click on the **Deploy model** under the Single-model serving platform. 
 
     ![Serving runtime list](img/rhoai_project_model_servers.png)
 
-5. Fill in the following values and click the **Deploy** button at the bottom of the form.
+2. Fill in the following values and click the **Deploy** button at the bottom of the form.
 
       - Model name = **mistral7b**
       - Serving runtime = **LlamaCPP**
@@ -340,17 +359,17 @@ We'll now add a custom serving runtime so we can deploy GGUF versions of models.
 
     ![Model Deployment 3](img/rhoai_model_serving_3.png)
 
-6. If your model deploys successfully you should see the following page.
+3. If your model deploys successfully you should see the following page.
 
     ![Deployed Model](img/rhoai_deployed_model.png)
 
-7. Test your model to make sure you can send in a request and get a response. You can use the client code that is provided by the model service in Podman AI Lab. 
+4. Test your model to make sure you can send in a request and get a response. You can use the client code that is provided by the model service in Podman AI Lab. 
 
       Make sure to update the URL in the cURL command to the Inference endpoint on OpenShift AI.
 
 
       ```
-      curl -k --location 'https://YOUR-OPENSHIFT-AI-INFERENCE-ENDPOINT/v1/chat/completions' --header 'Content-Type: application/json' --data '{
+      curl --location 'https://YOUR-OPENSHIFT-AI-INFERENCE-ENDPOINT/v1/chat/completions' --header 'Content-Type: application/json' --data '{
         "messages": [
           {
             "content": "You are a helpful assistant.",
