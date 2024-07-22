@@ -15,4 +15,4 @@ See the original DreamBooth [project](https://dreambooth.github.io/) homepage fo
 - A node with a GPU card. The example has been tested with a AWS p3.8xlarge node.
 
 !!!info
-    The full source and instructions for this demo are available on [this repo](https://github.com/opendatahub-io/distributed-workloads/examples/stable-diffusion-dreambooth) and is based on this sample [code](https://docs.ray.io/en/latest/train/examples/pytorch/dreambooth_finetuning.html).
+    The full source and instructions for this demo are available on [this repo](https://github.com/opendatahub-io/distributed-workloads/tree/main/examples/stable-diffusion-dreambooth) and is based on this sample [code](https://docs.ray.io/en/latest/train/examples/pytorch/dreambooth_finetuning.html).
