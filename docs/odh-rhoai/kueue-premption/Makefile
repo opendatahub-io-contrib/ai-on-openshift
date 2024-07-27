@@ -5,6 +5,7 @@ SHELL=/bin/sh
 
 teardown-kueue-premption:
 	
+	-oc delete -f $(BASE)/team-a-ray-cluster-prod.yaml -f $(BASE)/team-b-ray-cluster-dev.yaml
 	-oc delete -f $(BASE)/team-a-cq.yaml -f $(BASE)/team-b-cq.yaml -f $(BASE)/shared-cq.yaml
 	-oc delete -f $(BASE)/team-a-local-queue.yaml -f $(BASE)/team-b-local-queue.yaml	
 	-oc delete -f $(BASE)/default-flavor.yaml -f $(BASE)/gpu-flavor.yaml
