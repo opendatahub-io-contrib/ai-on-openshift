@@ -1,6 +1,6 @@
 # What's new?
 
-**2024-07-29**: Add [Kueue preemption](**/odh-rhoai/kueue-premption/readme.md) example.
+**2024-07-29**: Add [Kueue preemption](../odh-rhoai/kueue-preemption/readme.md) example.
 
 **2024-07-16**: Add [ODH Tools and Extensions Companion](../odh-rhoai/odh-tools-and-extensions-companion.md) documentation.
 
