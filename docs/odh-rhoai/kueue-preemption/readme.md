@@ -1,6 +1,6 @@
 # Introduction
 
-In [this repo](https://github.com/opendatahub-io-contrib/ai-on-openshift/tree/main/docs/odh-rhoai/kueue-premption), we will demostrate how to use quota allocation with Kueue with preemption.
+In [this repo](https://github.com/opendatahub-io-contrib/ai-on-openshift/tree/main/docs/odh-rhoai/kueue-preemption), we will demostrate how to use quota allocation with Kueue with preemption.
 
 ## Overview 
 In this example, there are 2 teams that work in their own namespace:
@@ -90,7 +90,7 @@ Team A will preempt team B because it has insufficient resources to run.
 
     ```bash
     git clone https://github.com/opendatahub-io-contrib/ai-on-openshift
-    cd ai-on-openshift/docs/odh-rhoai/kueue-premption
+    cd ai-on-openshift/docs/odh-rhoai/kueue-preemption
     ```
 
 5. Run the makefile target to setup the example. This will setup 2 namespaces: team-a and team-b.
@@ -101,7 +101,7 @@ Team A will preempt team B because it has insufficient resources to run.
 
 To teardown the example, you can use:
 ```bash
-make teardown-kueue-premption
+make teardown-kueue-preemption
 ```
 !!! warning 
     The setup script will delete all clusterqueues and resourceflavors in the cluster.
