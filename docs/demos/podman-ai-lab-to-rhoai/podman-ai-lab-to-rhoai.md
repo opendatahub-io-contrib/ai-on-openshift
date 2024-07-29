@@ -274,11 +274,9 @@ OR
                 oc get secrets -n openshift-ingress | grep cert
                 ```
 
-                ![Ingress Cert Secret Name](img/ingress_cert_secret.png)
-
-            2. Copy the full name of the secret and replace the name in the below oc command. Make sure you're in the top level directory of this project and run the below command.
+            2. Copy the full name of the secret you chose and replace the name in the below oc command. Make sure you're in the top level directory of this project and run the below command.
                 ```
-                oc extract secret/ingress-certs-2024-06-03 -n openshift-ingress --to=ingress-certs --confirm
+                oc extract secret/<CERT_SECRET_FROM_ABOVE> -n openshift-ingress --to=ingress-certs --confirm
                 ```
 
                 You should now have a *ingress-certs* directory with a tls.crt and tls.key file.
@@ -313,6 +311,8 @@ OR
         **NOTE:** *You might need to refresh the page and it could take a few minutes for the changes to be applied.*
 
         ![Single serving enabled](img/rhoai_single_serving_enabled.png)
+
+**NOTE:** *Make sure your single-model serving platform is using a trusted certificate. If it is not or you're unsure see section D in the* **Single-model serving platform automated install** *above.*
 
 ### Add a Custom Serving Runtime
 We'll now add a custom serving runtime so we can deploy the GGUF version of model. 
@@ -401,7 +401,11 @@ We'll now add a custom serving runtime so we can deploy the GGUF version of mode
 ## Update the Chat Recipe Application
 We'll now update the chat recipe application that we created from Podman AI Lab to use Langchain to connect the model we just deployed on OpenShift AI and the Elasticsearch vector database.
 
-1. We'll start from the default chatbot recipe code accessible from Podman AI Lab. In Podman AI Lab, after clicking the **Open in VSCode** button you should see the following.
+1. We'll start from the default chatbot recipe code accessible from Podman AI Lab. 
+
+    ![Podman AI Chatbot Recipe](img/podman_AI_chatbot.png)
+
+    In Podman AI Lab, after clicking the ![VS Code Button](img/vscode_button.png) button you should see the following.
 
     ![Chatbot in VSCode](img/chatbot_vscode.png)
 
@@ -421,9 +425,11 @@ We'll now update the chat recipe application that we created from Podman AI Lab 
 
 3. You can build the Containerfile and push it to your own repository or you can use the one at quay.io/jhurlocker/elastic-vectordb-chat.
 
-4. Update the ./components/deployment.yaml file with your values for the MODEL_ENDPOINT, ELASTIC_URL, and ELASTIC_PASS environment variables.
+4. Update the ./components/app/deployment.yaml file with your values for the MODEL_ENDPOINT, ELASTIC_URL, and ELASTIC_PASS environment variables.
 
     ![Deployment Environment Variables](img/update_deployment_vars.png)
+
+    **NOTE:** *Make sure you include* 'https://' *and the port* ':9200' *in the ELASTIC_URL environment variable*
 
 5. Create the project
 
