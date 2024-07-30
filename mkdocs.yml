@@ -117,10 +117,10 @@ nav:
       - OpenShift Group Management: odh-rhoai/openshift-group-management.md
       - Accelerator Profiles: odh-rhoai/accelerator-profiles.md
       - Kueue preemption: odh-rhoai/kueue-preemption/readme.md
+      - GitOps: odh-rhoai/gitops.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
-      - GitOps: odh-rhoai/gitops.md
   - Applications and Patterns:
     - Model Serving:
       - Ensemble Serving: tools-and-applications/ensemble-serving/ensemble-serving.md
