@@ -52,8 +52,9 @@ spec:
 ```
 
 Subscription Options:
-1) Operator versions are managed with the `channel` in OLM.  Users are able to select a channel that corresponds to the upgrade lifecycle they wish to follow and OLM will update versions as they are released on that channel.  To learn more about the available channels and the release lifecycle, please refer to the official [lifecycle documentation](https://access.redhat.com/support/policy/updates/rhoai-sm/lifecycle)
-2) Platform administrators also have an option to set how upgrades are applied for the operator with the `installPlanApproval`.  If set to `Automatic` RHOAI is automatically updated to the latest version that is available on the selected channel.  If set to `Manual` administrators will be required to approve all upgrades.
+
+1. Operator versions are managed with the `channel` in OLM.  Users are able to select a channel that corresponds to the upgrade lifecycle they wish to follow and OLM will update versions as they are released on that channel.  To learn more about the available channels and the release lifecycle, please refer to the official [lifecycle documentation](https://access.redhat.com/support/policy/updates/rhoai-sm/lifecycle)
+2. Platform administrators also have an option to set how upgrades are applied for the operator with the `installPlanApproval`.  If set to `Automatic` RHOAI is automatically updated to the latest version that is available on the selected channel.  If set to `Manual` administrators will be required to approve all upgrades.
 
 ### Component Configuration
 
@@ -84,8 +85,9 @@ spec:
 ```
 
 DSCInitialization Options:
-1) KServe requires a ServiceMesh instance to be installed on the cluster.  By default the Red Hat OpenShift AI operator will attempt to configure an instance if the ServiceMesh operator is installed.  If your cluster already has ServiceMesh configured, you may choose to skip this option.
-2) As part of the ServiceMesh configuration, the Red Hat OpenShift AI operator will configure a self-signed cert for any routes created by ServiceMesh.
+
+1. KServe requires a ServiceMesh instance to be installed on the cluster.  By default the Red Hat OpenShift AI operator will attempt to configure an instance if the ServiceMesh operator is installed.  If your cluster already has ServiceMesh configured, you may choose to skip this option.
+2. As part of the ServiceMesh configuration, the Red Hat OpenShift AI operator will configure a self-signed cert for any routes created by ServiceMesh.
 
 After the operator is installed, a DataScienceCluster object will need to be configured with the different components.  Each component has a `managementState` option which can be set to `Managed` or `Removed`.  Admins can choose which components are installed on the cluster.
 
@@ -236,11 +238,12 @@ spec:
 ```
 
 OdhDashboardConfig Options:
-1) The Dashboard creates a group called `rhods-admins` by default which users can be added to be granted admin privileges through the Dashboard.  Additionally, any user with the cluster-admin role are admins in the Dashboard by default.  If you wish to change the group which is used to manage admin access, this option can be updated.  It is important to note that this field only impacts a users ability to modify settings in the Dashboard, and will have no impact to a users ability to modify configurations through the Kubernetes objects such as this OdhDashboardConfig object.
-2) By default any user that has access to the OpenShift cluster where Red Hat OpenShift AI is installed will have the ability to access the Dashboard.  If you wish to restrict who has access to the Dashboard this option can be updated to another group.  Like the admin group option, this option only impacts the users ability to access the Dashboard and does not restrict their ability to interact directly with the Kubernetes objects used to deploy AI resources.
-3) When a user creates a new Model Server through the Dashboard they are presented with an option to choose a server size which will impact the resources available to the pod created for the Model Server.  Administrators have the ability to configure the default options that are available to their users.
-4) When creating a new Workbench, users are asked to create storage for their Workbench.  The storage will default to the value set here and users will have the option to choose a different amount of storage if their use case requires more or less storage.  Admins can choose another default storage size that is presented to users by configuring this option.
-5) Like the Model Server size, users are presented with a drop down menu of options to select what size of Workbench they wish to create.  Admins have the ability to customize the size options that are presented to users.
+
+1. The Dashboard creates a group called `rhods-admins` by default which users can be added to be granted admin privileges through the Dashboard.  Additionally, any user with the cluster-admin role are admins in the Dashboard by default.  If you wish to change the group which is used to manage admin access, this option can be updated.  It is important to note that this field only impacts a users ability to modify settings in the Dashboard, and will have no impact to a users ability to modify configurations through the Kubernetes objects such as this OdhDashboardConfig object.
+2. By default any user that has access to the OpenShift cluster where Red Hat OpenShift AI is installed will have the ability to access the Dashboard.  If you wish to restrict who has access to the Dashboard this option can be updated to another group.  Like the admin group option, this option only impacts the users ability to access the Dashboard and does not restrict their ability to interact directly with the Kubernetes objects used to deploy AI resources.
+3. When a user creates a new Model Server through the Dashboard they are presented with an option to choose a server size which will impact the resources available to the pod created for the Model Server.  Administrators have the ability to configure the default options that are available to their users.
+4. When creating a new Workbench, users are asked to create storage for their Workbench.  The storage will default to the value set here and users will have the option to choose a different amount of storage if their use case requires more or less storage.  Admins can choose another default storage size that is presented to users by configuring this option.
+5. Like the Model Server size, users are presented with a drop down menu of options to select what size of Workbench they wish to create.  Admins have the ability to customize the size options that are presented to users.
 
 ### Idle Notebook Culling
 
@@ -261,7 +264,8 @@ data:
 ```
 
 Idle Notebook Culling Options:
-1) The `CULL_IDLE_TIME` looks for metrics from Jupyter to understand when the last time a user interacted with the Workbench and will shut the pod down if it has passed the time set here.  The time is the number of minutes so 240 minutes or 4 hours.
+
+1. The `CULL_IDLE_TIME` looks for metrics from Jupyter to understand when the last time a user interacted with the Workbench and will shut the pod down if it has passed the time set here.  The time is the number of minutes so 240 minutes or 4 hours.
 
 ### Accelerator Profiles
 
@@ -320,14 +324,15 @@ spec:
 ```
 
 Notebook Image Options:
-1) A description for the purpose of the notebook image
-2) The name that will be displayed to end users in the drop down menu when creating a Workbench
-3) The notebook image requires several labels for them to appear in the Dashboard, including the `app.kubernetes.io/created-by: byon` label.  While traditionally this label is utilized to trace where an object originated from, this label is required for the notebooks to be made available to end users.
-4) Multiple image versions can be configured as part of the same Notebook and users have the ability to select which version of the image they wish to use.  This is helpful if you release updated versions of the Notebook image and you wish to avoid breaking end user environments with package changes and allow them to upgrade as they wish.
-5) When selecting a Notebook image users will be presented with some information about the notebook based on the information presented in this annotation.  `opendatahub.io/notebook-python-dependencies` is most commonly used to present information about versions from the most important Python packages that are pre-installed in the Image.
-6) Like the python dependencies annotation, the `opendatahub.io/notebook-software` annotation is used to present the end user with information about what software is installed in the Image.  Most commonly this field is used to present information such as the Python version, Jupyter versions, or CUDA versions.
-7) When multiple tags are created on the ImageStream, the `opendatahub.io/workbench-image-recommended` is used to control what version of the image is presented by default to end users.  Only one tag should be set to `true` at any give time.
-8) Notebook images are generally recommended to be stored in an Image Registry outside of the cluster and referenced in the ImageStream.
+
+1. A description for the purpose of the notebook image
+2. The name that will be displayed to end users in the drop down menu when creating a Workbench
+3. The notebook image requires several labels for them to appear in the Dashboard, including the `app.kubernetes.io/created-by: byon` label.  While traditionally this label is utilized to trace where an object originated from, this label is required for the notebooks to be made available to end users.
+4. Multiple image versions can be configured as part of the same Notebook and users have the ability to select which version of the image they wish to use.  This is helpful if you release updated versions of the Notebook image and you wish to avoid breaking end user environments with package changes and allow them to upgrade as they wish.
+5. When selecting a Notebook image users will be presented with some information about the notebook based on the information presented in this annotation.  `opendatahub.io/notebook-python-dependencies` is most commonly used to present information about versions from the most important Python packages that are pre-installed in the Image.
+6. Like the python dependencies annotation, the `opendatahub.io/notebook-software` annotation is used to present the end user with information about what software is installed in the Image.  Most commonly this field is used to present information such as the Python version, Jupyter versions, or CUDA versions.
+7. When multiple tags are created on the ImageStream, the `opendatahub.io/workbench-image-recommended` is used to control what version of the image is presented by default to end users.  Only one tag should be set to `true` at any give time.
+8. Notebook images are generally recommended to be stored in an Image Registry outside of the cluster and referenced in the ImageStream.
 
 While it is possible to build a Notebook Image on an OpenShift cluster and publish it directly to an ImageStream using a BuildConfig or a Tekton Pipeline, it can be challenging to get that image to be seen by the Red Hat OpenShift AI Dashboard.  The Dashboard is only looks at images listed in the `spec.tags` section and images pushed directly to the internal image registry are recorded in the `status.tags`.  As a work around, it is possible to "link" a tag pushed directly to the internal image registry to a tag that is visible by the Dashboard:
 
@@ -665,10 +670,10 @@ spec:
             secretName: my-workbench-tls
 ```
 
-1) The Notebook object contains several different annotations that are used by OpenShift AI, but the `inject-oauth` annotation is one of the most important.  There are several oauth based configurations that in the Notebook that will be automatically generated by this annotation, allowing you to exclude a large amount of notebook configuration from what is contained in your GitOps repo.
-2) While selecting the resource size through the Dashboard you have more limited options for what sizes you can select, you can choose any size you wish for your notebook through the YAML.  By selecting a non-standard size the Dashboard may report an "unknown" size however.
-3) Just like the resources size, you can choose any number of images for the Notebook, including ones that are not available in the Dashboard.  By selecting a non-standard notebook image the Dashboard may report issues however.
-4) The oauth-proxy container is one such item that can be removed from the gitops based configuration when utilizing the `inject-oauth` annotation.  Instead of including this section and some other oauth related configurations, you can simply rely on the annotation, and allow the Notebook controller to manage this portion of the object for you.  This will help to prevent problems when upgrading RHOAI.
+1. The Notebook object contains several different annotations that are used by OpenShift AI, but the `inject-oauth` annotation is one of the most important.  There are several oauth based configurations that in the Notebook that will be automatically generated by this annotation, allowing you to exclude a large amount of notebook configuration from what is contained in your GitOps repo.
+2. While selecting the resource size through the Dashboard you have more limited options for what sizes you can select, you can choose any size you wish for your notebook through the YAML.  By selecting a non-standard size the Dashboard may report an "unknown" size however.
+3. Just like the resources size, you can choose any number of images for the Notebook, including ones that are not available in the Dashboard.  By selecting a non-standard notebook image the Dashboard may report issues however.
+4. The oauth-proxy container is one such item that can be removed from the gitops based configuration when utilizing the `inject-oauth` annotation.  Instead of including this section and some other oauth related configurations, you can simply rely on the annotation, and allow the Notebook controller to manage this portion of the object for you.  This will help to prevent problems when upgrading RHOAI.
 
 Users have the ability to start and stop the Workbench to help conserve resources on the cluster.  To stop a Notebook, the following annotation should be applied to the Notebook object:
 
@@ -684,7 +689,7 @@ Generally, you do not want to include this annotation in your GitOps configurati
 
 A Data Science Connection is a normal Kubernetes Secret object with several annotations that follow a specific format for the data.
 
-```
+```yaml
 kind: Secret
 apiVersion: v1
 type: Opaque
@@ -704,11 +709,11 @@ data: <5>
   AWS_SECRET_ACCESS_KEY: dGVzdA==
 ```
 
-1) When creating a data connection through the Dashboard, the name is automatically generated as `aws-connection-<your-entered-name>`.  When generating the data connection from outside of the Dashboard, you do not need to follow this naming convention.
-2) The `opendatahub.io/dashboard: 'true'` label is used to help determine what secrets to display in the Dashboard.  This option must be set to true if you wish for it to be available in the UI.
-3) At this point in time, the Dashboard only supports the S3 as a connection-type, but other types may be supported in the future.
-4) The name of the data connection as it will appear in the Dashboard UI
-5) Like all secrets, data connections data is stored in a base64 encoding.  This data is not secure to be stored in this format and users should instead look into tools such as SealedSecrets or ExternalSecrets to manage secret data in a gitops workflow.
+1. When creating a data connection through the Dashboard, the name is automatically generated as `aws-connection-<your-entered-name>`.  When generating the data connection from outside of the Dashboard, you do not need to follow this naming convention.
+2. The `opendatahub.io/dashboard: 'true'` label is used to help determine what secrets to display in the Dashboard.  This option must be set to true if you wish for it to be available in the UI.
+3. At this point in time, the Dashboard only supports the S3 as a connection-type, but other types may be supported in the future.
+4. The name of the data connection as it will appear in the Dashboard UI
+5. Like all secrets, data connections data is stored in a base64 encoding.  This data is not secure to be stored in this format and users should instead look into tools such as SealedSecrets or ExternalSecrets to manage secret data in a gitops workflow.
 
 ### Data Science Pipelines
 
@@ -766,8 +771,8 @@ spec:
     deploy: true
 ```
 
-1) The Dashboard expects to look for an object called `dspa` and it is not recommended to deploy more than a single DataSciencePipelineApplication object in a single namespace.
-2) The externalStorage is a critical configuration for setting up S3 backend storage for Data Science Pipelines.  While using the dashboard you are required to configure the connection details.  While you can import these details from a data connection, it will create a separate secret containing the s3 secrets instead of reusing the existing data connection secret.
+1. The Dashboard expects to look for an object called `dspa` and it is not recommended to deploy more than a single DataSciencePipelineApplication object in a single namespace.
+2. The externalStorage is a critical configuration for setting up S3 backend storage for Data Science Pipelines.  While using the dashboard you are required to configure the connection details.  While you can import these details from a data connection, it will create a separate secret containing the s3 secrets instead of reusing the existing data connection secret.
 
 Once a Data Science Pipeline instance has been created, users may wish to configure and manage their pipelines via GitOps.  It is important to note that Data Science Pipelines is not "gitops friendly".  While working with Elyra or a kfp pipeline, users are required to manually upload a pipeline file to the Dashboard which does not generate a corresponding Kubernetes object.  Additionally, when executing a pipeline run, uses may find a ArgoWorkflow object that is generated for the run, however this object can not be re-used in a gitops application to create a new pipeline run in Data Science Pipelines.
 
@@ -859,7 +864,7 @@ spec:
   grpcDataEndpoint: 'port:8001'
 ```
 
-1) While KServe and ModelMesh share the same object definition, they have some subtle differences, in particular the annotations that are available on them.  `enable-route` is one annotation that is available on a ModelMesh ServingRuntime that is not available on a KServe based Model Server.
+1. While KServe and ModelMesh share the same object definition, they have some subtle differences, in particular the annotations that are available on them.  `enable-route` is one annotation that is available on a ModelMesh ServingRuntime that is not available on a KServe based Model Server.
 
 The InferenceService is responsible for a definition of the model that will be deployed as well as which ServingRuntime it should use to deploy it.
 
@@ -887,7 +892,7 @@ spec:
         path: models/fraud-detection-model/frauddetectionmodel.onnx
 ```
 
-1) The runtime must match the name of the ServingRuntime object that you wish to utilize to deploy the model.
+1. The runtime must match the name of the ServingRuntime object that you wish to utilize to deploy the model.
 
 One major difference between ModelMesh and KServe is which object is responsible for creating and managing the pod where the model is deployed.  
 
