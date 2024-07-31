@@ -109,15 +109,15 @@ nav:
       - Using the UI: odh-rhoai/from-zero-to-workbench/using-ui.md
       - Using Developer Hub: odh-rhoai/from-zero-to-workbench/using-developer-hub.md
     - Advanced Configuration:
-      - Dashboard configuration: odh-rhoai/configuration.md
-      - Custom notebooks: odh-rhoai/custom-notebooks.md
-      - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
-      - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
-      - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
-      - OpenShift Group Management: odh-rhoai/openshift-group-management.md
       - Accelerator Profiles: odh-rhoai/accelerator-profiles.md
+      - Custom notebooks: odh-rhoai/custom-notebooks.md
+      - Custom Serving Runtime (Triton): odh-rhoai/custom-runtime-triton.md
+      - Dashboard configuration: odh-rhoai/configuration.md
+      - GitOps (CRs, objects,...): odh-rhoai/gitops.md
       - Kueue preemption: odh-rhoai/kueue-preemption/readme.md
-      - GitOps: odh-rhoai/gitops.md
+      - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
+      - OpenShift Group Management: odh-rhoai/openshift-group-management.md
+      - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
@@ -125,10 +125,10 @@ nav:
     - Model Serving:
       - Ensemble Serving: tools-and-applications/ensemble-serving/ensemble-serving.md
     - Data processing:
-      - Starburst/Trino proxy: patterns/starproxy/starproxy.md
       - Apache NiFi: tools-and-applications/apache-nifi/apache-nifi.md
       - Apache Spark: tools-and-applications/apache-spark/apache-spark.md
       - NVIDIA Riva: tools-and-applications/riva/riva.md
+      - Starburst/Trino proxy: patterns/starproxy/starproxy.md
     - Workflows:
       - Apache Airflow: tools-and-applications/airflow/airflow.md
       - MLflow: tools-and-applications/mlflow/mlflow.md
