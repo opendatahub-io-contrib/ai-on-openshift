@@ -91,3 +91,16 @@ Ask someone in the `rhods-admins` group to confirm that it works for them. (Reme
 They should be able to do so and successfully save their changes, as shown below:
 
 ![](img/update.rhods-users.png)
+
+## Adding kube:admin to `rhods-admins`
+
+To add `kube:admin` user to the list of RHOAI Administrators, you will need to prefix it with b64:
+
+```yaml
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: rhods-admins
+users:
+- b64:kube:admin
+```
