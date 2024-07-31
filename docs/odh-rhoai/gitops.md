@@ -44,8 +44,8 @@ metadata:
   name: rhods-operator
   namespace: redhat-ods-operator
 spec:
-  channel: stable <1>
-  installPlanApproval: Automatic <2>
+  channel: stable # <1>
+  installPlanApproval: Automatic # <2>
   name: rhods-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
@@ -78,10 +78,10 @@ spec:
       metricsCollection: Istio
       name: data-science-smcp
       namespace: istio-system
-    managementState: Managed <1>
+    managementState: Managed # <1>
   trustedCABundle:
     customCABundle: ''
-    managementState: Managed <2>
+    managementState: Managed # <2>
 ```
 
 DSCInitialization Options:
@@ -164,9 +164,9 @@ spec:
     disableModelRegistry: true
     disableTracking: false
   groupsConfig:
-    adminGroups: rhods-admins <1>
-    allowedGroups: 'system:authenticated' <2>
-  modelServerSizes: <3>
+    adminGroups: rhods-admins # <1>
+    allowedGroups: 'system:authenticated' # <2>
+  modelServerSizes: # <3>
     - name: Small
       resources:
         limits:
@@ -194,8 +194,8 @@ spec:
   notebookController:
     enabled: true
     notebookNamespace: rhods-notebooks
-    pvcSize: 20Gi <4>
-  notebookSizes: <5>
+    pvcSize: 20Gi # <4>
+  notebookSizes: # <5>
     - name: Small
       resources:
         limits:
@@ -258,7 +258,7 @@ metadata:
   labels:
     opendatahub.io/dashboard: 'true'
 data:
-  CULL_IDLE_TIME: '240' <1>
+  CULL_IDLE_TIME: '240' # <1>
   ENABLE_CULLING: 'true'
   IDLENESS_CHECK_PERIOD: '1'
 ```
@@ -297,11 +297,11 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   annotations:
-    opendatahub.io/notebook-image-desc: A custom Jupyter Notebook built for my organization <1>
-    opendatahub.io/notebook-image-name: My Custom Notebook <2>
+    opendatahub.io/notebook-image-desc: A custom Jupyter Notebook built for my organization # <1>
+    opendatahub.io/notebook-image-name: My Custom Notebook # <2>
   name: my-custom-notebook
   namespace: redhat-ods-applications
-  labels: <3>
+  labels: # <3>
     app.kubernetes.io/created-by: byon
     opendatahub.io/dashboard: 'true'
     opendatahub.io/notebook-image: 'true'
@@ -309,14 +309,14 @@ spec:
   lookupPolicy:
     local: true
   tags:
-    - name: '1.0' <4>
+    - name: '1.0' # <4>
       annotations:
-        opendatahub.io/notebook-python-dependencies: '[{"name":"PyTorch","version":"2.2"}]' <5>
-        opendatahub.io/notebook-software: '[{"name":"Python","version":"v3.11"}]' <6>
-        opendatahub.io/workbench-image-recommended: 'true' <7>
+        opendatahub.io/notebook-python-dependencies: '[{"name":"PyTorch","version":"2.2"}]' # <5>
+        opendatahub.io/notebook-software: '[{"name":"Python","version":"v3.11"}]' # <6>
+        opendatahub.io/workbench-image-recommended: 'true' # <7>
       from:
         kind: DockerImage
-        name: 'quay.io/my-org/my-notebook:latest' <8>
+        name: 'quay.io/my-org/my-notebook:latest' # <8>
       importPolicy:
         importMode: Legacy
       referencePolicy:
@@ -502,7 +502,7 @@ apiVersion: kubeflow.org/v1
 kind: Notebook
 metadata:
   annotations:
-    notebooks.opendatahub.io/inject-oauth: 'true' <1>
+    notebooks.opendatahub.io/inject-oauth: 'true' # <1>
     opendatahub.io/image-display-name: Minimal Python
     notebooks.opendatahub.io/oauth-logout-url: 'https://rhods-dashboard-redhat-ods-applications.apps.my-cluster.com/projects/my-data-science-project?notebookLogout=my-workbench'
     opendatahub.io/accelerator-name: ''
@@ -520,7 +520,7 @@ spec:
     spec:
       affinity: {}
       containers:
-        - resources: <2>
+        - resources: # <2>
             limits:
               cpu: '2'
               memory: 8Gi
@@ -583,9 +583,9 @@ spec:
               name: trusted-ca
               readOnly: true
               subPath: ca-bundle.crt
-          image: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/s2i-minimal-notebook:2024.1' <3>
+          image: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/s2i-minimal-notebook:2024.1' # <3>
           workingDir: /opt/app-root/src
-        - resources: <4>
+        - resources: # <4>
             limits:
               cpu: 100m
               memory: 64Mi
@@ -694,14 +694,14 @@ kind: Secret
 apiVersion: v1
 type: Opaque
 metadata:
-  name: aws-connection-my-dataconnection <1>
+  name: aws-connection-my-dataconnection # <1>
   labels:
-    opendatahub.io/dashboard: 'true' <2>
+    opendatahub.io/dashboard: 'true' # <2>
     opendatahub.io/managed: 'true'
   annotations:
-    opendatahub.io/connection-type: s3 <3>
-    openshift.io/display-name: my-dataconnection <4>
-data: <5>
+    opendatahub.io/connection-type: s3 # <3>
+    openshift.io/display-name: my-dataconnection # <4>
+data: # <5>
   AWS_ACCESS_KEY_ID: dGVzdA==
   AWS_DEFAULT_REGION: 'dGVzdA=='
   AWS_S3_BUCKET: 'dGVzdA=='
@@ -723,7 +723,7 @@ When setting up a new project, a Data Science Pipeline instance needs to be crea
 apiVersion: datasciencepipelinesapplications.opendatahub.io/v1alpha1
 kind: DataSciencePipelinesApplication
 metadata:
-  name: dspa <1>
+  name: dspa # <1>
   namespace: my-data-science-project
 spec:
   apiServer:
@@ -752,7 +752,7 @@ spec:
   objectStorage:
     disableHealthCheck: false
     enableExternalRoute: false
-    externalStorage: <2>
+    externalStorage: # <2>
       basePath: ''
       bucket: pipelines
       host: 'minio.ai-example-training.svc.cluster.local:9000'
@@ -800,7 +800,7 @@ When creating a model server through the Dashboard, users can select a "Serving 
 apiVersion: serving.kserve.io/v1alpha1
 kind: ServingRuntime
 metadata:
-  annotations: <1>
+  annotations: # <1>
     enable-route: 'true'
     opendatahub.io/accelerator-name: ''
     opendatahub.io/apiProtocol: REST
@@ -886,7 +886,7 @@ spec:
         version: '1'
       name: ''
       resources: {}
-      runtime: multi-model-server  <1>
+      runtime: multi-model-server  # <1>
       storage:
         key: aws-connection-multi-model
         path: models/fraud-detection-model/frauddetectionmodel.onnx
