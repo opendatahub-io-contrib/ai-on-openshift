@@ -55,7 +55,9 @@ On top of the Caikit+TGIS or TGIS built-in runtimes, the following custom runtim
 
 #### Standalone Inference Servers
 
-- [vLLM](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/llm-servers/vllm/README.md){:target="_blank"}: how to deploy vLLM, the "Easy, fast, and cheap LLM serving for everyone".
+- vLLM: how to deploy vLLM, the "Easy, fast, and cheap LLM serving for everyone".
+    - on [GPU](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/llm-servers/vllm/gpu/README.md){:target="_blank"}: 
+    - on [CPU](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/llm-servers/vllm/cpu/README.md){:target="_blank"}:
 - [Hugging Face TGI](https://github.com/rh-aiservices-bu/llm-on-openshift/blob/main/llm-servers/hf_tgi/README.md){:target="_blank"}: how to deploy the Text Generation Inference server from Hugging Face.
 - [Caikit-TGIS-Serving](https://github.com/opendatahub-io/caikit-tgis-serving){:target="_blank"}: how to deploy the Caikit-TGIS-Serving stack, from OpenDataHub.
 
