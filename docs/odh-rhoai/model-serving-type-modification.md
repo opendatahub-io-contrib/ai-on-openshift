@@ -42,7 +42,10 @@ The behavior is controlled by a simple label in the **Namespace** definition of 
 
 ### Changing the type
 
-So what to do if you have remorse at some point and want to change the serving type? The recipe is pretty simple with what we now know:
+So what to do if you have remorse at some point and want to change the serving type? The recipe is pretty simple with what we now know.
+
+!!! important
+    **Prerequisite**: you need to be OpenShift Cluster admin, or find a friend who is, or have enough rights to modify the Namespace object from your project.
 
 - Remove all existing served models. As the type of model serving and engine will change, the definitions won't be compatible in most cases and cause lots of trouble. If you don't use the Dashboard, remove all instances of `InferenceService` and `ServingRuntime` from your project/namespace.
 - In the OpenShift Console, open the YAML definition of your Namespace (not the Project, that you can't modify!).<br>
