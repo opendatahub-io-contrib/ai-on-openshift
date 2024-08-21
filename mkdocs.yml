@@ -115,6 +115,7 @@ nav:
       - Dashboard configuration: odh-rhoai/configuration.md
       - GitOps (CRs, objects,...): odh-rhoai/gitops.md
       - Kueue preemption: odh-rhoai/kueue-preemption/readme.md
+      - Model serving type modification: odh-rhoai/model-serving-type-modification.md
       - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
       - OpenShift Group Management: odh-rhoai/openshift-group-management.md
       - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
