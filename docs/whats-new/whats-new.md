@@ -1,5 +1,7 @@
 # What's new?
 
+**2024-08-21**: Add [Model serving type modification](../odh-rhoai/model-serving-type-modification.md) instructions.
+
 **2024-07-29**: Add [Kueue preemption](../odh-rhoai/kueue-preemption/readme.md) example.
 
 **2024-07-16**: Add [ODH Tools and Extensions Companion](../odh-rhoai/odh-tools-and-extensions-companion.md) documentation.
