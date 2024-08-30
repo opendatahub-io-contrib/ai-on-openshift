@@ -119,6 +119,7 @@ nav:
       - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
       - OpenShift Group Management: odh-rhoai/openshift-group-management.md
       - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
+      - KServe Timeout Issues: odh-rhoai/kserve-timeout.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
