@@ -1,6 +1,6 @@
 # KServe Timeout Issues
 
-When deploying large models or when releying on node autoscaling with KServe, KServe may timeout before a model has successfully deployed due to the default progress deadline of 10 minutes set by KNative Serving.
+When deploying large models or when relying on node autoscaling with KServe, KServe may timeout before a model has successfully deployed due to the default progress deadline of 10 minutes set by KNative Serving.
 
 When a pod takes longer than 10 minutes to deploy that leverages KNative Serving, like KServe does, KNative Serving will automatically back the pod deployment off and mark it as failed.  This can happen for a number of reasons including deploying large models that take longer than 10m minutes to pull from S3 or if you are leveraging node autoscaling to reduce the consumption of expensive GPU nodes.
 
