@@ -62,4 +62,5 @@ is displayed. select `Yes`
 
 ## Caveats
 
-- You cannot save the Jupyter notebook(s) on the RHOAI workbench from your VS Code. 
+- You cannot save the Jupyter notebook(s) on the RHOAI workbench from your VS Code.
+- If your notebook uses any files (models, inputdata etc.), they should be present on the workbench and theit path should match the path specified in your notebook.
