@@ -119,6 +119,7 @@ nav:
       - NVIDIA GPUs: odh-rhoai/nvidia-gpus.md
       - OpenShift Group Management: odh-rhoai/openshift-group-management.md
       - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
+      - KServe Timeout Issues: odh-rhoai/kserve-timeout.md
       - Connect to RHOAI Workbench Kernel from VS Code: odh-rhoai/connect-vscode-to-rhoai-wb.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md

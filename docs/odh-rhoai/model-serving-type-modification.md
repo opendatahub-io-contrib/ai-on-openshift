@@ -21,7 +21,7 @@ The behavior is controlled by a simple label in the **Namespace** definition of 
 - When this label is set to `true`, so like this:
   
     ```yaml
-        labels:
+      labels:
         modelmesh-enabled: 'true'
     ```
 
@@ -32,7 +32,7 @@ The behavior is controlled by a simple label in the **Namespace** definition of 
 - When this label is set to `false` (or whatever value other than true to be honest, you can try 😉), like this:
 
     ```yaml
-    labels:
+      labels:
         modelmesh-enabled: 'false'
     ```
 
