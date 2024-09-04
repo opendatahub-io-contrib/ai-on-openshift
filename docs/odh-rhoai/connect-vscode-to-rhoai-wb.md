@@ -1,22 +1,17 @@
 # Connect to RHOAI Workbench Kernel from local VS Code
 
-In this article, we will demonstrate how to connect to a workbench running on RHOAI from local VS Code. Some customers have expressed their desire to work directly on their local IDE and execute the Jupyter notebook(s) using the kernel on remote workbench running on RHOAI. Most of these IDEs provide connection to a remote Kernel as a standard feature. However, this standard feature does not work
-with RHOAI because of the way authentication to workbench is set up in RHOAI<br/>
-
-## Why standard feature of most IDEs to connect to remote workbench kernel in RHOAI doesn't work
-
-The standard feature of most IDEs to connect to remote kernel uses token based authentication.<br/>
-Workbench pods running on RHOAI contain a OAuth proxy container that sits in front of the workbench container and handles the authentication of the user connecting to the workbench. This container uses Openshift Authentication mechanism and is not compatible with the standard connection feature of most IDEs.
+Some customers have expressed their desire to work directly on their local IDE and execute the Jupyter notebook(s) using the kernel on remote workbench running on RHOAI. Most IDEs provide connection to a remote Kernel as a standard feature. However, this standard feature does not work with RHOAI because of the way authentication to workbench is set up in RHOAI<br/>
+The standard feature of most IDEs to connect to remote kernel uses token based authentication. Workbench pods running on RHOAI contain a OAuth proxy container that sits in front of the workbench container and handles the authentication of the user connecting to the workbench. This container uses Openshift Authentication mechanism and is not compatible with the standard connection feature of most IDEs.
 
 ## Workaround: Connect to the remote kernel using Openshift port-forwarding
 
 <p>Use the following steps to connect your local VS Code to RHOAI Workbench kernel:</p>
 
-- In your data science project in RHOAI, create a workbench that you would like to use as your remote kernel. If you want to use gpu accelerator, use the compatible workbench image e.g. pytorch.<br/>
+- In your data science project in RHOAI, create a workbench that you would like to use as your remote kernel. If you want to use gpu accelerator, use the compatible workbench image (e.g. pytorch).<br/>
 
     ![Create workbench](img/workbench.png)
 
-- Open the workbench and copy the context path from the browser. You will need this later when connecting from vs code.<br/>
+- Open the workbench and copy the context path from the browser. You will need this later when connecting from VS Code.<br/>
 
     ![Workbench context path](img/workbench-context-path.png)
 
@@ -28,7 +23,7 @@ Workbench pods running on RHOAI contain a OAuth proxy container that sits in fro
 
 - Start port-forwarding to your workbench pod
     * List all the pods in your project. The pod running your workbench is named using the name of your workbench in RHOAI. e.g. `mywb-0` if your workbench name is `mywb`.
-    * Enable port-forwarding to your workbench pod. You need to forward to the port the pod is listening on. It is usually 8888 for RHOAI workbnech. You can find this port from the service in your project with name same as your workbench.
+    * Enable port-forwarding to your workbench pod. You need to forward to the port the pod is listening on. It is usually 8888 for RHOAI workbench. You can find this port from the service in your project with name same as your workbench.
     ![Port-forward to wb pod](img/port-forwarding.png)
 
 - Open the Jupyter notebook in your VS Code
@@ -54,7 +49,7 @@ is displayed. select `Yes`
 - You should see the selected Kernel in the top right corner.
     ![Remote kernel selected](img/remote-kernel-selected.png)
 
-- You should now be able to run your Jupyter notebook on the remote kernel.
+- The code inside of your notebook will now execute using the remote kernel on the RHOAI workbench pod.
 
 - If your workbench uses a Nvidia GPU, you can verify that it is being used in the execution of your notebook by adding a command `!nvidia-smi`. You should see output similar to the image below.
 
@@ -62,5 +57,5 @@ is displayed. select `Yes`
 
 ## Caveats
 
-- You cannot save the Jupyter notebook(s) on the RHOAI workbench from your VS Code.
-- If your notebook uses any files (models, inputdata etc.), they should be present on the workbench and theit path should match the path specified in your notebook.
+- Jupyter notebooks in your local VSCode environment will not be saved to the workbench.
+- If your notebook uses any files (models, inputdata etc.), they should be present on the workbench and their path should match the path specified in your notebook.
