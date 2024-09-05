@@ -188,7 +188,7 @@ Now that the Elasticsearch operator has been deployed and an instance created, w
     
     **Note:** *If you have insufficient resources to start a medium container size then stop the workbench and change the workbench to start as a small container size.*
 
-7. Upload or import the ./notebooks/Langchain-ElasticSearchVector-ingest.ipynb notebook to your workbench.
+7. Upload or import the ./notebooks/Langchain-ElasticSearchVector-Ingest.ipynb notebook to your workbench.
 
     ![RHOAI Workbench Notebook](img/vector_ingest_notebook_upload.png)
 

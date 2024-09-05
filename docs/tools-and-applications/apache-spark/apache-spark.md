@@ -19,5 +19,5 @@ It includes:
 - instructions to deploy the Spark history server to gather your processing logs,
 - instructions to deploy the Spark on Kubernetes operator,
 - Prometheus and Grafana configuration to monitor your data processing and operator in real time,
-- instructions to work without the operator, from a Notebook or a Terminal, inside or outside the OpenShit Cluster,
+- instructions to work without the operator, from a Notebook or a Terminal, inside or outside the OpenShift Cluster,
 - various examples to test your installation and the different methods.
