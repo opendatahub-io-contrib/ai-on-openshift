@@ -15,6 +15,9 @@ All those solutions are open source, you fully control how they are deployed and
 - A **Code Server workbench** image available in your RHOAI or ODH environment. Starting at RHOAI 2.8, this image is available out of the box. Prior to that, you would have to import it as a custom image, like [this one](https://quay.io/repository/modh/codeserver?tab=tags&tag=codeserver-ubi9-python-3.9-2023b-20240301-6560116){:target="_blank"}.
 - As Code Server is fully open source, it does not include the Microsoft Marketplace. So you must download the Continue extension file from the [Open VSX Registry](https://open-vsx.org/extension/Continue/continue){:target="_blank"}. Click on the **Download** button and select the **Linux x64** version. You will get a file named `Continue.continue-0.9.91@linux-x64.vsix` (or whatever version you download).
 
+!!! note
+    There is a repository containing the files that can be used to deploy some prerequisites for this demo. You can find it [here](https://github.com/rh-aiservices-bu/code-assistant-demo).
+
 ## Installation
 
 - Create and Start your Workbench based on Code Server:
