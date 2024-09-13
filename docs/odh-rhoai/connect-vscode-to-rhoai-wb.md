@@ -1,7 +1,7 @@
 # Connect to RHOAI Workbench Kernel from local VS Code
 
-Some customers have expressed their desire to work directly on their local IDE and execute the Jupyter notebook(s) using the kernel on remote workbench running on RHOAI. Most IDEs provide connection to a remote Kernel as a standard feature. However, this standard feature does not work with RHOAI because of the way authentication to workbench is set up in RHOAI<br/>
-The standard feature of most IDEs to connect to remote kernel uses token based authentication. Workbench pods running on RHOAI contain a OAuth proxy container that sits in front of the workbench container and handles the authentication of the user connecting to the workbench. This container uses Openshift Authentication mechanism and is not compatible with the standard connection feature of most IDEs.
+Some users have expressed their desire to work directly on their local IDE and execute the Jupyter notebook(s) using the kernel on remote workbench running on RHOAI. Most IDEs provide connection to a remote Kernel as a standard feature. However, this standard feature does not work with RHOAI because of the way authentication to workbench is set up in RHOAI<br/>
+The standard feature of most IDEs to connect to remote kernel uses token based authentication. Workbench pods running on RHOAI contain an authentication mechanism that sits in front of the workbench container and handles the authentication of the user connecting to the workbench. This container uses Openshift Authentication mechanism and is not compatible with the standard connection feature of most IDEs.
 
 ## Workaround: Connect to the remote kernel using Openshift port-forwarding
 
