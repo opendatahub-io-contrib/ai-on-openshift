@@ -120,6 +120,7 @@ nav:
       - OpenShift Group Management: odh-rhoai/openshift-group-management.md
       - Single stack serving certificate: odh-rhoai/single-stack-serving-certificate.md
       - KServe Timeout Issues: odh-rhoai/kserve-timeout.md
+      - RHOAI Metrics Dashboard for Model Serving: odh-rhoai/kserve-uwm-dashboard-metrics.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
