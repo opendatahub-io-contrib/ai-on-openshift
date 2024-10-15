@@ -294,6 +294,20 @@ OR
                 ```
 
                 **NOTE:** *You can delete the ingress-certs folder after you have created the knative-serving-cert secret.*
+                
+            4. To avoid possible SSL errors with the connection to the Minio bucket when creating your model server in the following steps, add a custom CA bundle to default-dsci:
+            
+                ```
+                oc get secret -n openshift-ingress-operator router-ca -o jsonpath='{.data.tls\.crt}' | base64 -d > openshift-ca-bundle.pem
+
+                oc get configmap -n openshift-config openshift-service-ca.crt -o jsonpath='{.data.service-ca\.crt}' >> openshift-ca-bundle.pem
+
+                CA_BUNDLE_FILE=./openshift-ca-bundle.pem
+
+                oc patch dscinitialization default-dsci --type='json' -p='[{"op":"replace","path":"/spec/trustedCABundle/customCABundle","value":"'"$(awk '{printf "%s\\n", $0}' $CA_BUNDLE_FILE)"'"}]'
+                ```
+                
+                **NOTE:** *You can delete the openshift-ca-bundle.pem file after you have patched your dscinitialization, or you can add it to your trusted CA sources if it's necessary.*
 
         5. Run the following oc commands to enable the Single Model Serving runtime for OpenShift AI. 
             ```
@@ -398,6 +412,49 @@ We'll now add a custom serving runtime so we can deploy the GGUF version of mode
     "role":"assistant"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":32,"completion
     ```
 
+    If you face any SSL errors when running the previous command, try to add the max_tokens limit to 100, which will get you safely under the 60s timeout limit of the Knative queue-proxy service (PS. The use of jq is optional):
+
+    ```
+      curl -k --location 'https://YOUR-OPENSHIFT-AI-INFERENCE-ENDPOINT/v1/chat/completions' --header 'Content-Type: application/json' --data '{
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "How large is the capital of France?",
+            "role": "user"
+          }
+        ],
+        "max_tokens": 100
+      }' | jq .
+        % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+      100  1011  100   793  100   218     14      3  0:01:12  0:00:55  0:00:17   174
+      {
+        "id": "chatcmpl-687c22c8-d0ba-4ea4-a012-d4b64069d7a2",
+        "object": "chat.completion",
+        "created": 1727727459,
+        "model": "/mnt/models/mistral-7b-instruct-v0.2.Q4_K_M.gguf",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "content": " The size of a city's area, including its urban and rural parts, is typically measured in square kilometers or square miles. However, when referring to the size of a city's capital, people usually mean the size of its urban core or central business district rather than the entire metropolitan area. In this context, Paris, the capital city of France, has an urban area of approximately 105 square kilometers (40.5 square miles). However, if you meant",
+              "role": "assistant"
+            },
+            "logprobs": null,
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 32,
+          "completion_tokens": 100,
+          "total_tokens": 132
+        }
+      }
+    ```
+
 ## Update the Chat Recipe Application
 We'll now update the chat recipe application that we created from Podman AI Lab to use Langchain to connect the model we just deployed on OpenShift AI and the Elasticsearch vector database.
 
@@ -425,25 +482,29 @@ We'll now update the chat recipe application that we created from Podman AI Lab 
 
 3. You can build the Containerfile and push it to your own repository or you can use the one at quay.io/jhurlocker/elastic-vectordb-chat.
 
-4. Update the ./components/app/deployment.yaml file with your values for the MODEL_ENDPOINT, ELASTIC_URL, and ELASTIC_PASS environment variables.
+4. If the chatbot app has SSL failures or timeouts similar to those mentioned in item 4 of the previous subtitle, add the max_tokens parameter to the chatbot_ui.py code in the ChatOpenAI connection part. Or if you want a built image with this parameter, you can use quay.io/alexonoliveira/elastic-vectordb-chat:latest.
+
+    ![Chatbot Max Tokens](img/chatbot_vscode_maxtokens.png)
+
+6. Update the ./components/app/deployment.yaml file with your values for the MODEL_ENDPOINT, ELASTIC_URL, and ELASTIC_PASS environment variables.
 
     ![Deployment Environment Variables](img/update_deployment_vars.png)
 
     **NOTE:** *Make sure you include* 'https://' *and the port* ':9200' *in the ELASTIC_URL environment variable*
 
-5. Create the project
+7. Create the project
 
     ```
     oc new-project elastic-vectordb-chat
     ```
 
-6. Apply the deployment.yaml you just updated to deploy the chatbot application.
+8. Apply the deployment.yaml you just updated to deploy the chatbot application.
 
     ```
     oc apply -f ./components/app/deployment.yaml
     ```
 
-7. Get the route to the chatbot application
+9. Get the route to the chatbot application
 
     ```
     oc get route -n elastic-vectordb-chat
@@ -453,15 +514,15 @@ We'll now update the chat recipe application that we created from Podman AI Lab 
 
     ![Chatbot Deployed on OpenShift](img/chatbot_on_openshift.png)
 
-8. Type in a message and press Enter. It might take awhile to respond if the model is deployed on a CPU.
+10. Type in a message and press Enter. It might take awhile to respond if the model is deployed on a CPU.
 
     ![Chatbot message](img/chatbot_on_openshift_message.png)
 
-9. In the OpenShift web console you can check the model server logs under the podman-ai-lab-rag-project -> Workloads -> Pods (mistral7b-*) -> Logs. Note the log statements when a message is sent to the model inference endpoint.
+11. In the OpenShift web console you can check the model server logs under the podman-ai-lab-rag-project -> Workloads -> Pods (mistral7b-*) -> Logs. Note the log statements when a message is sent to the model inference endpoint.
 
     ![Model Log](img/model_log.png)
 
-10. Congratulations! You've successfully taken a model and application from Podman AI Lab and created a RAG chatbot deployed on OpenShift and OpenShift AI.
+12. Congratulations! You've successfully taken a model and application from Podman AI Lab and created a RAG chatbot deployed on OpenShift and OpenShift AI.
 
 *Special thanks to the maintainers of the below repositories.*
 
