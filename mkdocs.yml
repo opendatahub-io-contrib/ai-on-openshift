@@ -122,6 +122,7 @@ nav:
       - KServe Timeout Issues: odh-rhoai/kserve-timeout.md
       - RHOAI Metrics Dashboard for Model Serving: odh-rhoai/kserve-uwm-dashboard-metrics.md
       - Connect to RHOAI Workbench Kernel from VS Code: odh-rhoai/connect-vscode-to-rhoai-wb.md
+      - AnythingLLM as Custom Workbench: odh-rhoai/custom-workbench-anythingllm.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
