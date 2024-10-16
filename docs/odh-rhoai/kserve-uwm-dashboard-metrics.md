@@ -53,19 +53,21 @@ The RHOAI UWM Grafana Dashboard will deploy a Grafana instance with pre-configur
 
 The following dashboards are currently available:
 
-- **vLLM Dashboard Model Metrics**: Provides Model metrics for vLLM Single Serving Models.
+- **vLLM Model Metrics Dashboard**: Provides Model metrics for vLLM Single Serving Models dashboard.
 
 ![vLLM Dashboard 1](./img/dashboard1.png)
 
+- **vLLM Service Performance Dashboard**: Provides Service Performance metrics for vLLM Single Serving Models dashboard.
+
 ![vLLM Dashboard 2](./img/dashboard2.png)
 
-- **vLLM Dashboard Service Performance**: Provides Service Performance for vLLM Single Serving Models.
-
-![vLLM Dashboard 3](./img/dashboard3.png)
-
-- **OpenVino Dashboard**: Provides metrics for OpenVino Single Serving Models.
+- **OpenVino Service Model Metrics Dashboard**: Provides metrics for OpenVino Single Serving Models
 
 ![vLLM Dashboard 4](./img/dashboard4.png)
+
+- **OpenVino Model Metrics Dashboard**: Provides Service Performance metrics for OpenVino Single Serving Models.
+
+![vLLM Dashboard 3](./img/dashboard3.png)
 
 ### Conclusion
 
