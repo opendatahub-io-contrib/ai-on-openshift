@@ -8,6 +8,8 @@ Enabling RHOAI User Workload Metrics for Single Serving Models and deploying a G
 
 By monitoring these metrics, you can identify bottlenecks, optimize resource allocation, and ensure efficient infrastructure utilization. This enables data-driven decisions to improve the overall performance and scalability of your AI applications.
 
+* *[RHOAI Metrics Dashboard for Single Serving Models Code Repository](https://github.com/rh-aiservices-bu/rhoai-uwm)*
+
 ### Prerequisites
 
 - OpenShift 4.10 or later
@@ -21,7 +23,7 @@ To enable RHOAI User Workload Metrics for Single Serving Models and deploy the G
 
 * [Configure Monitoring for the Single Model Serving Platform](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.11/html/serving_models/serving-large-models_serving-large-models#configuring-monitoring-for-the-single-model-serving-platform_serving-large-models)
 * [Configure GPU Monitoring Dashboard](https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.2/enable-gpu-monitoring-dashboard.html)
-* [Install the RHOAI Metrics Grafana and Dashboards for Single Serving Models](./rhoai-uwm-grafana/README.md)
+* [Install the RHOAI Metrics Grafana and Dashboards for Single Serving Models](https://github.com/rh-aiservices-bu/rhoai-uwm/blob/main/rhoai-uwm-grafana/README.md)
 
 ### Configure Monitoring for the Single Model Serving Platform
 
