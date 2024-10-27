@@ -20,8 +20,6 @@ kind: Namespace
 metadata:
   annotations:
     openshift.io/display-name: "Red Hat OpenShift AI"
-  labels:
-    openshift.io/cluster-monitoring: 'true'
   name: redhat-ods-operator
 ```
 
@@ -67,9 +65,6 @@ metadata:
   name: default-dsci
 spec:
   applicationsNamespace: redhat-ods-applications
-  monitoring:
-    managementState: Managed
-    namespace: redhat-ods-monitoring
   serviceMesh:
     auth:
       audiences:
@@ -86,8 +81,8 @@ spec:
 
 DSCInitialization Options:
 
-1. KServe requires a ServiceMesh instance to be installed on the cluster.  By default the Red Hat OpenShift AI operator will attempt to configure an instance if the ServiceMesh operator is installed.  If your cluster already has ServiceMesh configured, you may choose to skip this option.
-2. As part of the ServiceMesh configuration, the Red Hat OpenShift AI operator will configure a self-signed cert for any routes created by ServiceMesh.
+1. KServe requires a ServiceMesh instance to be installed on the cluster.  By default the Red Hat OpenShift AI operator will attempt to configure an instance if the ServiceMesh operator is installed.  If your cluster already has ServiceMesh configured, you may choose to set `Unmanaged`
+2. User can provide customized certification to be used by components across Red Hat OpenShift AI.
 
 After the operator is installed, a DataScienceCluster object will need to be configured with the different components.  Each component has a `managementState` option which can be set to `Managed` or `Removed`.  Admins can choose which components are installed on the cluster.
 
@@ -105,11 +100,11 @@ spec:
       serving:
         ingressGateway:
           certificate:
-            type: SelfSigned
+            type: OpenshiftDefaultIngress
         managementState: Managed
         name: knative-serving
     trustyai:
-      managementState: Removed
+      managementState: Managed
     ray:
       managementState: Managed
     kueue:
@@ -122,6 +117,11 @@ spec:
       managementState: Managed
     datasciencepipelines:
       managementState: Managed
+    trainingoperator:
+      managementState: Removed
+    modelregistry:
+      managementState: Removed
+      registriesNamespace: rhoai-model-registries
 ```
 
 After the `DataScienceCluster` object is created, the operator will install and configure the different components on the cluster.  Only one `DataScienceCluster` object can be created on a cluster.
@@ -144,25 +144,30 @@ metadata:
 spec:
   dashboardConfig:
     enablement: true
-    disableDistributedWorkloads: false
-    disableProjects: false
-    disableBiasMetrics: false
-    disableSupport: false
-    disablePipelines: false
-    disableProjectSharing: false
-    disableModelServing: false
-    disableKServe: false
     disableAcceleratorProfiles: false
+    disableBYONImageStream: false
+    disableClusterManager: false
+    disableConnectionTypes: true
     disableCustomServingRuntimes: false
-    disableModelMesh: false
-    disableKServeAuth: false
+    disableDistributedWorkloads: false
+    disableHome: false
     disableISVBadges: false
     disableInfo: false
-    disableClusterManager: false
+    disableKServe: false
+    disableKServeAuth: false
+    disableKServeMetrics: false
+    disableModelMesh: false
+    disableModelRegistry: false
+    disableModelServing: false
+    disableNIMModelServing: true
     disablePerformanceMetrics: false
-    disableBYONImageStream: false
-    disableModelRegistry: true
+    disablePipelines: false
+    disableProjectSharing: false
+    disableProjects: false
+    disableStorageClasses: false
+    disableSupport: false
     disableTracking: false
+    disableTrustyBiasMetrics: false
   groupsConfig:
     adminGroups: rhods-admins # <1>
     allowedGroups: 'system:authenticated' # <2>
@@ -327,7 +332,7 @@ Notebook Image Options:
 
 1. A description for the purpose of the notebook image
 2. The name that will be displayed to end users in the drop down menu when creating a Workbench
-3. The notebook image requires several labels for them to appear in the Dashboard, including the `app.kubernetes.io/created-by: byon` label.  While traditionally this label is utilized to trace where an object originated from, this label is required for the notebooks to be made available to end users.
+3. The notebook image requires several labels for them to appear in the Dashboard, including the `app.kubernetes.io/created-by: byon` label.  While traditionally this label is utilized to trace where an object originated from, this label is required for the notebooks to be made available to end users. Ensure `disableBYONImageStream` is set to false with this label
 4. Multiple image versions can be configured as part of the same Notebook and users have the ability to select which version of the image they wish to use.  This is helpful if you release updated versions of the Notebook image and you wish to avoid breaking end user environments with package changes and allow them to upgrade as they wish.
 5. When selecting a Notebook image users will be presented with some information about the notebook based on the information presented in this annotation.  `opendatahub.io/notebook-python-dependencies` is most commonly used to present information about versions from the most important Python packages that are pre-installed in the Image.
 6. Like the python dependencies annotation, the `opendatahub.io/notebook-software` annotation is used to present the end user with information about what software is installed in the Image.  Most commonly this field is used to present information such as the Python version, Jupyter versions, or CUDA versions.
@@ -416,6 +421,9 @@ objects:
         - name: tensorrt
           version: '7'
           autoSelect: true
+        - name: sklearn
+          version: "1"
+          autoSelect: true         
       protocolVersions:
         - grpc-v2
       multiModel: true
@@ -552,11 +560,11 @@ spec:
             - name: NOTEBOOK_ARGS
               value: |-
                 --ServerApp.port=8888
-                                  --ServerApp.token=''
-                                  --ServerApp.password=''
-                                  --ServerApp.base_url=/notebook/my-data-science-project/my-workbench
-                                  --ServerApp.quit_button=False
-                                  --ServerApp.tornado_settings={"user":"kube-3aadmin","hub_host":"https://rhods-dashboard-redhat-ods-applications.apps.my-cluster.com","hub_prefix":"/projects/my-data-science-project"}
+                --ServerApp.token=''
+                --ServerApp.password=''
+                --ServerApp.base_url=/notebook/my-data-science-project/my-workbench
+                --ServerApp.quit_button=False
+                --ServerApp.tornado_settings={"user":"kube-3aadmin","hub_host":"https://rhods-dashboard-redhat-ods-applications.apps.my-cluster.com", "hub_prefix":"/projects/my-data-science-project"}
             - name: JUPYTER_IMAGE
               value: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/s2i-minimal-notebook:2024.1'
             - name: PIP_CERT
@@ -864,7 +872,7 @@ spec:
   grpcDataEndpoint: 'port:8001'
 ```
 
-1. While KServe and ModelMesh share the same object definition, they have some subtle differences, in particular the annotations that are available on them.  `enable-route` is one annotation that is available on a ModelMesh ServingRuntime that is not available on a KServe based Model Server.
+While KServe and ModelMesh share the same object definition, they have some subtle differences, in particular the annotations that are available on them.  `enable-route` is one annotation that is available on a ModelMesh ServingRuntime that is not available on a KServe based Model Server.
 
 The InferenceService is responsible for a definition of the model that will be deployed as well as which ServingRuntime it should use to deploy it.
 
@@ -899,6 +907,69 @@ One major difference between ModelMesh and KServe is which object is responsible
 With KServe, the ServingRuntime acts as a "pod template" and each InferenceService creates it's own pod to deploy a model.  A ServingRuntime can be used by multiple InferenceServices and each InferenceService will create a separate pod to deploy a model.
 
 By contrast, a ServingRuntime creates a pod with ModelMesh, and the InferenceService simply tells the model server pod what models to load and from where.  With ModelMesh a single ServingRuntime with multiple InferenceServices will create a single pod to load all of the models.
+
+For auth token to work, several parts need to be adapted
+1. two extra annotations need to be added on InferenceService object `fraud-detection-mode`
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    security.opendatahub.io/enable-auth: 'true'
+    serving.knative.openshift.io/enablePassthrough: 'true'
+    ...
+  name: fraud-detection-model
+  ...
+```
+
+2. your service account `fraud-detection-s` created for inference requires proper permission to get InferenceService object `fraud-detection-mode`
+
+```yaml
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: fraud-detection-get-role
+  namespace: my-multi-model-serving-project
+  labels:
+    opendatahub.io/dashboard: 'true'
+rules:
+  - verbs:
+      - get
+    apiGroups:
+      - serving.kserve.io
+    resources:
+      - inferenceservices
+    resourceNames:
+      - fraud-detection-model
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: fraud-detection-get-rolebinding
+  namespace: my-multi-model-serving-project
+  labels:
+    opendatahub.io/dashboard: 'true'
+subjects:
+  - kind: ServiceAccount
+    name: fraud-detection-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: fraud-detection-get-role
+```
+
+3. Lastly, create secret attaching to your service account `fraud-detection-sa`
+
+```yaml
+kind: Secret
+apiVersion: v1
+  annotations:
+    kubernetes.io/service-account.name: fraud-detection-sa
+  name: auth-token-secret
+type: kubernetes.io/service-account-token
+```
 
 ## ArgoCD Health Checks
 
