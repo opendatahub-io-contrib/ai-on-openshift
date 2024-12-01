@@ -137,6 +137,7 @@ nav:
     - Workflows:
       - Apache Airflow: tools-and-applications/airflow/airflow.md
       - MLflow: tools-and-applications/mlflow/mlflow.md
+      - Data Science Pipeline: tools-and-applications/datasciencepipeline/datasciencepipeline.md
     - Storage:
       - Minio: tools-and-applications/minio/minio.md
       - Rclone: tools-and-applications/rclone/rclone.md
