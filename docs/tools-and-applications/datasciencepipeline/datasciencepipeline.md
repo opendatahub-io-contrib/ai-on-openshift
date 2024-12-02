@@ -16,6 +16,7 @@ The current version of KFP 2.0 in OpenShift AI uses Argo Workflow as the backend
 The example uses OpenShift Pipeline (Tekton) to compile the pipeline into an intermediate representation (IR) YAML and submit it to the Kubeflow Pipeline server (instead of doing it from your Jupyter environment using Elyra, or importing it directly through the Dashboard).
 
 The Tekton pipeline has 2 main tasks:
+
 * git-clone
 * execute-kubeflow-pipeline to compile and submit the pipeline
 
