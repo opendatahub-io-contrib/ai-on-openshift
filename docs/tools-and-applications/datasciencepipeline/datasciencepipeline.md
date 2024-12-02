@@ -41,7 +41,7 @@ The demo uses the following components:
 
 You will need OpenShift 2.15 installed with ModelRegistry set to `Managed`. In 2.15, the model registry feature is currently in Tech Preview.
 
-### Running the Example
+## Running the Example
 
 The sample code is available [here](https://github.com/tsailiming/openshift-ai-dsp).
 
