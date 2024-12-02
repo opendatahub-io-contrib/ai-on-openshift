@@ -22,7 +22,7 @@ The Tekton pipeline has 2 main tasks:
 
 ## Example 
 
-## Architectural Diagram
+### Architectural Diagram
 
 ![dsp-arch](img/rhoai-dsp.jpg)
 
@@ -37,11 +37,11 @@ The demo uses the following components:
 | Minio | S3 bucket to store the model
 | KServe | To serve the model
 
-## Prerequisite
+### Prerequisite
 
 You will need OpenShift 2.15 installed with ModelRegistry set to `Managed`. In 2.15, the model registry feature is currently in Tech Preview.
 
-## Running the Example
+### Running the Example
 
 The sample code is available [here](https://github.com/tsailiming/openshift-ai-dsp).
 
