@@ -9,7 +9,15 @@ Kubeflow Pipelines (KFP) is a platform for building and deploying portable and s
 
 With KFP you can author components and pipelines using the KFP Python SDK, compile pipelines to an intermediate representation YAML, and submit the pipeline to run on a KFP-conformant backend.
 
-The open source KFP backend is available as a core component of Kubeflow or as a standalone installation. Follow the installation instructions and Hello World Pipeline example to quickly get started with KFP.
+The current version of KFP 2.0 in OpenShift AI uses Argo Workflow as the backend.
+
+## Why do I see OpenShift Pipeline in this example?
+
+The example uses OpenShift Pipeline (Tekton) to compile the pipeline into an intermediate representation (IR) YAML and submit it to the Kubeflow Pipeline server.
+
+The Tekton pipeline has 2 main tasks:
+* git-clone
+* excute-kubeflow-pipeline to compile and submit the pipeline
 
 ## Example 
 
