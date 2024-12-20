@@ -1,4 +1,4 @@
-# Using the Image Puller Operator to Speed Up OpenShift AI Start-Up Times
+# Using Image Puller Operator to Speed Up Start-Up Times
 
 OpenShift AI provides a powerful suite of tools for building, training, and deploying AI/ML models. As with any powerful platform, optimizing start-up times for workbenches and model deployments can further enhance the overall user experience.
 
@@ -63,4 +63,4 @@ In this example, three images are pre-defined:
 - `openvino-model-server`: OpenVINO model server image.
 - 
 
-1) After applying your configuration, a StatefulSet definition will be created, and a pod will be launched on each node. Each pod will contain the images you specified as containers, and it will begin the image pulling process.
+3) After applying your configuration, a StatefulSet definition will be created, and a pod will be launched on each node. Each pod will contain the images you specified as containers, and it will begin the image pulling process.
