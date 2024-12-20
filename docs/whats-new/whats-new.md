@@ -1,6 +1,6 @@
 # What's new?
 
-**2024-12-20**: Add [Using Image Puller Operator to Speed Up Start-Up Times](../odh-rhoai/image-puller.md) instructions.
+**2024-12-20**: Add [Using Kubernetes Image Puller to Speed Up Start-Up Times](../odh-rhoai/image-puller.md) instructions.
 
 **2024-10-14**: Add [Using AnythingLLM as custom workbench in ODH/RHOAI](../odh-rhoai/custom-workbench-anythingllm.md) instructions.
 
