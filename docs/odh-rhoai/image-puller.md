@@ -65,4 +65,4 @@ In this example, three images are pre-defined:
 - `openvino-model-server`: OpenVINO model server image.
 - 
 
-3) After applying your configuration, a StatefulSet definition will be created, and a pod will be launched on each node. Each pod will contain the images you specified as containers, and it will begin the image pulling process.If you would like to learn more check [Kubernetes Image Puller GitHub page](https://github.com/che-incubator/kubernetes-image-puller).
+3) After applying your configuration, a DaemonSet definition will be created, and a pod will be launched on each node. Each pod will contain the images you specified as containers, and it will begin the image pulling process.If you would like to learn more check [Kubernetes Image Puller GitHub page](https://github.com/che-incubator/kubernetes-image-puller).
