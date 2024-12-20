@@ -1,4 +1,4 @@
-# Using Kubernete Image Puller to Speed Up Start-Up Times
+# Using Kubernetes Image Puller to Speed Up Start-Up Times
 
 OpenShift AI provides a powerful suite of tools for building, training, and deploying AI/ML models. As with any powerful platform, optimizing start-up times for workbenches and model deployments can further enhance the overall user experience.
 
