@@ -42,6 +42,9 @@ The behavior is controlled by a simple label in the **Namespace** definition of 
 
 ### Changing the type
 
+!!! important
+      Starting with version 2.16 of OpenShift AI, the following procedure is not needed any more. A **Change** button has been added right next to the model serving type label, achieving the same in a much simpler way.
+
 So what to do if you have remorse at some point and want to change the serving type? The recipe is pretty simple with what we now know.
 
 !!! important
