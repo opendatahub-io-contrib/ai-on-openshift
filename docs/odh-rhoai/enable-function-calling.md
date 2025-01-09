@@ -30,7 +30,9 @@ IMPORTANT: vLLM supports function calling for [certain LLMs](https://docs.vllm.a
 
 To enable Function Calling within vLLM in OpenShift AI we need to use a vLLM image with a 0.6.3+ version (depending on the model you use, like Granite3 family you should use 0.6.4 onwards).
 
-To deploy an LLM with vLLM on OpenShift **with Function Calling enabled**, use a Serving Runtime configured with vLLM images and set the required flags as described in the [vLLM documentation](https://docs.vllm.ai/en/latest/features/tool_calling.html#automatic-function-calling):
+Function Calling will work out of the box with RHOAI 2.17+, which includes the required vLLM versions for LLMs like Granite3. In the meantime, you can use the suggested image provided in this article.
+
+To deploy an LLM with vLLM on OpenShift AI **with Function Calling enabled**, use a Serving Runtime configured with vLLM images and set the required flags as described in the [vLLM documentation](https://docs.vllm.ai/en/latest/features/tool_calling.html#automatic-function-calling):
 
 - **`--enable-auto-tool-choice`**: Mandatory. Enables the model to autonomously generate tool calls when needed.
 - **`--tool-call-parser`**: Specifies the tool parser to use. Additional parsers can be registered via `--tool-parser-plugin`.
