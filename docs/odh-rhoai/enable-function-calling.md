@@ -30,7 +30,7 @@ IMPORTANT: vLLM supports function calling for [certain LLMs](https://docs.vllm.a
 
 To enable Function Calling within vLLM in OpenShift AI we need to use a vLLM image with a 0.6.3+ version (depending on the model you use, like Granite3 family you should use 0.6.4 onwards).
 
-Function Calling will work out of the box with RHOAI 2.17+, which includes the required vLLM versions for LLMs like Granite3. In the meantime, you can use the suggested image provided in this article.
+Function Calling will work out of the box with RHOAI 2.17+, which includes the required vLLM versions for LLMs like Granite3. In the meantime, you can use the [suggested vLLM image](quay.io/opendatahub/vllm@sha256:2c1e78004ad6852d46b55c7e882103af8716598d44faca283c7d2782f6141d65).
 
 To deploy an LLM with vLLM on OpenShift AI **with Function Calling enabled**, use a Serving Runtime configured with vLLM images and set the required flags as described in the [vLLM documentation](https://docs.vllm.ai/en/latest/features/tool_calling.html#automatic-function-calling):
 
@@ -47,7 +47,7 @@ kind: ServingRuntime
 metadata:
   annotations:
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
-    openshift.io/display-name: CUSTOM - vLLM ServingRuntime - vLLM 0.6.5 - Tool Calling Parser
+    openshift.io/display-name: CUSTOM - vLLM ServingRuntime - vLLM 0.6.4 - Tool Calling Parser
   labels:
     opendatahub.io/dashboard: "true"
   name: vllm-runtime-tool-calling
@@ -112,7 +112,7 @@ metadata:
   annotations:
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
     openshift.io/display-name: CUSTOM - vLLM ServingRuntime for KServe Tweaked
-      Float16 - v0.6.5 - Tool Calling Parser Generic
+      Float16 - v0.6.4 - Tool Calling Parser Generic
   labels:
     opendatahub.io/dashboard: "true"
   name: vllm-runtime-tool-calling-generic
