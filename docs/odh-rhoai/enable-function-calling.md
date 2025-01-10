@@ -28,9 +28,9 @@ IMPORTANT: vLLM supports function calling for [certain LLMs](https://docs.vllm.a
 
 ## How to enable Function Calling with vLLM in OpenShift AI
 
-To enable Function Calling within vLLM in OpenShift AI we need to use a vLLM image with a 0.6.3+ version (depending on the model you use, like Granite3 family you should use 0.6.6 onwards).
+To enable Function Calling within vLLM in OpenShift AI we need to use a vLLM image with a 0.6.3+ version (depending on the model you use, like Granite3 family you should use 0.6.5 onwards).
 
-Function Calling will work out of the box with RHOAI 2.17+, which includes the required vLLM versions for LLMs like Granite3. In the meantime, you can use the [suggested vLLM image](quay.io/opendatahub/vllm@sha256:f7e40286a9e0a5870fcb96f3dc6c2cb094ed8eb8d9a17dc886fc6aae2ad06519) (that ships) vLLM v0.6.6.
+Function Calling will work out of the box with RHOAI 2.17+, which includes the required vLLM versions for LLMs like Granite3. In the meantime, you can use the [suggested vLLM image](quay.io/opendatahub/vllm@sha256:f7e40286a9e0a5870fcb96f3dc6c2cb094ed8eb8d9a17dc886fc6aae2ad06519) (that includes vLLM v0.6.6).
 
 To deploy an LLM with vLLM on OpenShift AI **with Function Calling enabled**, use a Serving Runtime configured with vLLM images and set the required flags as described in the [vLLM documentation](https://docs.vllm.ai/en/latest/features/tool_calling.html#automatic-function-calling):
 
@@ -76,7 +76,7 @@ spec:
       env:
         - name: HF_HOME
           value: /tmp/hf_home
-      image: quay.io/opendatahub/vllm@sha256:2c1e78004ad6852d46b55c7e882103af8716598d44faca283c7d2782f6141d65
+      image: quay.io/opendatahub/vllm@sha256:f7e40286a9e0a5870fcb96f3dc6c2cb094ed8eb8d9a17dc886fc6aae2ad06519
       name: kserve-container
       ports:
         - containerPort: 8080
@@ -165,7 +165,7 @@ When you deploy your Model Serving (Granite3.0-8B-Instruct in this case) as a re
 
 ![](img/function-tooling2.png)
 
-NOTE: For Granite3.1-8B-Instruct only the flags `--enable-auto-tool-choice` and `--tool-call-parser=granite` are required, remove the --chat-template as is not required.
+NOTE: For Granite3.1-8B-Instruct only the flags `--enable-auto-tool-choice` and `--tool-call-parser=granite` are required, remove the --chat-template flag as is not required.
 
 This setup creates a "generic" Serving Runtime for Function Calling, allowing you to customize additional Serving Runtime arguments depending on the model used.
 
