@@ -28,9 +28,9 @@ IMPORTANT: vLLM supports function calling for [certain LLMs](https://docs.vllm.a
 
 ## How to enable Function Calling with vLLM in OpenShift AI
 
-To enable Function Calling within vLLM in OpenShift AI we need to use a vLLM image with a 0.6.3+ version (depending on the model you use, like Granite3 family you should use 0.6.4 onwards).
+To enable Function Calling within vLLM in OpenShift AI we need to use a vLLM image with a 0.6.3+ version (depending on the model you use, like Granite3 family you should use 0.6.6 onwards).
 
-Function Calling will work out of the box with RHOAI 2.17+, which includes the required vLLM versions for LLMs like Granite3. In the meantime, you can use the [suggested vLLM image](quay.io/opendatahub/vllm@sha256:2c1e78004ad6852d46b55c7e882103af8716598d44faca283c7d2782f6141d65).
+Function Calling will work out of the box with RHOAI 2.17+, which includes the required vLLM versions for LLMs like Granite3. In the meantime, you can use the [suggested vLLM image](quay.io/opendatahub/vllm@sha256:f7e40286a9e0a5870fcb96f3dc6c2cb094ed8eb8d9a17dc886fc6aae2ad06519) (that ships) vLLM v0.6.6.
 
 To deploy an LLM with vLLM on OpenShift AI **with Function Calling enabled**, use a Serving Runtime configured with vLLM images and set the required flags as described in the [vLLM documentation](https://docs.vllm.ai/en/latest/features/tool_calling.html#automatic-function-calling):
 
@@ -39,7 +39,7 @@ To deploy an LLM with vLLM on OpenShift AI **with Function Calling enabled**, us
 - **`--tool-parser-plugin`**: Optional. Registers custom tool parsers, which can then be selected with `--tool-call-parser`.
 - **`--chat-template`**: Optional for auto tool choice. Defines the chat template handling tool-role and assistant-role messages with tool calls. Pre-configured templates exist for Granite3, Hermes, Mistral, and Llama models in their `tokenizer_config.json` files (like the [Granite3](https://huggingface.co/ibm-granite/granite-3.1-8b-instruct/blob/main/tokenizer_config.json))
 
-The Serving Runtime for Granite3, for example, looks like the following:
+The Serving Runtime for [Granite3.0-8B-Instruct](https://huggingface.co/ibm-granite/granite-3.0-8b-instruct), for example, looks like the following:
 
 ```yaml
 apiVersion: serving.kserve.io/v1alpha1
@@ -47,7 +47,7 @@ kind: ServingRuntime
 metadata:
   annotations:
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
-    openshift.io/display-name: CUSTOM - vLLM ServingRuntime - vLLM 0.6.4 - Tool Calling Parser
+    openshift.io/display-name: CUSTOM - vLLM ServingRuntime - vLLM 0.6.6 - Tool Calling Parser
   labels:
     opendatahub.io/dashboard: "true"
   name: vllm-runtime-tool-calling
@@ -85,6 +85,14 @@ spec:
   supportedModelFormats:
     - autoSelect: true
       name: vLLM
+```
+
+NOTE: For [Granite3.1-8B-Instruct](https://huggingface.co/ibm-granite/granite-3.1-8b-instruct) as the [vLLM Function Calling documentation](https://docs.vllm.ai/en/latest/features/tool_calling.html#ibm-granite) refers use only the flags:
+
+```yaml
+        - --enable-auto-tool-choice
+        - --tool-call-parser
+        - granite
 ```
 
 The vLLM images used include different templates for several models, such as Llama3, Hermes, and Mistral, that can be used to enable function calling for these models. Check the [upstream vLLM Function Calling documentation](https://docs.vllm.ai/en/latest/features/tool_calling.html#mistral-models-mistral) to know more.
@@ -136,7 +144,7 @@ spec:
       env:
         - name: HF_HOME
           value: /tmp/hf_home
-      image: quay.io/opendatahub/vllm@sha256:2c1e78004ad6852d46b55c7e882103af8716598d44faca283c7d2782f6141d65
+      image: quay.io/opendatahub/vllm@sha256:f7e40286a9e0a5870fcb96f3dc6c2cb094ed8eb8d9a17dc886fc6aae2ad06519
       name: kserve-container
       ports:
         - containerPort: 8080
@@ -147,7 +155,7 @@ spec:
       name: vLLM
 ```
 
-When you deploy your Model Serving as a regular user in RHOAI Dashboard, in the Additional serving runtime arguments define the following:
+When you deploy your Model Serving (Granite3.0-8B-Instruct in this case) as a regular user in RHOAI Dashboard, in the Additional serving runtime arguments define the following:
 
 ```yaml
 --enable-auto-tool-choice
@@ -157,9 +165,11 @@ When you deploy your Model Serving as a regular user in RHOAI Dashboard, in the 
 
 ![](img/function-tooling2.png)
 
+NOTE: For Granite3.1-8B-Instruct only the flags `--enable-auto-tool-choice` and `--tool-call-parser=granite` are required, remove the --chat-template as is not required.
+
 This setup creates a "generic" Serving Runtime for Function Calling, allowing you to customize additional Serving Runtime arguments depending on the model used.
 
-The vLLM image includes the following templates (image: quay.io/opendatahub/vllm@sha256:2c1e78004ad6852d46b55c7e882103af8716598d44faca283c7d2782f6141d65 with vLLM 0.6.4):
+The vLLM image includes the following templates ([vLLM image](quay.io/opendatahub/vllm@sha256:f7e40286a9e0a5870fcb96f3dc6c2cb094ed8eb8d9a17dc886fc6aae2ad06519) with vLLM 0.6.6):
 
 ```bash
 ls /app/data/template/
