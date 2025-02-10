@@ -908,8 +908,11 @@ With KServe, the ServingRuntime acts as a "pod template" and each InferenceServi
 
 By contrast, a ServingRuntime creates a pod with ModelMesh, and the InferenceService simply tells the model server pod what models to load and from where.  With ModelMesh a single ServingRuntime with multiple InferenceServices will create a single pod to load all of the models.
 
-For auth token to work, several parts need to be adapted
-1. two extra annotations need to be added on InferenceService object `fraud-detection-mode`
+#### Securing a Model Server
+
+To secure a model server using KServe, you must have the Authorino operator installed.
+
+Additionally, you must had the following two annotations to the `InferenceService` object you wish to secure:
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -918,20 +921,45 @@ metadata:
   annotations:
     security.opendatahub.io/enable-auth: 'true'
     serving.knative.openshift.io/enablePassthrough: 'true'
-    ...
-  name: fraud-detection-model
-  ...
+  name: my-model-server
 ```
 
-2. your service account `fraud-detection-s` created for inference requires proper permission to get InferenceService object `fraud-detection-mode`
+At this point in time, the model server endpoint will be secured and require a bearer token to be passed as an `Authorization` header to the endpoint that is associated with a k8s user or service account:
+
+```sh
+curl --location 'https://my-model-server-my-namespace.apps.my-cluster.com/v1/models' \
+  --header 'Authorization: Bearer blah-blah-blah-blah' 
+```
+
+To access the endpoint, the user the token is associated with must have `get` permissions on the `InferenceService` object.
+
+By default, a user with admin or editor access to the namespace should have the appropriate permissions.  Your user token can be obtained using the following command:
+
+```sh
+oc whoami --show-token 
+```
+
+However, it is not recommended to utilize this token in use cases beyond testing, as it is a temporary token that will expire after 24 hours by default.
+
+For kubernetes applications, you can instead create a Service Account object and grant that Service Account the appropriate permissions.  To create a Service Account you can use the following object:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+  namespace: my-namespace
+```
+
+The following `Role` and `RoleBinding can be created and used to grant permissions to the Service Account:
 
 ```yaml
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: fraud-detection-get-role
-  namespace: my-multi-model-serving-project
+  name: my-model-server-view
+  namespace: my-namespace
   labels:
     opendatahub.io/dashboard: 'true'
 rules:
@@ -942,34 +970,58 @@ rules:
     resources:
       - inferenceservices
     resourceNames:
-      - fraud-detection-model
+      - my-model-server
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: fraud-detection-get-rolebinding
-  namespace: my-multi-model-serving-project
+  name: my-service-account-my-model-server-view
+  namespace: my-namespace
   labels:
     opendatahub.io/dashboard: 'true'
 subjects:
   - kind: ServiceAccount
-    name: fraud-detection-sa
+    name: my-service-account
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: fraud-detection-get-role
+  name: my-model-server-view
 ```
 
-3. Lastly, create secret attaching to your service account `fraud-detection-sa`
+When the Service Account is mounted to an application pod, the user token is automatically mounted to the pod's filesystem and can be read from the following location:
+
+```sh
+cat /var/run/secrets/kubernetes.io/serviceaccount/token
+```
+
+Alternatively, if the application consuming the model server endpoint exists outside of the kubernetes cluster, you can create a Service Account with a Legacy k8s token using the following instead:
 
 ```yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+  namespace: my-namespace
+secrets:
+  - name: my-service-account
+---
 kind: Secret
 apiVersion: v1
+metadata:
   annotations:
-    kubernetes.io/service-account.name: fraud-detection-sa
-  name: auth-token-secret
+    kubernetes.io/service-account.name: my-service-account
+  name: my-service-account
 type: kubernetes.io/service-account-token
 ```
+
+This will generate a static token that can be accessed with the following:
+
+```sh
+oc get secrets my-service-account -n my-namespace --template={{.data.token}} | base64 -d
+```
+
+As with the other example, the Service Account must have `get` access to the `InferenceService` which can be granted with the `Role` and `RoleBinding` included above.
 
 ## ArgoCD Health Checks
 
