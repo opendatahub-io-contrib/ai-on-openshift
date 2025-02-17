@@ -4,7 +4,28 @@ When deploying large models or when relying on node autoscaling with KServe, KSe
 
 When a pod takes longer than 10 minutes to deploy that leverages KNative Serving, like KServe does, KNative Serving will automatically back the pod deployment off and mark it as failed.  This can happen for a number of reasons including deploying large models that take longer than 10m minutes to pull from S3 or if you are leveraging node autoscaling to reduce the consumption of expensive GPU nodes.
 
-To resolve this issue, KNative supports an annotion that can be added to a KServe `ServingRuntime` that can be updated to set a custom progress-deadline for your application:
+To resolve this issue, KNative supports an annotation that can be added to a KServe `InferenceService` or `ServingRuntime` objects which will set a custom timeout for the KNative service object.  Please note that the annotation is not set on the top level objects `metadata.annotations` sections, but instead an annotation field under `spec` that gets applied to the KNative Service object.
+
+It is generally recommended to set the annotation on the `InferenceService` as that object also contains information about the model you are deploying and is the most likely to impact the deployment time of the model server.
+
+## Inference Service
+
+The following annotation on the `InferenceService` will update the default timeout:
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: my-model-server
+spec:
+  predictor:
+    annotations:
+      serving.knative.dev/progress-deadline: 30m
+```
+
+## Serving Runtime
+
+Alternatively, the following annotation on the `ServingRuntime` will also update the default timeout:
 
 ```yaml
 apiVersion: serving.kserve.io/v1alpha1
@@ -15,5 +36,3 @@ spec:
   annotations:
     serving.knative.dev/progress-deadline: 30m
 ```
-
-It is important to note that the annotation must be set at `spec.annotations` and not `metadata.annotations`.  By setting it in `spec.annotations` the annotation will be copied to the KNative `Service` object that is created by your KServe `InferenceService`.  The annotation on the `Service` will allow KNative to utilize the manually defined progress-deadline.
