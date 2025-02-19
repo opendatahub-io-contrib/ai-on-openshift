@@ -128,6 +128,7 @@ nav:
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
       - Using Kubernetes Image Puller Operator to Speed Up Start-Up Times: odh-rhoai/image-puller.md
       - Function / Tool Calling: odh-rhoai/enable-function-calling.md
+      - LLM GuardRails: odh-rhoai/llm-guardrails.md
   - Applications and Patterns:
     - Model Serving:
       - Ensemble Serving: tools-and-applications/ensemble-serving/ensemble-serving.md
