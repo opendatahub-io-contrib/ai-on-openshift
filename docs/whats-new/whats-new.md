@@ -1,5 +1,7 @@
 # What's new?
 
+**2025-02-21**: Add [Stable Diffusion Safety Checker](../odh-rhoai/stable_diffusion_safety_checker.md)
+
 **2024-12-20**: Add [Using Kubernetes Image Puller Operator to Speed Up Start-Up Times](../odh-rhoai/image-puller.md) instructions.
 
 **2024-10-14**: Add [Using AnythingLLM as custom workbench in ODH/RHOAI](../odh-rhoai/custom-workbench-anythingllm.md) instructions.
