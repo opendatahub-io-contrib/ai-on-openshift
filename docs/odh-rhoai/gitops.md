@@ -33,7 +33,7 @@ metadata:
   namespace: redhat-ods-operator
 ```
 
-Finally, a Subscription shoould be created to install the operator:
+Finally, a Subscription should be created to install the operator:
 
 ```yaml
 apiVersion: operators.coreos.com/v1alpha1
