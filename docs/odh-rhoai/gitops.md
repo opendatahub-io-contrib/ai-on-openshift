@@ -12,7 +12,7 @@ When first implementing features with GitOps it is highly recommended to deploy 
 
 The Red Hat OpenShift AI operator is installed and managed by OpenShift's Operator Lifecycle Manager (OLM) and follows common patterns that can be used to install many different operators.
 
-The Red Hat OpenShift AI operator should be installed in the redhat-ods-operator namespace:
+The Red Hat OpenShift AI operator should be installed in the `redhat-ods-operator namespace` by default:
 
 ```yaml
 apiVersion: v1
@@ -33,7 +33,7 @@ metadata:
   namespace: redhat-ods-operator
 ```
 
-Finally, a Subscription can be created to install the operator:
+Finally, a Subscription should be created to install the operator:
 
 ```yaml
 apiVersion: operators.coreos.com/v1alpha1
@@ -66,9 +66,6 @@ metadata:
 spec:
   applicationsNamespace: redhat-ods-applications
   serviceMesh:
-    auth:
-      audiences:
-        - 'https://kubernetes.default.svc'
     controlPlane:
       metricsCollection: Istio
       name: data-science-smcp
@@ -81,7 +78,7 @@ spec:
 
 DSCInitialization Options:
 
-1. KServe requires a ServiceMesh instance to be installed on the cluster.  By default the Red Hat OpenShift AI operator will attempt to configure an instance if the ServiceMesh operator is installed.  If your cluster already has ServiceMesh configured, you may choose to set `Unmanaged`
+1. KServe Serverless mode requires a ServiceMesh instance to be installed on the cluster.  By default the Red Hat OpenShift AI operator will attempt to configure an instance if the ServiceMesh and Authorino operators are installed. If your cluster already has ServiceMesh configured, you may choose to set `Unmanaged`.
 2. User can provide customized certification to be used by components across Red Hat OpenShift AI.
 
 After the operator is installed, a DataScienceCluster object will need to be configured with the different components.  Each component has a `managementState` option which can be set to `Managed` or `Removed`.  Admins can choose which components are installed on the cluster.
@@ -90,7 +87,7 @@ After the operator is installed, a DataScienceCluster object will need to be con
 kind: DataScienceCluster
 apiVersion: datasciencecluster.opendatahub.io/v1
 metadata:
-  name: default
+  name: default-dsc
 spec:
   components:
     codeflare:
@@ -147,7 +144,6 @@ spec:
     disableAcceleratorProfiles: false
     disableBYONImageStream: false
     disableClusterManager: false
-    disableConnectionTypes: true
     disableCustomServingRuntimes: false
     disableDistributedWorkloads: false
     disableHome: false
@@ -158,12 +154,14 @@ spec:
     disableKServeMetrics: false
     disableModelMesh: false
     disableModelRegistry: false
+    disableModelRegistrySecureDB: false
     disableModelServing: false
     disableNIMModelServing: true
     disablePerformanceMetrics: false
     disablePipelines: false
     disableProjectSharing: false
     disableProjects: false
+    disableServingRuntimeParams: false
     disableStorageClasses: false
     disableSupport: false
     disableTracking: false
@@ -244,7 +242,7 @@ spec:
 
 OdhDashboardConfig Options:
 
-1. The Dashboard creates a group called `rhods-admins` by default which users can be added to be granted admin privileges through the Dashboard.  Additionally, any user with the cluster-admin role are admins in the Dashboard by default.  If you wish to change the group which is used to manage admin access, this option can be updated.  It is important to note that this field only impacts a users ability to modify settings in the Dashboard, and will have no impact to a users ability to modify configurations through the Kubernetes objects such as this OdhDashboardConfig object.
+1. The Dashboard uses a group called `rhods-admins` by default which users can be added to be granted admin privileges through the Dashboard.  Additionally, any user with the cluster-admin role are admins in the Dashboard by default.  If you wish to change the group which is used to manage admin access, this option can be updated via Auth CR  `auth`.  It is important to note that this field only impacts a users ability to modify settings in the Dashboard, and will have no impact to a users ability to modify configurations through the Kubernetes objects such as this OdhDashboardConfig object.
 2. By default any user that has access to the OpenShift cluster where Red Hat OpenShift AI is installed will have the ability to access the Dashboard.  If you wish to restrict who has access to the Dashboard this option can be updated to another group.  Like the admin group option, this option only impacts the users ability to access the Dashboard and does not restrict their ability to interact directly with the Kubernetes objects used to deploy AI resources.
 3. When a user creates a new Model Server through the Dashboard they are presented with an option to choose a server size which will impact the resources available to the pod created for the Model Server.  Administrators have the ability to configure the default options that are available to their users.
 4. When creating a new Workbench, users are asked to create storage for their Workbench.  The storage will default to the value set here and users will have the option to choose a different amount of storage if their use case requires more or less storage.  Admins can choose another default storage size that is presented to users by configuring this option.
@@ -501,7 +499,7 @@ metadata:
 
 ### Workbenches
 
-Workbench objects are managed using the Notebook custom resource.  The Notebook object contains a fairly complex configuration, with many items that will be autogenerated, and required annotations to display correctly in the Dashboard.  The Notebook object essentially acts as a wrapper around a normal pod definition and you will find many similarities to managing a pod with options such as the image, pvcs, secrets, etc.  
+Workbench objects are managed using the Notebook custom resource.  The Notebook object contains a fairly complex configuration, with many items that will be autogenerated, and required annotations to display correctly in the Dashboard.  The Notebook object essentially acts as a wrapper around a normal pod definition and you will find many similarities to managing a pod with options such as the images, pvcs, secrets, etc.  
 
 It is highly recommended to thoroughly test any Notebook configurations configured with GitOps.
 
@@ -517,10 +515,8 @@ metadata:
     openshift.io/description: ''
     openshift.io/display-name: my-workbench
     notebooks.opendatahub.io/last-image-selection: 's2i-minimal-notebook:2024.1'
-    notebooks.kubeflow.org/last_activity_check_timestamp: '2024-07-30T20:43:25Z'
     notebooks.opendatahub.io/last-size-selection: Small
     opendatahub.io/username: 'kube:admin'
-    notebooks.kubeflow.org/last-activity: '2024-07-30T20:27:25Z'
   name: my-workbench
   namespace: my-data-science-project
 spec:
@@ -636,7 +632,7 @@ spec:
               name: oauth-config
             - mountPath: /etc/tls/private
               name: tls-certificates
-          image: 'registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4bef31eb993feb6f1096b51b4876c65a6fb1f4401fee97fa4f4542b6b7c9bc46'
+          image: 'registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4f8d66597feeb32bb18699326029f9a71a5aca4a57679d636b876377c2e95695'
           args:
             - '--provider=openshift'
             - '--https-address=:8443'
@@ -703,6 +699,7 @@ apiVersion: v1
 type: Opaque
 metadata:
   name: aws-connection-my-dataconnection # <1>
+  namespace: my-data-science-project
   labels:
     opendatahub.io/dashboard: 'true' # <2>
     opendatahub.io/managed: 'true'
@@ -725,10 +722,10 @@ data: # <5>
 
 ### Data Science Pipelines
 
-When setting up a new project, a Data Science Pipeline instance needs to be created using the DataSciencePipelineApplication object.  The DSPA will create the pipeline servers for the project and allow users to begin interacting with Data Science Pipelines.
+When setting up a new project, a Data Science Pipeline instance needs to be created using the DataSciencePipelineApplication(DSPA) object.  The DSPA will create the pipeline servers for the project and allow users to begin interacting with Data Science Pipelines.
 
 ```yaml
-apiVersion: datasciencepipelinesapplications.opendatahub.io/v1alpha1
+apiVersion: datasciencepipelinesapplications.opendatahub.io/v1
 kind: DataSciencePipelinesApplication
 metadata:
   name: dspa # <1>
@@ -779,7 +776,7 @@ spec:
     deploy: true
 ```
 
-1. The Dashboard expects to look for an object called `dspa` and it is not recommended to deploy more than a single DataSciencePipelineApplication object in a single namespace.
+1. The Dashboard expects to look for an object called `dspa` and it is not recommended to deploy more than one single DataSciencePipelineApplication object in a single namespace.
 2. The externalStorage is a critical configuration for setting up S3 backend storage for Data Science Pipelines.  While using the dashboard you are required to configure the connection details.  While you can import these details from a data connection, it will create a separate secret containing the s3 secrets instead of reusing the existing data connection secret.
 
 Once a Data Science Pipeline instance has been created, users may wish to configure and manage their pipelines via GitOps.  It is important to note that Data Science Pipelines is not "gitops friendly".  While working with Elyra or a kfp pipeline, users are required to manually upload a pipeline file to the Dashboard which does not generate a corresponding Kubernetes object.  Additionally, when executing a pipeline run, uses may find a ArgoWorkflow object that is generated for the run, however this object can not be re-used in a GitOps application to create a new pipeline run in Data Science Pipelines.
@@ -904,7 +901,7 @@ spec:
 
 One major difference between ModelMesh and KServe is which object is responsible for creating and managing the pod where the model is deployed.  
 
-With KServe, the ServingRuntime acts as a "pod template" and each InferenceService creates it's own pod to deploy a model.  A ServingRuntime can be used by multiple InferenceServices and each InferenceService will create a separate pod to deploy a model.
+With KServe, the ServingRuntime acts as a "pod template" and each InferenceService creates its own pod to deploy a model.  A ServingRuntime can be used by multiple InferenceServices and each InferenceService will create a separate pod to deploy a model.
 
 By contrast, a ServingRuntime creates a pod with ModelMesh, and the InferenceService simply tells the model server pod what models to load and from where.  With ModelMesh a single ServingRuntime with multiple InferenceServices will create a single pod to load all of the models.
 
@@ -951,7 +948,7 @@ metadata:
   namespace: my-namespace
 ```
 
-The following `Role` and `RoleBinding can be created and used to grant permissions to the Service Account:
+The following `Role` and `RoleBinding` can be created and used to grant permissions to the Service Account:
 
 ```yaml
 ---
@@ -1012,6 +1009,7 @@ metadata:
   annotations:
     kubernetes.io/service-account.name: my-service-account
   name: my-service-account
+  namespace: my-namespace
 type: kubernetes.io/service-account-token
 ```
 
