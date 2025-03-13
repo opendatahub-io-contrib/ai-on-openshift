@@ -704,7 +704,7 @@ metadata:
     opendatahub.io/dashboard: 'true' # <2>
     opendatahub.io/managed: 'true'
   annotations:
-    opendatahub.io/connection-type: s3 # <3>
+    opendatahub.io/connection-type-ref: s3 # <3>
     openshift.io/display-name: my-dataconnection # <4>
 data: # <5>
   AWS_ACCESS_KEY_ID: dGVzdA==
