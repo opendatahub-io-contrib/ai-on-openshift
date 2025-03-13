@@ -698,7 +698,7 @@ kind: Secret
 apiVersion: v1
 type: Opaque
 metadata:
-  name: aws-connection-my-dataconnection # <1>
+  name: dataconnectionminio # <1>
   namespace: my-data-science-project
   labels:
     opendatahub.io/dashboard: 'true' # <2>
@@ -707,14 +707,14 @@ metadata:
     opendatahub.io/connection-type-ref: s3 # <3>
     openshift.io/display-name: my-dataconnection # <4>
 data: # <5>
-  AWS_ACCESS_KEY_ID: dGVzdA==
-  AWS_DEFAULT_REGION: 'dGVzdA=='
-  AWS_S3_BUCKET: 'dGVzdA=='
+  AWS_ACCESS_KEY_ID: bWluaW8=
+  AWS_DEFAULT_REGION: 'dXMtZWFzdC0x'
+  AWS_S3_BUCKET: 'bXlidWNrZXQ='
   AWS_S3_ENDPOINT: dGVzdA==
-  AWS_SECRET_ACCESS_KEY: dGVzdA==
+  AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
 ```
 
-1. When creating a data connection through the Dashboard, the name is automatically generated as `aws-connection-<your-entered-name>`.  When generating the data connection from outside of the Dashboard, you do not need to follow this naming convention.
+1. When creating a data connection through the Dashboard, the name is automatically generated as `dataconnection<your-entered-name>`.  When generating the data connection from outside of the Dashboard, you do not need to follow this naming convention.
 2. The `opendatahub.io/dashboard: 'true'` label is used to help determine what secrets to display in the Dashboard.  This option must be set to true if you wish for it to be available in the UI.
 3. With the latest release, the Dashboard has S3, uri as supported connection-type, other types e.g oci may be added in the future releases.
 4. The name of the data connection as it will appear in the Dashboard UI
@@ -757,7 +757,7 @@ spec:
       s3CredentialsSecret:
         accessKey: AWS_SECRET_ACCESS_KEY
         secretKey: AWS_ACCESS_KEY_ID
-        secretName: aws-connection-my-dataconnection
+        secretName: dataconnectionminio
       scheme: http
   persistenceAgent:
     deploy: true
@@ -802,8 +802,6 @@ metadata:
     opendatahub.io/accelerator-name: ''
     opendatahub.io/apiProtocol: REST
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
-    opendatahub.io/template-display-name: OpenVINO Model Server
-    opendatahub.io/template-name: ovms
     openshift.io/display-name: multi-model-server
   name: multi-model-server
   labels:
@@ -834,9 +832,9 @@ spec:
         - '--rest_port=8888'
         - '--config_path=/models/model_config_list.json'
         - '--file_system_poll_wait_seconds=0'
-        - '--grpc_bind_address=127.0.0.1'
-        - '--rest_bind_address=127.0.0.1'
-      image: 'quay.io/modh/openvino_model_server@sha256:5d04d405526ea4ce5b807d0cd199ccf7f71bab1228907c091e975efa770a4908'
+        - '--grpc_bind_address=0.0.0.0'
+        - '--rest_bind_address=0.0.0.0'
+      image: 'quay.io/modh/openvino_model_server@sha256:428c00232cbf3b38a3929a0d22d0e13c6388ce353e3853cc2956d175eacf6724'
       name: ovms
       resources:
         limits:
