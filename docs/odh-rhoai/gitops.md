@@ -716,7 +716,7 @@ data: # <5>
 
 1. When creating a data connection through the Dashboard, the name is automatically generated as `aws-connection-<your-entered-name>`.  When generating the data connection from outside of the Dashboard, you do not need to follow this naming convention.
 2. The `opendatahub.io/dashboard: 'true'` label is used to help determine what secrets to display in the Dashboard.  This option must be set to true if you wish for it to be available in the UI.
-3. With the latest release, the Dashboard has S3, uri-v1 and oci-v1 all as supported connection-type, other types may be added in the future releases.
+3. With the latest release, the Dashboard has S3, uri as supported connection-type, other types e.g oci may be added in the future releases.
 4. The name of the data connection as it will appear in the Dashboard UI
 5. Like all secrets, data connections data is stored in a base64 encoding.  This data is not secure to be stored in this format and users should instead look into tools such as SealedSecrets or ExternalSecrets to manage secret data in a GitOps workflow.
 
