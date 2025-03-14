@@ -142,7 +142,7 @@ If you already have your own Data Science Project, or OpenShift project, you can
                   subPath: minio
               terminationMessagePolicy: File
               image: >-
-                quay.io/minio/minio:RELEASE.2023-06-19T19-52-50Z
+                quay.io/minio/minio:latest
               args:
                 - server
                 - /data
@@ -261,7 +261,7 @@ If you already have your own Data Science Project, or OpenShift project, you can
 
 ## Create a matching Data Connection for Minio
 
-1. Back in RHOAI, inside of your Data Science Project, Click on **Add data connection**:
+1. Back in RHOAI Dashboard, inside of your Data Science Project, Click on **Add data connection**:
 
     ![alt_text](img/add.connection.png)
 
