@@ -1,5 +1,7 @@
 # What's new?
 
+**2025-04-01**: Add [Building an Image Generation App: What We Learned](../generative-ai/building-an-image-generation-app.md)
+
 **2025-02-21**: Add [Stable Diffusion Safety Checker](../odh-rhoai/stable_diffusion_safety_checker.md)
 
 **2024-12-20**: Add [Using Kubernetes Image Puller Operator to Speed Up Start-Up Times](../odh-rhoai/image-puller.md) instructions.

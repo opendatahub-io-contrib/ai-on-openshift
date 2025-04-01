@@ -163,6 +163,7 @@ nav:
   - Generative AI:
     - What is Generative AI?: generative-ai/what-is-generative-ai.md
     - LLM Serving: generative-ai/llm-serving.md
+    - Building an Image Generation App: generative-ai/building-an-image-generation-app.md
     - Demos: 
       - Chat with your documentation: demos/llm-chat-doc/llm-chat-doc.md
       - Code assistant: demos/codellama-continue/codellama-continue.md
