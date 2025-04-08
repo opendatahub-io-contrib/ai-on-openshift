@@ -164,7 +164,8 @@ nav:
     - What is Generative AI?: generative-ai/what-is-generative-ai.md
     - LLM Serving: generative-ai/llm-serving.md
     - Building an Image Generation App: generative-ai/building-an-image-generation-app.md
-    - Demos: 
+    - Demos:
+      - AI for Everyone: generative-ai/ai-for-everyone.md 
       - Chat with your documentation: demos/llm-chat-doc/llm-chat-doc.md
       - Code assistant: demos/codellama-continue/codellama-continue.md
       - Fine-tune Llama2: demos/llama2-finetune/llama2-finetune.md
