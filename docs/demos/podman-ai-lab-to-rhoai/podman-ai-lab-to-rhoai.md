@@ -341,7 +341,9 @@ We'll now add a custom serving runtime so we can deploy the GGUF version of mode
 
     ![Add Serving runtime](img/rhoai_add_serving_runtime_custom.png)
 
-    **NOTE:** *I've included a pre-built image that is public. You can build your own image with the Containerfile under ./components/ucstom-model-serving-runtime if you would rather pull from your own repository.*
+    **NOTE 1:** *I've included a pre-built image that is public. You can build your own image with the Containerfile under ./components/ucstom-model-serving-runtime if you would rather pull from your own repository.*
+
+    **NOTE 2:** *If you intend to work with the Granite model using the GraniteForCausalLM architecture instead of the LlamaForCausalLM one, then use the quay.io/alexonoliveira/llamacpp_python:latest image, since this image is built with the latest version of the llama-cpp-python package, which supports the GraniteForCausalLM architecture.*
 
 3. If the serving runtime was added was succesfully you should now see it in the list of serving runtimes available. 
 
