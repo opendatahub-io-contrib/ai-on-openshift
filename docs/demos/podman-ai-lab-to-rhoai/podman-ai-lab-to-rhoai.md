@@ -27,7 +27,7 @@ This article will walk you through how to go from a chatbot recipe in the Podman
 6. The updated chatbot with LangChain is built as a container and deployed to OpenShift.
 
 ## Requirements
-It is expected that you have admin access to an OpenShift 4.12+ cluster. The following code was tested with an OpenShift 4.15 cluster and OpenShift AI 2.9.
+It is expected that you have admin access to an OpenShift 4.12+ cluster. The following code was tested with an OpenShift 4.18 cluster and OpenShift AI 2.16.
 
 ## Podman AI Lab
 ### Install Podman Desktop and Podman AI Lab extension
