@@ -168,6 +168,7 @@ nav:
       - AI for Everyone: generative-ai/ai-for-everyone.md 
       - Chat with your documentation: demos/llm-chat-doc/llm-chat-doc.md
       - Code assistant: demos/codellama-continue/codellama-continue.md
-      - Fine-tune Llama2: demos/llama2-finetune/llama2-finetune.md
+      - Fine-tuning Llama2 with Ray: demos/llama2-finetune/llama2-finetune.md
+      - Fine-tune Llama3 with KFTO: demos/llama3-finetune/llama3-finetune-kfto.md
       - From Podman AI Lab to OpenShift AI: demos/podman-ai-lab-to-rhoai/podman-ai-lab-to-rhoai.md
       - Text to Image: demos/stable-diffusion/stable-diffusion.md
