@@ -353,3 +353,132 @@ For a detailed guide on implementing these solutions, refer to [our repository](
 
 * *[Single Worker Node - Multiple GPUs Example Repository](https://github.com/rh-aiservices-bu/multi-gpu-llms?tab=readme-ov-file#71-single-node---multiple-gpu-demos)*
 * *[Multiple Worker Node - Multiple GPUs Example Repository](https://github.com/rh-aiservices-bu/multi-gpu-llms?tab=readme-ov-file#72-multi-node---multiple-gpu-demos)*
+
+### NVIDIA vGPUs
+
+NVIDIA vGPU is a software that allows virtualisation of a whole GPU, such that it can be assigned to multiple VMs, within VMWare vSphere. In terms of OpenShift, this means that a single physical GPU could be split such that it can be assigned to several clusters.
+
+#### Pros
+
+* Helpful in particularly resource constrainted environments where GPUs need to be spread out.
+
+* Useful for redistributing GPU compute to other clusters, when a full GPU would remain underutilised.
+
+* Physical GPUs can be split in vSphere via either timeslicing, or MIG, if available for the model of GPU.
+
+#### Cons
+
+* NVIDIA vGPU is a licensed product, therefore a license per vGPU-equipped OCP worker node is required. Communication between the vGPU-equipped worker and a license service will also be required.
+
+* NVIDIA vGPUs require a vGPU specific driver image, which need to be either built manually, or retrieved from the [NVIDIA NGC Catalog](https://catalog.ngc.nvidia.com/). Both of these require an active NVIDIA AI Enterprise subscription.
+
+* Additional setup of the vSphere ESXi hosts is required.
+
+* Workers with vGPUs have a single allocatable `nvidia.com/gpu` resource, which cannot be split any further.
+
+#### Setup
+
+Setting up vGPUs to be used on OpenShift requires some pre-work on the ESXi hosts themselves, that can be found in [NVIDIA documentation](https://docs.nvidia.com/vgpu/deployment/vmware/latest/manager.html#). 
+
+Post ESXi setup, equipping OpenShift worker nodes with vGPUs isn't directly possible with the vSphere OpenShift installer. To get around this, you'll need to create a custom RHCOS template within vSphere that is preconfigured with the vGPU PCI device. The [RHCOS template can be referenced](https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html/machine_management/managing-compute-machines-with-the-machine-api#machineset-yaml-vsphere_creating-machineset-vsphere) in the `machineSet` definition as shown below.
+
+```yaml
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+...
+template:
+  ...
+  spec:
+    providerSpec:
+      value:
+        ...
+        template: <vm_template_name>
+```
+
+> NOTE: You will need a separate `machineSet` and RHCOS template, for each vGPU configuration you need. For instance, if you're using a MIG sliced A100 80GB for your vGPUs, you
+may want a `machineSet` each for `1g.10gb` slices, `3g.40gb` slices and `7g.80gb` slices. 
+
+Once the worker node has been provisioned, and the Node Feature Discovery (NFD) and NVIDIA GPU operator pods have spun up on it, the worker node should have a single allocatable `nvidia.com/gpu` resource. Unfortunately, vGPUs can't be partitioned any smaller in OpenShift, using any of the above methods (i.e. Timeslicing, MPS, MIG) therefore, a single vGPU can be allocated to only a single workload at a time.
+
+#### vGPU Drivers
+
+As mentioned in the pros and cons list, vGPUs require specific drivers to work. These drivers can be either built according to NVIDIA's [documentation](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/install-gpu-operator-vgpu.html#build-the-driver-container), or they can be retrieved directly from the [NVIDIA NGC catalog](https://catalog.ngc.nvidia.com/). 
+
+The version of the NVIDIA vGPU driver, needs to correspond to the version of the vGPU Manager image, that is on the underlying ESXi host. For instance, if [vGPU software version 17.6](https://docs.nvidia.com/vgpu/17.0/grid-vgpu-release-notes-vmware-vsphere/index.html#vgpu-software-driver-versions) was being used, the vGPU Manager version would be `550.163.02`, and the corresponding maximum version for the vGPU Driver would be `550.163.01`.
+
+If the drivers are to be built, or utilised in a disconnected OCP environment, then a private image registry is required to push the images to. In the case that driver images are pulled directly from NVIDIA NGC, an image pull secret needs to [be created that contains the NGC API Key](https://docs.nvidia.com/datacenter/cloud-native/openshift/latest/nvaie-with-ocp.html#create-the-ngc-secret).
+
+To pull a specific vGPU driver image, it needs to be defined in the `clusterPolicy` CR. Below is an example that pulls directly from NVIDIA NGC.
+
+```yaml
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  ...
+  name: gpu-cluster-policy
+spec:
+  ...
+  driver:
+    repository: nvcr.io/nvidia/vgpu
+    image: vgpu-guest-driver-X
+    version: 550.163.01-rhcos4.XX
+    imagePullSecrets:
+      - ngc-secret
+```
+
+#### Licensing
+
+Licensing of the vGPUs is done through the NVIDIA License Portal (NLP). NVIDIA offers a solution for both connected and disconnected environments, that's their Cloud License Service ([CLS](https://docs.nvidia.com/license-system/latest/nvidia-license-system-user-guide/index.html#about-cls-instances)) and Delegated License Service ([DLS](https://docs.nvidia.com/license-system/latest/nvidia-license-system-user-guide/index.html#about-dls-instances)) respectively. All communication between either license services, and the vGPU-equipped worker nodes, is through HTTPS / TLS port 443.
+
+An NVIDIA CLS instance is hosted directly on the NLP. This means that NVIDIA maintains the CLS instance themselves, and so, the lifecycle of the CLS doesn't need to be managed directly. Comparatively, an NVIDIA DLS instance is deployed on-premises, either directly on the OpenShift cluster, or on a VM. This means that the DLS instance will need to be deployed and maintained directly, which includes downloading licenses from the NLP and manually uploading them to the instance.
+
+Irrespective of which license service has been chosen, a client configuration token will be able to be generated. The client configuration token contains information about which service instance generated it, and is used by the NVIDIA GPU operator to lease licenses for the vGPU-equipped workers. To do this, you need to create the following `configMap`
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metaData:
+  name: licensing-config
+  namespace: nvidia-gpu-operator
+data:
+  client_configuration_token.tok: <TOKEN>
+  gridd.conf: |
+    # Description: Set Feature to be enabled
+    # Data type: integer
+    # Possible values:
+    # 0 => for unlicensed state
+    # 1 => for NVIDIA vGPU
+    # 2 => for NVIDIA RTX Virtual Workstation
+    # 4 => for NVIDIA Virtual Compute Server
+    FeatureType=1
+    # ProxyServerAddress=<ADDRESS> # Required if you have a proxy between OCP and CLS.
+    # ProxyServerPort=<PORT>
+```
+
+This `configMap` can then be referenced in the NVIDIA GPU operator `clusterPolicy` CR, as shown below:
+
+```yaml
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  ...
+  name: gpu-cluster-policy
+spec:
+  ...
+  driver:
+    ...
+    licensingConfig:
+      nlsEnabled: true
+      configMapName: "licensing-config"
+  ...
+```
+
+To validate that the vGPU worker nodes are licensed, NVIDIA Data Centre GPU Manager (DCGM) will export the `DCGM_FI_DEV_VGPU_LICENSE_STATUS` metric, per worker node. This will show a value of `1` if the worker node is licensed properly. Alternatively, the license service instance should show that the license(s) are allocated.
+
+#### References
+
+* [NVIDIA vGPU: VMware Deployment Guide](https://docs.nvidia.com/vgpu/deployment/vmware/latest/index.html)
+
+* [NVIDIA License System User Guide](https://docs.nvidia.com/license-system/latest/nvidia-license-system-user-guide/index.html)
+
+* [NVIDIA OpenShift Container Platform on VMware vSphere with NVIDIA vGPUs](https://docs.nvidia.com/datacenter/cloud-native/openshift/latest/nvaie-with-ocp.html#openshift-container-platform-on-vmware-vsphere-with-nvidia-vgpus)
