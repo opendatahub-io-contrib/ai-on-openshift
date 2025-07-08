@@ -1,5 +1,7 @@
 # What's new?
 
+**2025-07-08**: Add [Managing Secrets in an AI Platform](../odh-rhoai/secret-management.md)
+
 **2025-04-03**: Add [AI for Everyone: What We Learned](../generative-ai/ai-for-everyone.md)
 
 **2025-04-01**: Add [Building an Image Generation App: What We Learned](../generative-ai/building-an-image-generation-app.md)
