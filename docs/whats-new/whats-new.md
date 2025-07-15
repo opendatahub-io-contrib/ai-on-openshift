@@ -1,5 +1,7 @@
 # What's new?
 
+**2025-07-15**: Add [Deploying a Red Hat Validated Model in a Disconnected OpenShift AI Environment](../odh-rhoai/deploy-validated-models-on-disconnected.md)
+
 **2025-04-03**: Add [AI for Everyone: What We Learned](../generative-ai/ai-for-everyone.md)
 
 **2025-04-01**: Add [Building an Image Generation App: What We Learned](../generative-ai/building-an-image-generation-app.md)
