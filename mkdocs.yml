@@ -124,6 +124,7 @@ nav:
       - RHOAI Metrics Dashboard for Model Serving: odh-rhoai/kserve-uwm-dashboard-metrics.md
       - Connect to RHOAI Workbench Kernel from VS Code: odh-rhoai/connect-vscode-to-rhoai-wb.md
       - AnythingLLM as Custom Workbench: odh-rhoai/custom-workbench-anythingllm.md
+      - Deploying a Red Hat Validated Model in a Disconnected OpenShift AI Environment: odh-rhoai/deploy-validated-models-on-disconnected.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
