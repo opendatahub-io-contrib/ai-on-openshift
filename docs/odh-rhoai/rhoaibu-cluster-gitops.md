@@ -104,7 +104,7 @@ Cluster-wide settings:
 - **Console Customization**: OpenShift and RHOAI console with AI-focused navigation
 - **Namespace Management**: Project request templates and resource quotas
 
-📖 **Reference**: [Cluster Configurations Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/configs/README.md)
+📖 **Reference**: [Cluster Configurations Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/configs)
 
 !!! note "Comprehensive Configuration Details"
     For detailed Kubernetes object definitions and advanced configuration options for model serving, data connections, accelerator profiles, and InferenceService objects, see our comprehensive **[Managing RHOAI with GitOps](gitops.md)** guide.
@@ -130,7 +130,7 @@ GPU autoscaling is critical for AI workloads since GPUs are expensive resources 
 
 ### Accelerator Profiles
 
-Hardware-specific configurations for optimal GPU utilization:
+OpenShift AI Accelerator Profiles configurations for optimal GPU utilization:
 
 ```yaml
 # Example accelerator profiles
@@ -141,7 +141,7 @@ Hardware-specific configurations for optimal GPU utilization:
 - NVIDIA H100: 80GB VRAM, cutting-edge performance for large-scale training
 ```
 
-📖 **Reference**: [Accelerator Profiles Configuration](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/configs/accelerator-profiles/README.md)
+📖 **Reference**: [Accelerator Profiles Configuration](https://github.com/rh-aiservices-bu/rhoaibu-cluster/tree/main/components/instances/rhoai-instance/components/accelerator-profiles)
 
 ## AI-Specific Components
 
@@ -207,7 +207,7 @@ Pre-configured Jupyter environments optimized for specific AI tasks:
 - **Docling** for document processing pipelines
 - **Custom tools** for specialized AI workflows
 
-📖 **Reference**: [Custom Workbenches Configuration](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/instances/rhoai-instance/README.md)
+📖 **Reference**: [Custom Workbenches Configuration](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/instances/rhoai-instance)
 
 While this implementation serves as a practical reference architecture, organizations can extend it with additional features based on their specific requirements.
 
