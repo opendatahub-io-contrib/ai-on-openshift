@@ -1,13 +1,8 @@
 # RHOAI BU Cluster GitOps Repository Overview
 
-!!! info
-    This guide provides an overview of the **[RHOAI BU Cluster GitOps Repository](https://github.com/rh-aiservices-bu/rhoaibu-cluster)**, an implementation of GitOps for managing Red Hat OpenShift AI infrastructure at scale.
-    
-    For foundational OpenShift AI & GitOps concepts and object definitions, please refer to our **[Managing RHOAI with GitOps](gitops.md)** guide first.
-
 ## What is the RHOAI BU Cluster Repository?
 
-The **RHOAI BU Cluster** repository is a comprehensive GitOps implementation that demonstrates how to manage complete Red Hat OpenShift AI infrastructure using declarative configuration management. This repository serves as both a working example and a reference architecture for organizations looking to implement GitOps practices for their AI/ML platforms.
+The **RHOAI BU Cluster** repository is a comprehensive GitOps implementation that demonstrates how to manage complete Red Hat OpenShift AI infrastructure using declarative configuration management. This repository manages two OpenShift clusters - a development cluster (`rhoaibu-cluster-dev`) and a production cluster (`rhoaibu-cluster-prod`) - and serves as both a working example and a reference architecture for organizations looking to implement GitOps practices for their AI/ML platforms.
 
 **🚀 Key Service**: This cluster hosts a complete **Models as a Service (MaaS)** platform with 15+ AI models, providing API management, authentication, and self-service capabilities for internal development and testing purposes.
 
@@ -21,6 +16,11 @@ Unlike basic GitOps examples, this repository manages:
 - **Multi-environment support** with dev and prod cluster configurations  
 - **Advanced AI-specific components** including GPU autoscaling, declarative model serving, and custom workbenches
 - **Advanced features** like OAuth integration, RBAC, and certificate management
+
+!!! info
+    This guide provides an overview of the **[RHOAI BU Cluster GitOps Repository](https://github.com/rh-aiservices-bu/rhoaibu-cluster)**, an implementation of GitOps for managing the RHOAIBU Cluster infrastructure at scale including OpenShift AI and MaaS.
+    
+    For foundational OpenShift AI & GitOps concepts and object definitions, please refer to our **[Managing RHOAI with GitOps](gitops.md)** guide first.
 
 ## Why GitOps for AI Infrastructure?
 
@@ -65,7 +65,7 @@ The bootstrap layer handles initial cluster setup and GitOps installation. Key f
 - **Authentication Setup**: Google OAuth integration for internal access
 - **Certificate Management**: Let's Encrypt certificates with automatic renewal
 
-📖 **Reference**: [Bootstrap README](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/bootstrap/README.md)
+📖 **Reference**: [Bootstrap Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/bootstrap/README.md)
 
 #### 2. Operators Management (`components/operators/`)
 
@@ -78,15 +78,11 @@ The bootstrap layer handles initial cluster setup and GitOps installation. Key f
 - OpenShift Service Mesh
 - OpenShift Serverless
 
-📖 **Reference**: [Core Operators Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/operators/README.md)
+📖 **Reference**: [Core Operators Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/operators)
 
 **Community & Third-Party Operators** (`components/operators-extra/`):
 
-- CodeFlare Operator for distributed training
-- Pachyderm for data versioning
-- Redis Enterprise for caching
-
-📖 **Reference**: [Operators Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/docs/README.md)
+📖 **Reference**: [Operators Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/tree/main/docs#community-and-third-party-operators)
 
 #### 3. Instance Configurations (`components/instances/`)
 
@@ -94,24 +90,26 @@ Configurations for each operator:
 
 - **RHOAI Instance**: Complete DataScienceCluster configuration with custom accelerator profiles, workbenches, and dashboard settings
 - **GPU Management**: NVIDIA operator policies optimized for AI workloads
-- **Storage**: OpenShift Data Foundation configured for ML data pipelines
+- **Storage**: OpenShift Data Foundation instance for proving storage capabilities (including RWX) for OpenShift AI workloads.
 - **Certificates**: Automated TLS certificate management for model serving endpoints
 
-📖 **Reference**: [RHOAI Instance README](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/instances/rhoai-instance/README.md)
+📖 **Reference**: [Operator Instances Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/instances/rhoai-instance)
 
 #### 4. Cluster Configurations (`components/configs/`)
 
 Cluster-wide settings:
 
 - **Authentication**: OAuth providers and RBAC configurations
-- **Autoscaling**: GPU-optimized cluster autoscaler with support for Tesla T4 and A10G instances
-- **Console Customization**: OpenShift AI console with AI-focused navigation
+- **Autoscaling**: GPU-optimized cluster autoscaler with support for several GPUs
+- **Console Customization**: OpenShift and RHOAI console with AI-focused navigation
 - **Namespace Management**: Project request templates and resource quotas
 
 📖 **Reference**: [Cluster Configurations Documentation](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/configs/README.md)
 
 !!! note "Comprehensive Configuration Details"
     For detailed Kubernetes object definitions and advanced configuration options for model serving, data connections, accelerator profiles, and InferenceService objects, see our comprehensive **[Managing RHOAI with GitOps](gitops.md)** guide.
+
+## Key GitOps Workflows
 
 ### Development and Testing Workflow
 
@@ -123,8 +121,6 @@ The repository supports a complete development lifecycle:
 4. **Production Promotion**: Validated changes are promoted to production via GitOps
 
 📖 **Reference**: [Development Workflow](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/docs/develop-and-test-changes.md)
-
-## Key GitOps Workflows
 
 ### GPU Autoscaling for AI Workloads
 
@@ -151,47 +147,55 @@ Hardware-specific configurations for optimal GPU utilization:
 
 ### Models as a Service (MaaS)
 
-**🚀 IMPORTANT**: The RHOAI BU Cluster serves as internal infrastructure hosting a complete **Models as a Service (MaaS)** platform. This is not just an integration—MaaS runs entirely on top of this GitOps-managed cluster infrastructure, providing AI model serving capabilities for development and testing purposes internally to all Red Hat Employees.
+The RHOAI BU Cluster serves as internal infrastructure hosting a complete **Models as a Service (MaaS)** platform. MaaS runs entirely on top of this GitOps-managed cluster infrastructure, providing AI model serving capabilities for development and testing purposes internally to all Red Hat Employees.
 
 The MaaS implementation leverages the **[Models as a Service repository](https://github.com/rh-aiservices-bu/models-aas)**, which demonstrates how to set up 3Scale and Red Hat SSO in front of models served by OpenShift AI.
 
+!!! warning "Internal Service Notice"
+    This is an internal development and testing service. No Service Level Agreements (SLAs) or Service Level Objectives (SLOs) are provided or guaranteed. This service is not intended for production use cases or mission-critical applications.
+
 #### Declarative Model Serving as Code
 
-Model serving configurations are managed entirely through GitOps using declarative YAML configurations:
+```yaml
+# MaaS Configuration Structure
+components/configs/maas/
+├── model-serving/base/              # Model deployment configurations
+│   ├── granite-3.3-8b-instruct.yaml
+│   ├── llama-4-scout.yaml
+│   ├── llama-3.2-3b.yaml
+│   ├── mistral-small-24b.yaml
+│   ├── phi-4.yaml
+│   ├── nomic-embed-text-v1-5.yaml
+│   ├── docling.yaml
+│   ├── sdxl-custom-runtime.yaml
+│   └── serving-runtimes/
+└── 3scale-config/base/              # API management configurations
+    ├── granite-3-3-8b-instruct/
+    ├── llama-4-scout/
+    ├── llama-3-2-3b/
+    ├── mistral-small-24b/
+    ├── phi-4/
+    └── [per-model configs for authentication, rate limiting, documentation]
+```
 
-The MaaS platform organizes configurations for 15+ models including Granite 3.3 8B, Llama-4-Scout, Llama 3.2 3B, Mistral Small 24B, Phi-4, embedding models (Nomic), document processing (Docling), and image generation (SDXL). Each model has dedicated GitOps configurations for both OpenShift AI model serving and 3Scale API management (authentication, rate limiting, documentation).
-
-📖 **Reference**: [MaaS Configurations](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/configs/maas/README.md)
-
-This GitOps approach ensures:
-- **Consistent Deployments**: Identical model configurations across dev/prod environments
-- **Version Control**: Full audit trail of model deployment changes
-- **Easy Rollbacks**: Quick reversion to previous model versions
-- **Automated Scaling**: GPU autoscaling based on model demand
-
-#### MaaS Capabilities
-
-**Core Platform Features**:
-- **Authentication & Authorization**: Red Hat SSO integration for secure model access
-- **API Management**: 3Scale-powered API gateway with comprehensive rate limiting and usage controls  
-- **Self-Service Portal**: User registration and API key management interface for developers
-- **Usage Analytics**: Real-time tracking and monitoring of model consumption and performance
-- **Multi-tenant Access**: Secure isolation between different user groups and organizations
-- **Model Catalog**: 15+ models including Granite, Llama, Mistral, and specialized models for development and testing
+The MaaS platform organizes configurations for 15+ models with dedicated GitOps configurations for both OpenShift AI model serving and 3Scale API management.
 
 **Available Model Types**:
+
 - **Large Language Models**: Llama-4-Scout, Granite 3.3 8B, Llama 3.2 3B, Mistral Small 24B, Phi-4
 - **Embedding Models**: Nomic Embed Text v1.5 for semantic search and RAG applications
 - **Vision Models**: Granite Vision 3.2 2B, Qwen2.5 VL 7B for multimodal AI
 - **Specialized Models**: Document processing (Docling), safety checking, image generation (SDXL)
 - **Lightweight Models**: TinyLlama 1.1B (running on CPU)
 
-**Additional Features**:
-- **Tiered Service Plans**: Different rate limits for internal use
-- **Usage Quotas**: Configurable consumption limits per user/organization  
-- **Cost Tracking**: Detailed billing and chargeback capabilities
-- **Advanced Analytics**: Comprehensive dashboards for usage patterns and model performance
-- **Custom Model Integration**: Framework for adding proprietary or fine-tuned models
+📖 **Reference**: [MaaS Configurations](https://github.com/rh-aiservices-bu/rhoaibu-cluster/blob/main/components/configs/maas/)
+
+This GitOps approach ensures:
+
+- **Consistent Deployments**: Identical model configurations across dev/prod environments
+- **Version Control**: Full audit trail of model deployment changes  
+- **Easy Rollbacks**: Quick reversion to previous model versions
+- **Automated Scaling**: GPU autoscaling based on model demand
 
 ### Custom AI Workbenches
 
