@@ -33,7 +33,7 @@ Unlike basic GitOps examples, this repository manages:
 
 ## Why GitOps for AI Infrastructure?
 
-GitOps provides unique advantages for AI/ML workloads that traditional infrastructure management approaches struggle to deliver:
+GitOps provides unique advantages for AI/ML workloads that traditional infrastructure management approaches struggle to deliver. Rather than reinventing the wheel, this implementation builds upon the proven **[GitOps Catalog](https://github.com/redhat-cop/gitops-catalog)** from Red Hat Community of Practice, providing battle-tested GitOps patterns and components as the foundation for our AI-specific infrastructure.
 
 **🔄 Infrastructure Reproducibility**: AI experiments require consistent environments. GitOps ensures your development, and production clusters are identical, eliminating "works on my machine" issues.
 
