@@ -1,8 +1,8 @@
-# Managing the RHOAI BU cluster at scale with GitOps
+# Fully GitOpsified implementation of an RHOAI platform
 
 ## What is the RHOAI BU Cluster Repository?
 
-The **[RHOAI BU Cluster GitOps Repository](https://github.com/rh-aiservices-bu/rhoaibu-cluster)** manages the **RHOAI BU cluster** and is a comprehensive GitOps implementation for managing Red Hat OpenShift AI infrastructure using declarative configuration management.
+The **[RHOAI BU Cluster GitOps Repository](https://github.com/rh-aiservices-bu/rhoaibu-cluster)** manages the **OpenShift AI BU cluster** and is a comprehensive GitOps implementation for managing Red Hat OpenShift AI infrastructure using declarative configuration management.
 
 **What it manages:**
 
