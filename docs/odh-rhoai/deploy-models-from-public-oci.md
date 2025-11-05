@@ -29,14 +29,9 @@ Alternatively, you can use the **OCI compliant registry - v1** option, but this 
 
 ```json
 {
-  "auths": {
-    "quay.io": {}
-  }
+  "auths": {}
 }
 ```
-
-!!! note
-    Replace `quay.io` with your registry hostname (e.g., `docker.io`, `ghcr.io`, etc.)
 
 ![OCI registry deployment with secret](./public-oci/oci-secret-option.png)
 
