@@ -126,6 +126,10 @@ nav:
       - Connect to RHOAI Workbench Kernel from VS Code: odh-rhoai/connect-vscode-to-rhoai-wb.md
       - AnythingLLM as Custom Workbench: odh-rhoai/custom-workbench-anythingllm.md
       - Deploying a Red Hat Validated Model in a Disconnected OpenShift AI Environment: odh-rhoai/deploy-validated-models-on-disconnected.md
+    - GitOps:
+      - GitOps (CRs, objects,...): odh-rhoai/gitops.md
+      - RHOAI BU Cluster GitOps: odh-rhoai/rhoaibu-cluster-gitops.md
+      - Managing Secrets in an AI Platform: odh-rhoai/secret-management.md
     - Tools:
       - GPU pruner: odh-rhoai/gpu-pruner.md
       - ODH Tools and Extensions Companion: odh-rhoai/odh-tools-and-extensions-companion.md
