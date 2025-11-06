@@ -1,5 +1,7 @@
 # What's new?
 
+**2025-11-05**: Add [Deploying Models from Public OCI Registries](../odh-rhoai/deploy-models-from-public-oci.md)
+
 **2025-07-28**: Add [Managing Secrets in an AI Platform](../odh-rhoai/secret-management.md)
 
 **2025-07-15**: Add [Deploying a Red Hat Validated Model in a Disconnected OpenShift AI Environment](../odh-rhoai/deploy-validated-models-on-disconnected.md)
