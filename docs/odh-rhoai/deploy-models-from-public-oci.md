@@ -2,6 +2,9 @@
 
 When deploying models in OpenShift AI using the [ModelCar](https://kserve.github.io/website/master/modelserving/storage/oci/#using-modelcars) approach, you can pull model images directly from OCI-compliant registries. ModelCar packages models as OCI images, simplifying deployment by eliminating the need to manually download models and upload them to S3 storage.
 
+!!! note
+    While models hosted publicly are not going to be the norm in enterprise environments, they make things way easier for quick demos and testing purposes.
+
 ## Two Options for Public Registries
 
 If you're deploying a model from a **public OCI registry** that doesn't require authentication, OpenShift AI offers two approaches:
