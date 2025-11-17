@@ -179,3 +179,4 @@ nav:
       - Fine-tune Llama3 with KFTO: demos/llama3-finetune/llama3-finetune-kfto.md
       - From Podman AI Lab to OpenShift AI: demos/podman-ai-lab-to-rhoai/podman-ai-lab-to-rhoai.md
       - Text to Image: demos/stable-diffusion/stable-diffusion.md
+      - Secure Model Ingestion and Evaluation with OpenShift AI: demos/modelops-benchmarking/modelops-benchmarking.md
